@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const path = require("path");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config({ path: "./.env" });
 
@@ -18,6 +19,10 @@ const db = mysql.createConnection({
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+
 app.set('view engine', 'hbs');
 
 db.connect((err) => {
@@ -28,9 +33,9 @@ db.connect((err) => {
     }
 })
 
-app.get("/", (req, res) => {
-    res.render("v_home");
-});
+//define routes (r_pages and r_routes)
+app.use('/', require('./routes/r_pages'));
+app.use('/auth', require('./routes/r_auth'));
 
 app.listen(5050, () => {
     console.log("Server started on Port 5050");
