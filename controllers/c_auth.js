@@ -49,37 +49,50 @@ exports.login_user = async(req, res) => {
 }
 
 exports.register_user = (req, res) => {
-    console.log(req.body);
+    try {
+        console.log(req.body);
 
-    const { name, email, password, passwordConfirm, role, ic } = req.body;
+        const { name, email, password, passwordConfirm, role, ic } = req.body;
 
-    db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
-        if (error) {
-            console.log(error);
-        }
-        if (results.length > 0) {
-            return res.render('v_register', {
-                message: 'IC Has Been Registered'
-            })
-        } else if (password !== passwordConfirm) {
-            return res.render('v_register', {
-                message: 'Password Do Not Match'
+        console.log(" 1. " + name + " 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
+
+        if (!email || !password || !passwordConfirm || !role || !ic) {
+            return res.status(400).render('v_register', {
+                message: 'Field Cannot Be Empty'
             })
         }
 
-        let hashedPassword = await bcrypt.hash(password, 8);
-        console.log(hashedPassword);
-        db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role }, (error, results) => {
+
+        db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
             if (error) {
                 console.log(error);
-            } else {
-                console.log(results);
-                return res.render('v_register', {
-                    message: 'Successfully Registered'
-                });
             }
+            if (results.length > 0) {
+                return res.render('v_register', {
+                    message: 'IC Has Been Registered'
+                })
+            } else if (password !== passwordConfirm) {
+                return res.render('v_register', {
+                    message: 'Password Do Not Match'
+                })
+            }
+
+            let hashedPassword = await bcrypt.hash(password, 8);
+            console.log(hashedPassword);
+            db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role }, (error, results) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(results);
+                    return res.status(200).render('v_login', {
+                        message: 'Successfully Registered'
+                    })
+                }
+            })
         })
-    })
+    } catch (error) {
+
+    }
 
 }
 
