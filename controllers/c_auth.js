@@ -52,9 +52,11 @@ exports.register_user = (req, res) => {
     try {
         console.log(req.body);
 
-        const { name, email, password, passwordConfirm, role, ic } = req.body;
+        const { email, password, passwordConfirm, role, ic } = req.body;
 
-        console.log(" 1. " + name + " 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
+        console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
+
+
 
         if (!email || !password || !passwordConfirm || !role || !ic) {
             return res.status(400).render('v_register', {
@@ -84,9 +86,20 @@ exports.register_user = (req, res) => {
                     console.log(error);
                 } else {
                     console.log(results);
-                    return res.status(200).render('v_login', {
-                        message: 'Successfully Registered'
-                    })
+
+                    if (role == "Patient") {
+                        return res.status(200).render('v_p_register', {
+                            message: 'Successfully Registered',
+                            ic: ic
+
+                        })
+                    } else if (role == "Doctor") {
+                        return res.status(200).render('v_d_register', {
+                            message: 'Successfully Registered'
+                        })
+                    } else {
+
+                    }
                 }
             })
         })
@@ -95,6 +108,8 @@ exports.register_user = (req, res) => {
     }
 
 }
+
+
 
 exports.isLoggedIn = async(req, res, next) => {
     //console.log(req.cookies);
@@ -140,5 +155,50 @@ exports.logout_user = async(req, res) => {
 
     //redirect to homepage
     res.status(200).redirect('/');
+
+}
+
+exports.register_patient = (req, res) => {
+    try {
+        console.log(req.body);
+
+        const { ic, fullname, age, home_address, phone_number, gender, marital_status, activity_level, height, surgery_status, curr_weight, before_surg_weight, surgery_date } = req.body;
+
+        console.log(ic + " 1. " + fullname + age + " 2. " + home_address + " 3. " + phone_number + gender + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
+
+        if (!fullname || !age || !home_address || !phone_number || !gender || !marital_status || !activity_level || !surgery_status || !curr_weight || !surgery_date || !height) {
+            return res.status(400).render('v_p_register', {
+                message: 'Field Cannot Be Empty'
+            })
+        }
+
+        console.log(parseInt(ic));
+        console.log(gender);
+        console.log(age);
+
+
+        console.log(ic + "<br>" + fullname + "<br>" + age + "<br>" + home_address + "<br>" + phone_number + "<br>" + gender + " <br>" + marital_status + "<br>" + activity_level + "<br>" + height + "<br>" + surgery_status + "<br>" + curr_weight + "<br>" + before_surg_weight + "<br>" + surgery_date);
+
+        console.log(req.body);
+        db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
+            if (error) {
+                console.log(error + "ic retrieve");
+            }
+
+            console.log();
+            db.query('INSERT INTO patientdetails SET ?', { ic: ic, fullname: fullname, age: age, home_address: home_address, phone_number: phone_number, gender: gender, marital_status: marital_status, activity_level: activity_level, height: height, surgery_status: surgery_status, curr_weight: curr_weight, before_surg_weight: before_surg_weight, surgery_date: surgery_date }, (error, results) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(results);
+                    return res.status(200).render('v_login', {
+                        message: 'Successfully Registered Patient'
+                    })
+                }
+            })
+        })
+    } catch (error) {
+
+    }
 
 }
