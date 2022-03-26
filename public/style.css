@@ -119,3 +119,10 @@ input[type=submit] {
     position: relative;
     left: -35px;
 }
+
+#messageAlert {
+    margin: auto;
+    width: 60%;
+    border: 5px solid red;
+    padding: 10px;
+}

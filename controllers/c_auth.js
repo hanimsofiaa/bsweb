@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
+const async = require("hbs/lib/async");
 
 
 const db = mysql.createConnection({
@@ -91,7 +92,6 @@ exports.register_user = (req, res) => {
                         return res.status(200).render('v_p_register', {
                             message: 'Successfully Registered',
                             ic: ic
-
                         })
                     } else if (role == "Doctor") {
                         return res.status(200).render('v_d_register', {
@@ -156,6 +156,24 @@ exports.logout_user = async(req, res) => {
     //redirect to homepage
     res.status(200).redirect('/');
 
+}
+
+exports.getHP = (req, res) => {
+
+    db.query('SELECT * FROM healthcare', async(error, results) => {
+        console.log(results);
+        if (!results) {
+            res.status(401).render('v_register', {
+                message: 'Error retrieve healthcare provider'
+            })
+        } else {
+            const healthcare = {
+                id: results.body.id,
+                name: results.body.name
+            }
+
+        }
+    })
 }
 
 exports.register_patient = (req, res) => {

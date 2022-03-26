@@ -8,9 +8,18 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
         user: req.user
     });
 });
-router.get('/registerpatient', (req, res) => { res.render('v_p_register'); });
-router.get('/register', (req, res) => { res.render('v_register'); });
-router.get('/login', (req, res) => { res.render('v_login'); });
+
+router.get('/registerpatient', (req, res) => {
+    res.render('v_p_register');
+});
+
+router.get('/register', (req, res) => {
+    res.render('v_register');
+});
+
+router.get('/login', (req, res) => {
+    res.render('v_login');
+});
 
 //check whether user has already login using jwt -> c_auth(isLoggedIn function)
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {

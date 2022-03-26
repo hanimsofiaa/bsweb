@@ -38,56 +38,60 @@
 
     <div class="container mt-4">
        <div class="card">
-		   <div class="card-header">Register Form</div>
+		   <div class="card-header">Update Patient Details Form {{ic}}</div>
 			<div class="card-body">
 				<form action="/auth/registerpatient" method="POST">
 				
+					<!--IC Input Field--> 
 					<div class="form-group" id="ic" name= "ic" style="padding: 5px; display:none;">
 						<label for="ic">Registered IC</label>
 						<input type="text" class="form-control" id="ic" name= "ic" value="{{#if ic}}{{ic}}{{/if}}" onload="inputIC({{#if ic}}{{ic}}{{/if}});">
 					</div>
 					
+					<!--Name Input Field--> 
 					<div class="form-group" style="padding: 5px;">
 						<label for="fullname">Fullname</label>
-						<input type="text" class="form-control" id="fullname" name= "fullname" placeholder="Enter Fullname">
+						<input type="text" class="form-control" id="fullname" name= "fullname" placeholder="Enter Fullname" required>
 					</div>
 					
-					<div class="form-group" id="age" name= "age" style="padding: 5px;">
-					
+					<!--Age Input Field--> 
+					<div class="form-group" id="age" name= "age">
 						<input type="hidden" class="form-control" id="age" name= "age" value="0">
 					</div>
-										
+						
+					<!--Home Address Input Field--> 				
 					<div class="form-group" style="padding: 5px;">
 						<label for="home_address">Home address</label>
-						<input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address">
+						<input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" required>
 					</div>
 				
+					<!--Phone Number Input Field--> 
 					<div class="form-group" style="padding: 5px;">
 						<label for="phone_number">Phone Number</label>
-						<input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Enter Phone Number">
+						<input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Eg: 0123456789" required>
 					</div>
 					
-					<div class="form-group" id="gender" name= "gender" style="padding: 5px;">
-			
+					<!--Gender Input Field--> 
+					<div class="form-group" id="gender" name= "gender">
 						<input type="hidden" class="form-control" id="gender" name= "gender" value="unknown">
 					</div>
 					
-					
+					<!--Marital Status Input Field--> 
 					<div class="form-group" style="padding: 5px; width:fit-content">
 						<label for="marital_status">Select Marital Status</label>
-						<select class="form-select"  id="marital_status" name="marital_status" aria-label="marital_status">
+						<select class="form-select"  id="marital_status" name="marital_status" aria-label="marital_status" required>
 							<option value="single" selected>Single</option>
 							<option value="married">Married</option>
 							<option value="divorce">Divorce</option>
 							<option value="separated">Separated</option>
 							<option value="widowed">Widowed</option>
 						</select>
-						
 					</div>
 					
+					<!--Physical Activity Input Field--> 
 					<div class="form-group" style="padding: 5px; width:fit-content">
 						<label for="activity_level">Select Physical Activity Level</label>
-						<select class="form-select"  id="activity_level" name="activity_level" aria-label="activity_level">
+						<select class="form-select"  id="activity_level" name="activity_level" aria-label="activity_level" required>
 							<option value="sedentary" selected>Sedentary</option>
 							<option value="lightly">Lightly Active</option>
 							<option value="moderately">Moderately Active</option>
@@ -96,33 +100,38 @@
 						</select>
 					</div>
 					
+					<!--Height Input Field--> 
 					<div class="form-group" style="padding: 5px;">
 						<label for="height">Height</label>
-						<input type="number" class="form-control" id="height" name="height" placeholder="Enter Height(cm)">
+						<input type="number" class="form-control" id="height" name="height" placeholder="Enter Height(cm)" required>
 					</div>
 					
+					<!--Surgery Status Input Field--> 
 					<div class="form-group" style="padding: 5px; width:fit-content">
 						<label for="surgery_status">Select Surgery Status</label>
-						<select class="form-select"  id="surgery_status" name="surgery_status" aria-label="surgery_status" onchange="inputSurgery(this.value);">
+						<select class="form-select"  id="surgery_status" name="surgery_status" aria-label="surgery_status" required>
 							<option value="post" selected>Post-Operation</option>
 							<option value="pre">Pre-Operation</option>
 						</select>
 					</div>
 					
+					<!--Current Weight Input Field--> 
 					<div class="form-group" style="padding: 5px;">
 						<label for="curr_weight">Current Weight</label>
-						<input type="number" class="form-control" id="curr_weight" name="curr_weight" placeholder="Enter Weight(kg)">
+						<input type="number" class="form-control" id="curr_weight" name="curr_weight" placeholder="Enter Weight(kg)" required>
 					</div>
 					
+					<!--Weight Before Surgery Input Field--> 
 					<div class="form-group" id="before_surg_weight" name="before_surg_weight" style="padding: 5px;">
 						<label for="before_surg_weight" id="before_surg_weight" name="before_surg_weight">Weight Before Operation</label>
 						<input type="number" class="form-control" id="before_surg_weight" name="before_surg_weight" placeholder="Enter Weight(kg)" value="">
 					</div>
 					
+					 <!--Date of Operation Input Field--> 
 					<div class="form-group" style="padding: 5px; width:fit-content">
 						<label for="surgery_date">Date of Operation</label>
 						<div class="input-group date" id="surgery_date" name="surgery_date" data-provide="datepicker">
-							<input type="date" class="form-control" id="surgery_date" name="surgery_date">
+							<input type="date" class="form-control" id="surgery_date" name="surgery_date" required>
 							<div class="input-group-addon">
 								<span class="glyphicon glyphicon-th"></span>
 							</div>
