@@ -13,4 +13,6 @@ router.get('/register', authContoller.getHP); //function to c_auth
 router.get('/logout', authContoller.logout_user); //function to c_auth
 
 
+
+
 module.exports = router;

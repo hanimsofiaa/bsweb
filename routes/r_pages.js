@@ -21,11 +21,12 @@ router.get('/login', (req, res) => {
     res.render('v_login');
 });
 
+
 //check whether user has already login using jwt -> c_auth(isLoggedIn function)
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-        res.render('v_profile', {
+        res.render('v_p_profile', {
             user: req.user
         });
 

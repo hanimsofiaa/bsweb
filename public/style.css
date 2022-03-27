@@ -126,3 +126,9 @@ input[type=submit] {
     border: 5px solid red;
     padding: 10px;
 }
+
+select,
+input,
+button {
+    border-width: 0px;
+}

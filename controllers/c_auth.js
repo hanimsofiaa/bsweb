@@ -160,19 +160,15 @@ exports.logout_user = async(req, res) => {
 
 exports.getHP = (req, res) => {
 
-    db.query('SELECT * FROM healthcare', async(error, results) => {
-        console.log(results);
-        if (!results) {
-            res.status(401).render('v_register', {
-                message: 'Error retrieve healthcare provider'
-            })
-        } else {
-            const healthcare = {
-                id: results.body.id,
-                name: results.body.name
-            }
+    db.query('SELECT * FROM healthcare', (err, rows) => {
 
+        if (!err) { //if not error
+            res.render('v_p_register', { rows });
+        } else {
+            console.log(err);
         }
+
+        console.log('the data from user table', rows);
     })
 }
 

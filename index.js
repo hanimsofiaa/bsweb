@@ -8,6 +8,7 @@ dotenv.config({ path: "./.env" });
 
 const app = express();
 
+//set db connection
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -23,8 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 
+//set handlebars
 app.set('view engine', 'hbs');
 
+//connect to db
 db.connect((err) => {
     if (err) {
         console.log(err);
@@ -35,6 +38,7 @@ db.connect((err) => {
 
 //define routes (r_pages and r_routes)
 app.use('/', require('./routes/r_pages'));
+app.use('/diet', require('./routes/r_diet'));
 app.use('/auth', require('./routes/r_auth'));
 
 app.listen(5050, () => {
