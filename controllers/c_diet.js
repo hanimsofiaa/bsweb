@@ -13,14 +13,14 @@ const db = mysql.createConnection({
 
 });
 
-//display ALL food(no id is passed)
+//function 1 - display ALL list food(no id is passed)
 exports.view_diet = (req, res) => {
     db.query('SELECT * FROM diets', (err, rows) => {
         //when done with connection
 
         if (!err) { //if not error
-            let removedFood = req.query.removed;
-            res.render('v_p_diet', { rows, alert: removedFood });
+            let removedFood = req.query.removed; //if any food is deleted, set alert 
+            res.render('v_p_diet', { rows, removedFood: removedFood });
         } else {
             console.log(err);
         }
@@ -28,15 +28,15 @@ exports.view_diet = (req, res) => {
     })
 }
 
-//search food
+//function 2 - search food by name of meal(pass req.body)
 exports.find_diet = (req, res) => {
 
-    let searchTerm = req.body.search;
+    let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
 
     db.query('SELECT * FROM diets WHERE name LIKE ? OR type LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet', { rows });
+            res.render('v_p_diet', { rows, alert: 'Display Searched Food' });
         } else {
             console.log(err);
         }
@@ -46,20 +46,22 @@ exports.find_diet = (req, res) => {
 
 }
 
-//display form to add diet
-exports.form_edit_diet = (req, res) => {
+//function 3 - display add form to add new food
+exports.form_add_diet = (req, res) => {
     res.render('v_p_diet_add');
 }
 
-//add new food
+//function 4 - add new food(pass req.body)
 exports.add_diet = (req, res) => {
 
-    const createdAt = Date(Date.now());
-    const updatedAt = Date(Date.now());
+    const createdAt = new Date(Date.now());
+    const updatedAt = new Date(Date.now());
+
+    console.log(createdAt, updatedAt);
 
     const { name, calories, type } = req.body;
 
-    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?', [name, calories, type, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_add', {
@@ -74,12 +76,7 @@ exports.add_diet = (req, res) => {
 
 }
 
-//display basic form to update exisiting diet
-exports.form_update_diet = (req, res) => {
-    res.render('v_p_diet_edit');
-}
-
-//display form with data based on its id 
+//function 5 - display update form with data based on its id(pass id)
 exports.form_update_diet_id = (req, res) => {
     db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
         //when done with connection
@@ -93,23 +90,24 @@ exports.form_update_diet_id = (req, res) => {
     })
 }
 
-//update existing data using its id
+//function 6 - update existing data using its id(pass req.body)
 exports.update_diet_id = (req, res) => {
 
-    const createdAt = Date(Date.now());
-    const updatedAt = Date(Date.now());
+    const createdAt = new Date(Date.now());
+    const updatedAt = new Date(Date.now());
 
     const { name, calories, type } = req.body;
 
-    db.query('UPDATE diets SET name = ?, calories = ?, type = ? WHERE id = ?', [name, calories, type, req.params.id], (err, rows) => {
+    db.query('UPDATE diets SET name = ?, calories = ?, type = ?, updatedAt = ? WHERE id = ?', [name, calories, type, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 
+            //display back updated version
             db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
                 //when done with connection
 
                 if (!err) { //if not error
-                    res.render('v_p_diet_edit', { rows, alert: 'Food Has Been Updated' });
+                    res.render('v_p_diet_edit', { rows, alert: `${name} Has Been Updated` });
                 } else {
                     console.log(err);
                 }
@@ -124,7 +122,7 @@ exports.update_diet_id = (req, res) => {
     })
 }
 
-//delete existing data using its id
+//function 7 - delete existing data using its id(pass id)
 exports.delete_diet_id = (req, res) => {
 
     db.query('DELETE FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
@@ -140,7 +138,7 @@ exports.delete_diet_id = (req, res) => {
     })
 }
 
-//display specific food based on its id
+//funciton 8 - display specific food based on its id(pass id)
 exports.display_diet_id = (req, res) => {
 
     db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
