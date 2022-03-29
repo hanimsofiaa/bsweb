@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const expresshbs = require('express-handlebars');
 
 dotenv.config({ path: "./.env" });
 
@@ -17,8 +18,13 @@ const db = mysql.createConnection({
 
 });
 
+//define the static folder(image/css)
 const publicDirectory = path.join(__dirname, './public');
 app.use(express.static(publicDirectory));
+
+
+//define hbs extension and engine folder(layouts and partial folder)
+app.engine('hbs', expresshbs.engine({ extname: '.hbs', layoutsDir: 'views/layouts', partialsDir: 'views/partial' }));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
