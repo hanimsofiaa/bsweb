@@ -1,3 +1,4 @@
+
 <nav>
 	<h4>Bariact</h4>
 	<ul>
@@ -11,13 +12,13 @@
 <nav aria-label="breadcrumb" style="background-color: #ffffff;">
 	<ol class="breadcrumb" style="background-color: #a79bb6;">
 		<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Search Food Database</li>
+		<li class="breadcrumb-item active" aria-current="page">Search Food List From Database</li>
 	</ol>
 </nav>
 
 
 {{#if alert}}
-<div class="container" style="background-color: #ffffff;">
+<div class="container mt-4" style="background-color: #ffffff;">
 	<div class="alert alert-success alert-dismissible fade show" role="alert">
 		<strong>Success! </strong>{{alert}}
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -26,67 +27,11 @@
 {{/if}}
 
 <br>
-<center><h3>Search Food</h3></center>
+<center><h3>Add New Food</h3></center>
 <div class="container mt-4">
-	<form class="input-group mb-3" method="POST" action="/foodlist">
-		<input type="search" class="form-control" name="search" placeholder="Search Food Database" aria-label="Search">
-		<button type="submit"><span><i class="bi bi-search"></i></span></button>		
+	<form class="row g-3 needs-validation" method="POST" action="/diet/foodlist" novalidate>
+		{{> v_p_diet_form}}
 	</form>
-	
-	{{#each rows}}
-	<div class="row mb-5"> 
-		<div class="col text-center">
-			<h3>{{this.name}}</h3>
-		</div>
-	</div>
-	<div class="row"> 
-		<div class="col"> 
-			<table class="table"> 
-				<thead> 
-					<tr>
-					<th scope="col">Name</th> 
-					<th scope="col">Calories</th> 
-					<th scope="col">Serving Size</th>
-					<th scope="col">Serving Type</th>
-					<th scope="col">Meal</th> 
-					</tr> 
-				</thead> 
-				<tbody> 
-					<tr>
-					<th scope="row">{{this.name}}</th> 
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<!--
-					<td><input type="number" class="form-control" id="calories" name="calories" value="{{{this.calories}}}" disabled></td> 
-					<td><input type="number" class="form-control" id="serving_size" name="serving_size" value="{{{this.serving_size}}}" onkeyup="calculateCal(this.value)" required></td>
-					<td>{{this.serving_type}}</td>
-					<td>
-					<select class="form-select"  id="type" name="type" aria-label="type" required>
-						<option value="breakfast" selected>Breakfast</option>
-						<option value="brunch">Brunch</option>
-						<option value="lunch">Lunch</option>
-						<option value="tea">Tea</option>
-						<option value="supper">Supper</option>
-					</select>							
-					</td> -->
-					</tr>
-				</tbody> 
-			</table>
-		</div>
-	</div>
-	{{/each}}
-	
 </div>	
-
-<script>
-function calculateCal(serving_size){
-	var cal = document.getElementById("calories");
-	var newCal = cal.value*serving_size;
-	
-	cal.value=newCal;
-}
-</script>
 
 

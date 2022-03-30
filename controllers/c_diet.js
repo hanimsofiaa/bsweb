@@ -51,6 +51,11 @@ exports.form_add_diet = (req, res) => {
     res.render('v_p_diet_add');
 }
 
+exports.form_search_foodlist = (req, res) => {
+    res.render('v_p_diet_search');
+}
+
+
 //function 4 - add new food(pass req.body)
 exports.add_diet = (req, res) => {
 
@@ -125,17 +130,19 @@ exports.update_diet_id = (req, res) => {
 //function 7 - delete existing data using its id(pass id)
 exports.delete_diet_id = (req, res) => {
 
-    db.query('DELETE FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-        //when done with connection
+    if (req.params.id) {
+        db.query('DELETE FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
+            //when done with connection
 
-        if (!err) { //if not error
-            let removedFood = encodeURIComponent('Food Successfully Removed');
-            res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
-    })
+            if (!err) { //if not error
+                // let removedFood = encodeURIComponent('Food Successfully Removed');
+                res.redirect('/diet/view'); //no need render just redirect to same page of current page dislaying
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+        })
+    }
 }
 
 //funciton 8 - display specific food based on its id(pass id)
@@ -153,11 +160,9 @@ exports.display_diet_id = (req, res) => {
     })
 }
 
-exports.form_search_foodlist = (req, res) => {
-    res.render('v_p_diet_search');
-}
 
 exports.search_foodlist_db = (req, res) => {
+
     let searchTerm = req.body.search; //get req.body.search from v_p_diet_search(name="search")
 
     db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
@@ -173,7 +178,24 @@ exports.search_foodlist_db = (req, res) => {
 }
 
 
-
 exports.add_search_diet = (req, res) => {
+    const createdAt = new Date(Date.now());
+    const updatedAt = new Date(Date.now());
 
+    console.log(createdAt, updatedAt);
+
+    const { name, calories, type } = req.body;
+
+    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, createdAt, updatedAt], (err, rows) => {
+        //when done with connection
+        if (!err) { //if not error
+            res.render('v_p_diet_search', {
+                alert: 'New Food Has Been Added'
+            });
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+
+    })
 }

@@ -39,7 +39,7 @@
 	
 	<div class="row" style="justify-content: center;">
 	<div class="col-7">
-		<h3>Food List</h3>
+		<h3>Your Food List</h3>
 	</div>
 	
 	<!--button for ADD -->
@@ -49,8 +49,9 @@
 			+ Add Food
 		</button>
 		<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-			<a class="dropdown-item" href="/diet/add">Form</a>
 			<a class="dropdown-item" href="/diet/foodlist">Search Food Database</a>
+			<a class="dropdown-item" href="/diet/add">Form</a>
+		
 		</div>
 		</div>
 	</div>
@@ -58,8 +59,10 @@
 	<!--button for SEARCH -->
 	<form class="input-group mb-3" method="POST" action="/diet/search">
 		<input type="search" class="form-control" name="search" placeholder="Search Food or Meal" aria-label="Search">
-		<button type="submit"><span><i class="bi bi-search"></i></span></button>		
+		<button type="submit"><span><i class="bi bi-search"></i></span></button>	
+			
 	</form>
+
 	
 	<table class="table table-bordered">
 		<thead>
