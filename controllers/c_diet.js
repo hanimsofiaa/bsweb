@@ -152,3 +152,28 @@ exports.display_diet_id = (req, res) => {
         console.log(rows);
     })
 }
+
+exports.form_search_foodlist = (req, res) => {
+    res.render('v_p_diet_search');
+}
+
+exports.search_foodlist_db = (req, res) => {
+    let searchTerm = req.body.search; //get req.body.search from v_p_diet_search(name="search")
+
+    db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
+        //when done with connection
+        if (!err) { //if not error
+            res.render('v_p_diet_search', { rows, alert: 'Display Searched Food' });
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+
+    })
+}
+
+
+
+exports.add_search_diet = (req, res) => {
+
+}

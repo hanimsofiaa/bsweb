@@ -49,6 +49,25 @@ exports.login_user = async(req, res) => {
     }
 }
 
+exports.form_register_patient = (req, res) => {
+    res.render('v_p_register');
+}
+
+exports.getHP = (req, res) => {
+
+    db.query('SELECT * FROM healthcare', (err, rows) => {
+
+        if (!err) { //if not error
+            res.render('v_p_register', { rows });
+        } else {
+            console.log(err);
+        }
+
+        console.log('the data from user table', rows);
+    })
+}
+
+
 exports.register_user = (req, res) => {
     try {
         console.log(req.body);
@@ -57,8 +76,6 @@ exports.register_user = (req, res) => {
 
         console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
 
-
-
         if (!email || !password || !passwordConfirm || !role || !ic) {
             return res.status(400).render('v_register', {
                 message: 'Field Cannot Be Empty'
@@ -66,13 +83,13 @@ exports.register_user = (req, res) => {
         }
 
 
-        db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
+        db.query('SELECT ic FROM userdetails WHERE ic = ? OR email = ?', [ic, email], async(error, results) => {
             if (error) {
                 console.log(error);
             }
             if (results.length > 0) {
                 return res.render('v_register', {
-                    message: 'IC Has Been Registered'
+                    message: 'IC or Email Has Been Registered'
                 })
             } else if (password !== passwordConfirm) {
                 return res.render('v_register', {
@@ -87,19 +104,23 @@ exports.register_user = (req, res) => {
                     console.log(error);
                 } else {
                     console.log(results);
-
+                    /*
                     if (role == "Patient") {
-                        return res.status(200).render('v_p_register', {
+                        return res.status(200).render('v_p_profile', {
                             message: 'Successfully Registered',
                             ic: ic
                         })
-                    } else if (role == "Doctor") {
+                    } else if (role == "") {
                         return res.status(200).render('v_d_register', {
                             message: 'Successfully Registered'
                         })
                     } else {
 
-                    }
+                    }*/
+
+                    return res.status(200).render('v_login', {
+                        success: 'Successfully Registered'
+                    });
                 }
             })
         })
@@ -158,20 +179,6 @@ exports.logout_user = async(req, res) => {
 
 }
 
-exports.getHP = (req, res) => {
-
-    db.query('SELECT * FROM healthcare', (err, rows) => {
-
-        if (!err) { //if not error
-            res.render('v_p_register', { rows });
-        } else {
-            console.log(err);
-        }
-
-        console.log('the data from user table', rows);
-    })
-}
-
 exports.register_patient = (req, res) => {
     try {
         console.log(req.body);
@@ -205,8 +212,9 @@ exports.register_patient = (req, res) => {
                     console.log(error);
                 } else {
                     console.log(results);
+                    //kena tukar v_login
                     return res.status(200).render('v_login', {
-                        message: 'Successfully Registered Patient'
+                        success: 'Successfully Registered Patient'
                     })
                 }
             })

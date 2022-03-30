@@ -9,8 +9,21 @@
 
 {{#if message }}
 <br>
-<div id="messageAlert">
-  <h6 class "alert alert-danger mt-4" style="text-align: center;" onload="setAlert()">{{message}}</h6>
+<div class="container" style="background-color: #ffffff;">
+	<div class="alert alert-danger alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+		<strong>Failed! </strong>{{message}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+</div>
+{{/if}}
+
+{{#if success }}
+<br>
+<div class="container" style="background-color: #ffffff;">
+	<div class="alert alert-success alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+		<strong>Yay! </strong>{{success}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
 </div>
 {{/if}}
 
@@ -86,9 +99,8 @@
           <div class="form-group" style="padding: 5px; width:fit-content">
             <label for="healthcare">Select Healthcare Provider</label>
             <select class="form-select"  id="healthcare" name="healthcare" aria-label="healthcare">
-              {{#each rows}}
-              <option value="{{this.id}}">{{this.name}}</option>
-              {{/each}}
+              <option value="USM Kubang Kerian" selected>USM Kubang Kerian</option>
+              <option value="USM IPPT">USM Institut Perubatan & Pergigian Termaju</option>
             </select>
           </div>
           

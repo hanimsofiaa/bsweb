@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const authContoller = require('../controllers/c_auth');
 
+//localhost:5050/
+
 //GET define routes and its view
 router.get('/', authContoller.isLoggedIn, (req, res) => {
     res.render('v_home', {

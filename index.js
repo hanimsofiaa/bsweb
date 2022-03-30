@@ -4,6 +4,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const expresshbs = require('express-handlebars');
+const fileUpload = require('express-fileupload');
 
 dotenv.config({ path: "./.env" });
 
@@ -29,6 +30,7 @@ app.engine('hbs', expresshbs.engine({ extname: '.hbs', layoutsDir: 'views/layout
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload());
 
 //set handlebars
 app.set('view engine', 'hbs');

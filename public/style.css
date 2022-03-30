@@ -122,13 +122,6 @@ input[type=submit] {
     left: -35px;
 }
 
-#messageAlert {
-    margin: auto;
-    width: 60%;
-    border: 5px solid red;
-    padding: 10px;
-}
-
 select,
 input,
 button {

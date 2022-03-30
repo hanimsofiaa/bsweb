@@ -6,6 +6,25 @@
         <li><a href="/register">Register</a></li>
     </ul>
 </nav>
+{{#if message }}
+<br>
+<div class="container" style="background-color: #ffffff;">
+	<div class="alert alert-danger alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+		<strong>Failed! </strong>{{message}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+</div>
+{{/if}}
+
+{{#if success }}
+<br>
+<div class="container" style="background-color: #ffffff;">
+	<div class="alert alert-success alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+		<strong>Yay! </strong>{{success}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+</div>
+{{/if}}
 
 <div class="container mt-4">
     <div class="card">
