@@ -18,6 +18,8 @@ router.get('/display/:id', dietContoller.display_diet_id); //funciton 8 - displa
 router.post('/search', dietContoller.find_diet); //function 2 - search food by name of meal(pass req.body for searchterm)
 router.post('/add', dietContoller.add_diet); //function 4 - add new food(pass req.body for all data)
 router.post('/update/:id', dietContoller.update_diet_id); //function 6 - update existing data using its id(pass req.body)
-router.post('/foodlist', dietContoller.add_search_diet);
+router.post('/foodlist', dietContoller.search_foodlist_db);
+router.post('/add_foodlist', dietContoller.add_search_diet);
+
 
 module.exports = router;

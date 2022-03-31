@@ -50,7 +50,7 @@
 		</button>
 		<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 			<a class="dropdown-item" href="/diet/foodlist">Search Food Database</a>
-			<a class="dropdown-item" href="/diet/add">Form</a>
+			<a class="dropdown-item" href="/diet/add">Enter Form</a>
 		
 		</div>
 		</div>
@@ -59,8 +59,7 @@
 	<!--button for SEARCH -->
 	<form class="input-group mb-3" method="POST" action="/diet/search">
 		<input type="search" class="form-control" name="search" placeholder="Search Food or Meal" aria-label="Search">
-		<button type="submit"><span><i class="bi bi-search"></i></span></button>	
-			
+		<button type="submit"><span><i class="bi bi-search"></i></span></button>		
 	</form>
 
 	
@@ -69,9 +68,10 @@
 			<tr>
 				<!--<th scope="col">#</th>-->
 				<th scope="col" class="text-center">Food</th>
-				<th scope="col" class="text-center">Calories</th>
 				<th scope="col" class="text-center">Meal</th>
-				<th scope="col" class="text-center">Date</th>
+				<th scope="col" class="text-center">Serving Size</th>
+				<th scope="col" class="text-center">Serving Type</th>
+				<th scope="col" class="text-center">Calories(kcal)</th>
 				<!--column for READ, EDIT, DELETE -->
 				<th scope="col" class="text-center">Update</th> 
 			</tr>
@@ -82,9 +82,10 @@
 			<tr>
 				<!--<th scope="row">{{{this.id}}}</th>-->
 				<td>{{{this.name}}}</td>
-				<td>{{{this.calories}}}</td>
 				<td>{{{this.type}}}</td>
-				<td>{{{this.updatedAt}}}</td>
+				<td>{{{this.serving_size}}}</td>
+				<td>{{{this.serving_type}}}</td>
+				<td>{{{this.calories}}}</td>
 				<td  class="text-center">
 					<a href="/diet/display/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye-fill"></i> View </a>
 					<a href="/diet/update/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-pen-fill"></i> Edit </a>

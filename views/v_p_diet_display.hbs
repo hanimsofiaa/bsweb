@@ -31,7 +31,8 @@
 	{{#each rows}} 
 	<div class="row mb-5"> 
 		<div class="col text-center">
-			<h3>{{this.name}} Calories: {{this.calories}}</h3>
+			<h3>{{this.name}}</h3>
+			<h3>Calories Intake: {{this.calories}} kcal</h3>
 		</div>
 	</div>
 	<div class="row"> 
@@ -40,16 +41,22 @@
 				<thead> 
 					<tr>
 					<th scope="col">Name</th> 
-					<th scope="col">Calories</th> 
-					<th scope="col">Type</th>
-					<th scope="col">Date</th> 
+					<th scope="col" class="text-center">Meal</th>
+					<th scope="col" class="text-center">Serving Size</th>
+					<th scope="col" class="text-center">Serving Type</th>
+					<th scope="col" class="text-center">Calories(kcal)</th>
+					<th scope="col">Created on</th> 
+					<th scope="col">Last Update</th> 
 					</tr> 
 				</thead> 
 				<tbody> 
 					<tr>
 					<th scope="row">{{this.name}}</th> 
-					<td>{{this.calories}}</td> 
-					<td>{{this.type}}</td>
+					<td>{{{this.type}}}</td>
+					<td>{{{this.serving_size}}}</td>
+					<td>{{{this.serving_type}}}</td>
+					<td>{{{this.calories}}}</td>
+					<td>{{{this.createdAt}}}</td>
 					<td>{{this.updatedAt}}</td> 
 					</tr>
 				</tbody> 

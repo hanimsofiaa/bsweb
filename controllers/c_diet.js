@@ -51,10 +51,6 @@ exports.form_add_diet = (req, res) => {
     res.render('v_p_diet_add');
 }
 
-exports.form_search_foodlist = (req, res) => {
-    res.render('v_p_diet_search');
-}
-
 
 //function 4 - add new food(pass req.body)
 exports.add_diet = (req, res) => {
@@ -64,9 +60,9 @@ exports.add_diet = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-    const { name, calories, type } = req.body;
+    const { name, calories, type, serving_size, serving_type } = req.body;
 
-    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_add', {
@@ -101,9 +97,9 @@ exports.update_diet_id = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
-    const { name, calories, type } = req.body;
+    const { name, calories, type, serving_size, serving_type } = req.body;
 
-    db.query('UPDATE diets SET name = ?, calories = ?, type = ?, updatedAt = ? WHERE id = ?', [name, calories, type, updatedAt, req.params.id], (err, rows) => {
+    db.query('UPDATE diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 
@@ -135,8 +131,8 @@ exports.delete_diet_id = (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                // let removedFood = encodeURIComponent('Food Successfully Removed');
-                res.redirect('/diet/view'); //no need render just redirect to same page of current page dislaying
+                let removedFood = encodeURIComponent('Food Successfully Removed');
+                res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
             } else {
                 console.log(err);
             }
@@ -160,6 +156,10 @@ exports.display_diet_id = (req, res) => {
     })
 }
 
+exports.form_search_foodlist = (req, res) => {
+    res.render('v_p_diet_search');
+}
+
 
 exports.search_foodlist_db = (req, res) => {
 
@@ -168,7 +168,7 @@ exports.search_foodlist_db = (req, res) => {
     db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet_search', { rows, alert: 'Display Searched Food' });
+            res.render('v_p_diet_search', { rows, alert: 'Display Searched Food', searchword: searchTerm });
         } else {
             console.log(err);
         }
@@ -184,9 +184,21 @@ exports.add_search_diet = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-    const { name, calories, type } = req.body;
+    var size = req.body.serving_size;
+    const serving_size = parseInt(size);
 
-    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, createdAt, updatedAt], (err, rows) => {
+    var cal = req.body.calories;
+    let calories = parseInt(cal);
+
+    console.log(serving_size, calories);
+
+    const newCal = calories * serving_size;
+
+    console.log(newCal);
+
+    const { name, type, serving_type } = req.body;
+
+    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_search', {

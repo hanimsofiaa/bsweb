@@ -7,24 +7,119 @@
 
 <div class="col-6">
 	<div class="form-floating mb-3">
+	
+	
+		<select class="form-select"  id="serving_type" name="serving_type" placeholder="Serving Type" aria-label="serving_type" aria-selected="{{{this.serving_type}}}" aria-valuetext="{{{this.serving_type}}}" aria-valuenow="{{{this.serving_type}}}" >
+			
+			<!--hidangan & sajian & set-->
+		
+			{{#if this.serving_type}}
+			<option value="{{this.serving_type}}" selected>{{this.serving_type}}</option>
+			{{/if}}
+			
+			<option value="hidangan (kecil) | serving (small)">hidangan (kecil) | serving (small)</option>
+			<option value="hidangan (biasa) | serving (regular)">hidangan (biasa) | serving (regular)</option>
+			<option value="hidangan (besar) | serving (large)">hidangan (besar) | serving (large)</option>
+			<option value="set | set">set | set</option>
+			<option value="sajian (pinggan 23cm) | portion">sajian (pinggan 23cm) | portion</option>
+			
+			<!--biji-->
+			<option value="biji | piece">biji | piece</option>
+			<option value="biji sederhana | medium whole">biji sederhana | medium whole</option>
+			<option value="biji | one half">biji | one half</option>
+			<option value="biji besar | large whole">biji besar | large whole</option>
+			
+			<!--ekor-->
+			<option value="ekor | whole ">ekor | whole</option>
+					
+			<!--sudu-->
+			<option value="sudu besar | tablespoon">sudu besar | tablespoon</option>
+			<option value="sudu teh | teaspoon">sudu teh | teaspoon</option>
+			<option value="sudu cina | chines spoons ">sudu cina | chines spoons </option>
+			
+			<!--senduk-->
+			<option value="senduk | scoop">senduk | scoop</option>
+			<option value="senduk | ladle">senduk | ladle</option>
+			
+			<!--mangkuk-->
+			<option value="mangkuk | bowl">mangkuk | bowl</option>
+			<option value="mangkuk nasi | rice bowl ">mangkuk nasi | rice bowl </option>
+			<option value="mangkuk kecil | small bowl">mangkuk kecil | small bowl</option>
+			<option value="mangkuk sup (16 dan 1/2 cm) | soup bowl (16 and 1/2cm)">mangkuk sup (16 dan 1/2 cm) | soup bowl (16 and 1/2cm)</option>
+			
+			<!--gelas and cup-->
+			<option value="gelas (besar) | glass (large)">gelas (besar) | glass (large)</option>
+			<option value="gelas (kecil) | glass (small)">gelas (kecil) | glass (small)</option>
+			<option value="gelas (sederhana) | glass (medium)">gelas (sederhana) | glass (medium)</option>
+			<option value="cawan | cup">cawan | cup</option>
+				
+			<!--pinggan-->
+			<option value="pinggan (23 cm) | plate (23 cm)">pinggan (23 cm) | plate (23 cm)</option>
+			<option value="pinggan (20 cm) | plate (20 cm)">pinggan (20 cm) | plate (20 cm)</option>
+			<option value="pinggan (16 cm) | plate (16 cm)">pinggan (16 cm) | plate (16 cm)</option>
+					
+			<!--piece-->		
+			<option value="ketul | piece">ketul | piece</option>
+			<option value="keping | pieces">keping | pieces</option>
+			
+			<!--batang & stick-->
+			<option value="batang | bar">batang | bar</option>
+			<option value="batang | stick">batang | stick</option>
+			<option value="cucuk | sticks">cucuk | sticks</option>
+			
+			
+			<option value="tin | can">tin | can</option>
+			<option value="kotak | carton">kotak | carton</option>
+			
+			<option value="paket | packet">paket | packet</option>
+			<option value="bekas | container">bekas | container	</option>
+			
+			
+			<option value="potong | slice">potong | slice</option>
+			<option value="hiris | slices">hiris | slices</option>
+			<option value="kon | cone">kon | cone</option>
+			<option value="kiub | cube">kiub | cube</option>
+			<option value="ulas | fruits">ulas | fruits</option>
+		
+	
+		</select>
+		<label for="serving_type">Serving Type</label>
+	</div>
+</div>
+
+<div class="col-6">
+	<div class="form-floating mb-3">
+		<input type="number" class="form-control" id="serving_size" placeholder="Serving Size" name="serving_size" id="serving_size" value="{{this.serving_size}}">
+		<label for="serving_size">Serving Size</label>
+	</div>
+</div>
+
+<div class="col-6">
+	<div class="form-floating mb-3">
 		<input type="text" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}">
 		<label for="calories">Calories</label>
 	</div>
 </div>
 
 <div class="col-6">
-	<div class="form-floating mb-3">
-		<input type="text" class="form-control" id="type" placeholder="Meal" name="type" id="type" value="{{this.type}}">
-		<label for="type">Meals</label>
+	<div class="form-floating mb-3">	
+		<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
+			
+			{{#if this.type}}
+			<option value="{{this.type}}" selected>{{this.type}}</option>
+			{{/if}}
+			
+			<option value="breakfast">breakfast</option>
+			<option value="brunch">brunch</option>
+			<option value="lunch">lunch</option>
+			<option value="tea">tea</option>
+			<option value="dinner">dinner</option>
+			<option value="supper">supper</option>
+		</select>
+		<label for="type">Meal</label>
 	</div>
 </div>
 
-<div class="col-12">
-	<div class="form-floating mb-3">
-		<textarea class="form-control" id="comments" placeholder="Notes" name="comments" id="comments" style="height: 100px;">{{this.comments}}</textarea>
-		<label for="comments">Notes(optional)</label>
-	</div>
-</div>
 
 <div class="col-12 d-grid">
 	<button class="btn btn-primary" type="submit">Submit</button>
