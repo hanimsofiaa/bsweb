@@ -1,4 +1,4 @@
-<nav>
+<!--<nav>
 	<h4>Bariact</h4>
 	<ul>
 		<li><a href="/">Home</a></li>
@@ -6,14 +6,74 @@
 		<li><a href="/profile">Profile</a></li>
 		<li><a href="/auth/logout">Log Out</a></li>
 	</ul>
+</nav>-->
+
+<nav>
+    <div class="logo-name">
+        <div class="logo-image">
+            <!--<img src="images/logo.png" alt="">-->
+        </div>
+
+        <span class="logo_name">Bariact</span>
+    </div>
+
+    <div class="menu-items">
+        
+        <ul class="nav-links">
+            <li><a href="/">
+                <i class="uil uil-estate"></i>
+                <span class="link-name">Dashboard</span>
+            </a></li>
+            <li><a href="/diet/view">
+                <i class="uil uil-utensils"></i>
+                <span class="link-name">Diet</span>
+            </a></li>
+            <li><a href="#">
+                <i class="uil uil-basketball"></i>
+                <span class="link-name">Exercise</span>
+            </a></li>
+                <li><a href="#">
+                <i class="uil uil-chart"></i>
+                <span class="link-name">Analytics</span>
+            </a></li>
+            
+            <li><a href="/profile">
+                <i class="uil uil-user-circle"></i>
+                <span class="link-name">Profile</span>
+            </a></li>
+          
+        </ul>
+        
+        <ul class="logout-mode">
+     
+            <li><a href="/auth/logout">
+                <i class="uil uil-signout"></i>
+                <span class="link-name">Logout</span>
+            </a></li>
+            
+
+            <li class="mode">
+                <a href="#">
+                    <i class="uil uil-moon"></i>
+                <span class="link-name">Dark Mode</span>
+            </a>
+
+            <div class="mode-toggle">
+                <span class="switch"></span>
+            </div>
+        </li>
+        </ul>        
+    </div>
 </nav>
 
+
+<!--
 <nav aria-label="breadcrumb" style="background-color: #ffffff;">
 	<ol class="breadcrumb" style="background-color: #a79bb6;">
 		<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
 		<li class="breadcrumb-item active" aria-current="page">Add New Food</li>
 	</ol>
-</nav>
+</nav>-->
 
 
 {{#if alert}}

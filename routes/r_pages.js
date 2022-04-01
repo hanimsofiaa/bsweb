@@ -39,4 +39,7 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
 });
 
 
+
+
+
 module.exports = router;

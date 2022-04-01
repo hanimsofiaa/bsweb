@@ -133,6 +133,7 @@ exports.delete_diet_id = (req, res) => {
             if (!err) { //if not error
                 let removedFood = encodeURIComponent('Food Successfully Removed');
                 res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
+                //res.redirect('/diet/view');
             } else {
                 console.log(err);
             }
