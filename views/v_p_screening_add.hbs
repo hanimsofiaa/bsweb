@@ -32,14 +32,15 @@
                 <i class="uil uil-basketball"></i>
                 <span class="link-name">Exercise</span>
             </a></li>
-			<li><a href="/screening/view">
+            <li><a href="/screening/view">
                 <i class="uil uil-clipboard-alt"></i>
                 <span class="link-name">Screening Form</span>
             </a></li>   
                 <li><a href="#">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
-            </a></li> 
+            </a></li>
+            
             <li><a href="/profile">
                 <i class="uil uil-user-circle"></i>
                 <span class="link-name">Profile</span>
@@ -71,11 +72,10 @@
 
 <br>
 <ol class="breadcrumb" style="background-color: #ffffff;">
-	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Display Food</li>
+	<li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
+	<li class="breadcrumb-item active" aria-current="page">Add New Screening</li>
 </ol>
 <br>
-
 
 
 {{#if alert}}
@@ -88,44 +88,11 @@
 {{/if}}
 
 <br>
-<center><h3>Display Food</h3></center>
+<center><h3>Add New Screening</h3></center>
 <div class="container mt-4">
-	{{#each rows}} 
-	<div class="row mb-5"> 
-		<div class="col text-center">
-			<h3>{{this.name}}</h3>
-			<h3>Calories Intake: {{this.calories}} kcal</h3>
-		</div>
-	</div>
-	<div class="row"> 
-		<div class="col"> 
-			<table class="table table-bordered"> 
-				<thead> 
-					<tr>
-					<th scope="col">Name</th> 
-					<th scope="col" class="text-center">Meal</th>
-					<th scope="col" class="text-center">Serving Size</th>
-					<th scope="col" class="text-center">Serving Type</th>
-					<th scope="col" class="text-center">Calories(kcal)</th>
-					<th scope="col">Created on</th> 
-					<th scope="col">Last Update</th> 
-					</tr> 
-				</thead> 
-				<tbody> 
-					<tr>
-					<th scope="row">{{this.name}}</th> 
-					<td>{{{this.type}}}</td>
-					<td>{{{this.serving_size}}}</td>
-					<td>{{{this.serving_type}}}</td>
-					<td>{{{this.calories}}}</td>
-					<td>{{{this.createdAt}}}</td>
-					<td>{{this.updatedAt}}</td> 
-					</tr>
-				</tbody> 
-			</table>
-		</div>
-	</div>
-	{{/each}}
+	<form class="row g-3 needs-validation" method="POST" action="/screening/add" novalidate>
+		{{> v_p_screening_form}}
+	</form>
 </div>	
 
 

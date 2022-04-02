@@ -35,11 +35,11 @@
 			<li><a href="/screening/view">
                 <i class="uil uil-clipboard-alt"></i>
                 <span class="link-name">Screening Form</span>
-            </a></li>   
-                <li><a href="#">
+            </a></li>  
+			<li><a href="#">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
-            </a></li> 
+            </a></li>  
             <li><a href="/profile">
                 <i class="uil uil-user-circle"></i>
                 <span class="link-name">Profile</span>
@@ -71,8 +71,8 @@
 
 <br>
 <ol class="breadcrumb" style="background-color: #ffffff;">
-	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Display Food</li>
+	<li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
+	<li class="breadcrumb-item active" aria-current="page">Display Screening</li>
 </ol>
 <br>
 
@@ -88,13 +88,12 @@
 {{/if}}
 
 <br>
-<center><h3>Display Food</h3></center>
+<center><h3>Display Screening</h3></center>
 <div class="container mt-4">
 	{{#each rows}} 
 	<div class="row mb-5"> 
 		<div class="col text-center">
-			<h3>{{this.name}}</h3>
-			<h3>Calories Intake: {{this.calories}} kcal</h3>
+			<h3>Your Score: {{this.score}} %</h3>
 		</div>
 	</div>
 	<div class="row"> 
@@ -102,22 +101,14 @@
 			<table class="table table-bordered"> 
 				<thead> 
 					<tr>
-					<th scope="col">Name</th> 
-					<th scope="col" class="text-center">Meal</th>
-					<th scope="col" class="text-center">Serving Size</th>
-					<th scope="col" class="text-center">Serving Type</th>
-					<th scope="col" class="text-center">Calories(kcal)</th>
+					<th scope="col">Score</th> 
 					<th scope="col">Created on</th> 
 					<th scope="col">Last Update</th> 
 					</tr> 
 				</thead> 
 				<tbody> 
 					<tr>
-					<th scope="row">{{this.name}}</th> 
-					<td>{{{this.type}}}</td>
-					<td>{{{this.serving_size}}}</td>
-					<td>{{{this.serving_type}}}</td>
-					<td>{{{this.calories}}}</td>
+					<th scope="row">{{this.score}}</th> 
 					<td>{{{this.createdAt}}}</td>
 					<td>{{this.updatedAt}}</td> 
 					</tr>
