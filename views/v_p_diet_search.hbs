@@ -33,6 +33,10 @@
                 <i class="uil uil-basketball"></i>
                 <span class="link-name">Exercise</span>
             </a></li>
+			<li><a href="#">
+                <i class="uil uil-clipboard-alt"></i>
+                <span class="link-name">Health Forms</span>
+            </a></li>   
                 <li><a href="#">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
@@ -67,14 +71,12 @@
     </div>
 </nav>
 
-
-<!--
-<nav aria-label="breadcrumb" style="background-color: #ffffff;">
-	<ol class="breadcrumb" style="background-color: #a79bb6;">
-		<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-		<li class="breadcrumb-item active" aria-current="page">Search Food List From Database</li>
-	</ol>
-</nav>-->
+<br>
+<ol class="breadcrumb" style="background-color: #ffffff;">
+	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
+	<li class="breadcrumb-item active" aria-current="page">Search Food List From Database</li>
+</ol>
+<br>
 
 
 {{#if alert}}
@@ -90,10 +92,14 @@
 <center><h3>Search Food</h3></center>
 <div class="container mt-4">
 	<!--button for SEARCH -->
+	<div class="input-group mb-3">
 	<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
 		<input type="search" autocomplete="on" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">
-		<button type="submit"><span><i class="uil uil-search"></i></span></button>		
+		<div class="input-group-append">
+   			<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
+  		</div>
 	</form>
+	</div>
 </div>	
 <br>
 {{#if searchword}}

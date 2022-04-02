@@ -10,7 +10,7 @@
 
 :root {
     /* ===== Colors ===== */
-    --primary-color: #ffffff;
+    --primary-color: #0275d8;
     --panel-color: #FFF;
     --text-color: #000;
     --black-light-color: #707070;
@@ -473,4 +473,10 @@ nav.close~.dashboard .top {
     .dashboard .top .sidebar-toggle {
         display: none;
     }
+}
+
+th,
+td {
+    border: 1px solid black;
+    border-radius: 10px;
 }
