@@ -75,8 +75,8 @@
 
 <br>
 <ol class="breadcrumb" style="background-color: #ffffff;">
-	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Display Food</li>
+	<li class="breadcrumb-item"><a href="/exercise/view">Back to Exercise</a></li>
+	<li class="breadcrumb-item active" aria-current="page">Display Exercise</li>
 </ol>
 <br>
 
@@ -92,13 +92,13 @@
 {{/if}}
 
 <br>
-<center><h3>Display Food</h3></center>
+<center><h3>Display Exercise</h3></center>
 <div class="container mt-4">
 	{{#each rows}} 
 	<div class="row mb-5"> 
 		<div class="col text-center">
-			<h3>{{this.name}}</h3>
-			<h3>Calories Intake: {{this.calories}} kcal</h3>
+			<h3>{{this.activity}}</h3>
+			<h3>Calories Burn: {{this.calories_burn}} kcal</h3>
 		</div>
 	</div>
 	<div class="row"> 
@@ -106,22 +106,22 @@
 			<table class="table table-bordered"> 
 				<thead> 
 					<tr>
-					<th scope="col">Name</th> 
-					<th scope="col" class="text-center">Meal</th>
-					<th scope="col" class="text-center">Serving Size</th>
-					<th scope="col" class="text-center">Serving Type</th>
-					<th scope="col" class="text-center">Calories(kcal)</th>
+					<th scope="col">Activity</th> 
+					<th scope="col" class="text-center">Duration</th>
+					<th scope="col" class="text-center">Step Count</th>
+					<th scope="col" class="text-center">Distance</th>
+					<th scope="col" class="text-center">Calories Burn(kcal)</th>
 					<th scope="col">Created on</th> 
 					<th scope="col">Last Update</th> 
 					</tr> 
 				</thead> 
 				<tbody> 
 					<tr>
-					<th scope="row">{{this.name}}</th> 
-					<td>{{{this.type}}}</td>
-					<td>{{{this.serving_size}}}</td>
-					<td>{{{this.serving_type}}}</td>
-					<td>{{{this.calories}}}</td>
+					<th scope="row">{{this.activity}}</th> 
+					<td>{{{this.duration}}}</td>
+					<td>{{{this.step_count}}}</td>
+					<td>{{{this.distance}}}</td>
+					<td>{{{this.calories_burn}}}</td>
 					<td>{{{this.createdAt}}}</td>
 					<td>{{this.updatedAt}}</td> 
 					</tr>

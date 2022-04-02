@@ -46,6 +46,7 @@ db.connect((err) => {
 
 //define routes (r_pages and r_routes)
 app.use('/', require('./routes/r_pages'));
+app.use('/exercise', require('./routes/r_exercise'));
 app.use('/diet', require('./routes/r_diet'));
 app.use('/auth', require('./routes/r_auth'));
 
