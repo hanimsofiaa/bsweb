@@ -15,39 +15,6 @@ const db = mysql.createConnection({
 });
 
 
-exports.isLoggedIn = async(req, res, next) => {
-    //console.log(req.cookies);
-    if (req.cookies.jwt) {
-        try {
-            // 1. Verify token of the user
-            //get ID from jwt token parameter - jwt token & password
-            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
-            console.log(decoded);
-
-            // 2. Check if user exist in MySQL based on decoded jwt token ID 
-            db.query('SELECT * FROM userdetails WHERE id = ?', [decoded.id],
-                (error, result) => {
-                    console.log(result);
-
-                    //2. a. if there is no result
-                    if (!result) {
-                        return next();
-                    }
-
-                    req.user = result[0]; //only 1 array of result
-                    return next();
-                });
-
-        } catch (error) {
-            console.log(error);
-            return next();
-        }
-    } else {
-        next(); //next() function redirect back to r_pages
-    }
-}
-
-
 //function 1 - display ALL list food(no id is passed)
 exports.view_diet = (req, res) => {
     db.query('SELECT * FROM diets', (err, rows) => {
@@ -178,7 +145,7 @@ exports.delete_diet_id = (req, res) => {
     }
 }
 
-//funciton 8 - display specific food based on its id(pass id)
+//function 8 - display specific food based on its id(pass id)
 exports.display_diet_id = (req, res) => {
 
     db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
@@ -193,11 +160,12 @@ exports.display_diet_id = (req, res) => {
     })
 }
 
+//function 9 - display search form to search existing food
 exports.form_search_foodlist = (req, res) => {
     res.render('v_p_diet_search');
 }
 
-
+//function 10 - search specific food based on req.body.search
 exports.search_foodlist_db = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet_search(name="search")
@@ -214,7 +182,7 @@ exports.search_foodlist_db = (req, res) => {
     })
 }
 
-
+//function 11 - add specific food after search from database food
 exports.add_search_diet = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
