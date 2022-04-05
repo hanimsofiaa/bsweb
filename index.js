@@ -25,7 +25,13 @@ app.use(express.static(publicDirectory));
 
 
 //define hbs extension and engine folder(layouts and partial folder)
-app.engine('hbs', expresshbs.engine({ extname: '.hbs', layoutsDir: 'views/layouts', partialsDir: 'views/partial' }));
+app.engine('hbs', expresshbs.engine({
+    extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: 'views/layouts',
+    partialsDir: 'views/partial',
+    helpers: { todaysDate: () => new Date() } //can use {{todaysDate}} in any file
+}));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

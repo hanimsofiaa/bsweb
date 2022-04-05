@@ -17,7 +17,7 @@ const db = mysql.createConnection({
 //GET define routes and its view
 
 //localhost/diet
-/*
+
 router.get('/diet', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
@@ -39,7 +39,7 @@ router.get('/diet', authContoller.isLoggedIn, (req, res) => {
         res.redirect('..');
     }
 
-});*/
+});
 
 
 
