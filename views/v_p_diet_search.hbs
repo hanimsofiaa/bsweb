@@ -15,7 +15,7 @@
             <img src="logo.png" alt="">
         </div>
 
-        <span class="logo_name">Bariact</span>
+        <span class="logo_name">BARIACT</span>
     </div>
 
     <div class="menu-items">
@@ -61,95 +61,102 @@
                 <a href="#">
                     <i class="uil uil-moon"></i>
                 <span class="link-name">Dark Mode</span>
-            </a>
+				</a>
 
-            <div class="mode-toggle">
-                <span class="switch"></span>
-            </div>
-        </li>
+				<div class="mode-toggle">
+					<span class="switch"></span>
+				</div>
+			</li>
         </ul>        
     </div>
 </nav>
 
-<br>
-<ol class="breadcrumb" style="background-color: #ffffff;">
-	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Search Food List From Database</li>
-</ol>
-<br>
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+    </div>
+    <div class="dash-content">
+		<br><br>
+		<ol class="breadcrumb" style="background-color: #ffffff;">
+			<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Search Food List From Database</li>
+		</ol>
+		<br>
 
 
-{{#if alert}}
-<div class="container mt-4" style="background-color: #ffffff;">
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-		<strong>Success! </strong>{{alert}}
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-</div>
-{{/if}}
+		{{#if alert}}
+		<div class="container mt-4" style="background-color: #ffffff;">
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Success! </strong>{{alert}}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		{{/if}}
 
-<br>
-<center><h3>Search Food</h3></center>
-<div class="container mt-4">
-	<!--button for SEARCH -->
-	<div class="input-group mb-3">
-	<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
-		<input type="search" autocomplete="on" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">
-		<div class="input-group-append">
-   			<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
-  		</div>
-	</form>
-	</div>
-</div>	
-<br>
-{{#if searchword}}
-<div class="container mt-4" style="background-color: #ffffff;"><h5>Searched Results for <b>"{{searchword}}"</b></h5></div>
-{{/if}}
+		<br>
+		<center><h3>Search Food</h3></center>
+		<div class="container mt-4">
+			<!--button for SEARCH -->
+			<div class="input-group mb-3">
+			<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
+				<input type="search" autocomplete="on" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">
+				<div class="input-group-append">
+					<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
+				</div>
+			</form>
+			</div>
+		</div>	
+		<br>
+		{{#if searchword}}
+		<div class="container mt-4" style="background-color: #ffffff;"><h5>Searched Results for <b>"{{searchword}}"</b></h5></div>
+		{{/if}}
 
-{{#each rows}}
-<hr>
-<div class="container" style="justify-content: center;">
-	<form class="row g-3 needs-validation" method="POST" action="/diet/add_foodlist" novalidate>
-		
-		<center><h6>{{{this.name}}} ({{{this.serving_size}}} {{{this.serving_type}}})</h6></center>
-		<center><h6>{{{this.serving_size}}} serving size: {{{this.calories}}} kcal</h6></center>
-		
-		<input type="text" class="form-control" id="name" placeholder="Food Name" name="name" id="name" value="{{this.name}}" hidden>
-		
-		<input type="text" class="form-control" id="serving_type" placeholder="Serving type" name="serving_type" id="serving_type" value="{{this.serving_type}}" hidden>
-			
-		<center><div class="col-6">
-			<div class="form-floating mb-3">
-				<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
-			
-				{{#if this.type}}
-				<option value="{{this.type}}" selected>{{this.type}}</option>
-				{{/if}}
+		{{#each rows}}
+		<hr>
+		<div class="container" style="justify-content: center;">
+			<form class="row g-3 needs-validation" method="POST" action="/diet/add_foodlist" novalidate>
 				
-				<option value="breakfast">breakfast</option>
-				<option value="brunch">brunch</option>
-				<option value="lunch">lunch</option>
-				<option value="tea">tea</option>
-				<option value="dinner">dinner</option>
-				<option value="supper">supper</option>
-				</select>
-				<label for="type">Meal</label>
-			</div>
-		</div></center>
-		
-		<center><div class="col-6">
-			<div class="form-floating mb-3">
-				<input type="number" class="form-control" id="serving_size" placeholder="Serving size" name="serving_size" id="serving_size" value="{{this.serving_size}}">
-				<label for="serving_size">Serving Size</label>
-			</div>
-		</div></center>
-		 	
-		<input type="text" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}" hidden>
-		<div class="col-12">
-			<button class="btn btn-primary float-right" type="submit">Add New Food</button>
-		</div>		
-	</form>
-</div>
-<br>
-{{/each}}
+				<center><h6>{{{this.name}}} ({{{this.serving_size}}} {{{this.serving_type}}})</h6></center>
+				<center><h6>{{{this.serving_size}}} serving size: {{{this.calories}}} kcal</h6></center>
+				
+				<input type="text" class="form-control" id="name" placeholder="Food Name" name="name" id="name" value="{{this.name}}" hidden>
+				
+				<input type="text" class="form-control" id="serving_type" placeholder="Serving type" name="serving_type" id="serving_type" value="{{this.serving_type}}" hidden>
+					
+				<center><div class="col-6">
+					<div class="form-floating mb-3">
+						<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
+					
+						{{#if this.type}}
+						<option value="{{this.type}}" selected>{{this.type}}</option>
+						{{/if}}
+						
+						<option value="breakfast">breakfast</option>
+						<option value="brunch">brunch</option>
+						<option value="lunch">lunch</option>
+						<option value="tea">tea</option>
+						<option value="dinner">dinner</option>
+						<option value="supper">supper</option>
+						</select>
+						<label for="type">Meal</label>
+					</div>
+				</div></center>
+				
+				<center><div class="col-6">
+					<div class="form-floating mb-3">
+						<input type="number" class="form-control" id="serving_size" placeholder="Serving size" name="serving_size" id="serving_size" value="{{this.serving_size}}">
+						<label for="serving_size">Serving Size</label>
+					</div>
+				</div></center>
+					
+				<input type="text" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}" hidden>
+				<div class="col-12">
+					<button class="btn btn-primary float-right" type="submit">Add New Food</button>
+				</div>		
+			</form>
+		</div>
+		<br>
+		{{/each}}
+	</div>
+</section>
 

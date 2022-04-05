@@ -10,7 +10,7 @@
 
 :root {
     /* ===== Colors ===== */
-    --primary-color: #0275d8;
+    --primary-color: #92adf7;
     --panel-color: #FFF;
     --text-color: #000;
     --black-light-color: #707070;
@@ -98,7 +98,7 @@ nav .logo-image {
 }
 
 nav .logo-image img {
-    width: 40px;
+    width: 45px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -152,7 +152,7 @@ body.dark li a:hover:before {
 
 .menu-items li a i {
     font-size: 24px;
-    min-width: 45px;
+    min-width: 0px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -163,6 +163,7 @@ body.dark li a:hover:before {
 .menu-items li a .link-name {
     font-size: 18px;
     font-weight: 400;
+    padding-left: 5px;
     color: var(--black-light-color);
     transition: var(--tran-05);
 }
@@ -237,6 +238,7 @@ body.dark .switch:before {
     min-height: 100vh;
     width: calc(100% - 250px);
     padding: 10px 14px;
+    padding-top: 5px;
     transition: var(--tran-05);
 }
 
@@ -308,7 +310,7 @@ nav.close~.dashboard .top {
 }
 
 .dashboard .dash-content {
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .dash-content .title {
@@ -475,8 +477,106 @@ nav.close~.dashboard .top {
     }
 }
 
-th,
-td {
-    border: 1px solid black;
-    border-radius: 10px;
+.avatar-ctn {
+    background-color: transparent;
+    text-align: center;
+}
+
+.avatar {
+    width: 50%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+
+/* Style the submit button */
+
+input[type=submit] {
+    background-color: greenyellow;
+    color: white;
+}
+
+
+/* Style the container for inputs */
+
+.container {
+    padding: 20px;
+}
+
+
+/* The message box is shown when the user clicks on the password field */
+
+#messagePassword {
+    display: none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+#messageIC {
+    display: none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+#messagePassword p {
+    padding: 10px 35px;
+    font-size: 18px;
+}
+
+#messageIC p {
+    padding: 10px 35px;
+    font-size: 18px;
+}
+
+
+/* Add a green text color and a checkmark when the requirements are right */
+
+.valid {
+    color: rgb(146, 231, 17);
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+}
+
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -35px;
+}
+
+#messageAlert {
+    margin: auto;
+    width: 60%;
+    border: 5px solid red;
+    padding: 10px;
+}
+
+select,
+input,
+button {
+    border-width: 0px;
 }

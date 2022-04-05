@@ -14,7 +14,7 @@
             <img src="logo.png" alt="">
         </div>
 
-        <span class="logo_name">Bariact</span>
+        <span class="logo_name">BARIACT</span>
     </div>
 
     <div class="menu-items">
@@ -69,30 +69,34 @@
         </ul>        
     </div>
 </nav>
-
-<br>
-<ol class="breadcrumb" style="background-color: #ffffff;">
-	<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-	<li class="breadcrumb-item active" aria-current="page">Add New Food</li>
-</ol>
-<br>
-
-
-{{#if alert}}
-<div class="container mt-4" style="background-color: #ffffff;">
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-		<strong>Success! </strong>{{alert}}
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-	</div>
-</div>
-{{/if}}
-
-<br>
-<center><h3>Add New Food</h3></center>
-<div class="container mt-4">
-	<form class="row g-3 needs-validation" method="POST" action="/diet/add" novalidate>
-		{{> v_p_diet_form}}
-	</form>
-</div>	
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+    </div>
+    <div class="dash-content">
+        <br><br>
+        <ol class="breadcrumb" style="background-color: #ffffff;">
+            <li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add New Food</li>
+        </ol>
+        <br>
 
 
+        {{#if alert}}
+        <div class="container mt-4" style="background-color: #ffffff;">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success! </strong>{{alert}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {{/if}}
+
+        <br>
+        <center><h3>Add New Food</h3></center>
+        <div class="container mt-4">
+            <form class="row g-3 needs-validation" method="POST" action="/diet/add" novalidate>
+                {{> v_p_diet_form}}
+            </form>
+        </div>	
+    </div>
+</section>
