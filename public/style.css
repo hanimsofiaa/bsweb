@@ -10,7 +10,7 @@
 
 :root {
     /* ===== Colors ===== */
-    --primary-color: #fff;
+    --primary-color: rgb(0, 123, 255);
     --panel-color: #FFF;
     --text-color: #000;
     --black-light-color: #707070;
