@@ -89,6 +89,10 @@
     <div class="menu-items">
 
     <ul class="nav-links">
+        <li><a href="/">
+                <i class="uil uil-estate"></i>
+                <span class="link-name">Home</span>
+        </a></li>
         <li><a href="/login">
             <i class="uil uil-signin"></i>
             <span class="link-name">Login</span>
@@ -101,21 +105,29 @@
     </ul>
     </div>
 </nav>
+
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+    </div>
+    <div class="dash-content">
+        <div class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">Bariatric Surgery Web</h1>
+            <p class="lead">BARIACT aka Bariatric Surgery Monitoring System for Patients and Doctors in Universiti Sains Malaysia.</p>
+            <hr class="my-4">
+            <p>Log In or Register to know more! </p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="/login" role="button">Log In</a>
+                <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
+            </p>
+        </div>
+        </div>
+    </div>
+</section>
 {{/if}}
 
-<!--
-<div class="container mt-4">
-<div class="jumbotron">
-<h1 class="display-4">Bariatric Surgery Web</h1>
-<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-<hr class="my-4">
-<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-<p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-</p>
-</div>
-</div>-->
-
+{{#if user}} 
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
@@ -273,9 +285,7 @@
                 }
             }
         });
-        </script>
-        
-        
-        
+        </script>    
     </div>
 </section>
+{{/if}}

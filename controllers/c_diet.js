@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
 const async = require("hbs/lib/async");
+const authContoller = require('../controllers/c_auth');
 
 //add db connection
 const db = mysql.createConnection({
@@ -12,6 +13,40 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 
 });
+
+
+exports.isLoggedIn = async(req, res, next) => {
+    //console.log(req.cookies);
+    if (req.cookies.jwt) {
+        try {
+            // 1. Verify token of the user
+            //get ID from jwt token parameter - jwt token & password
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+            console.log(decoded);
+
+            // 2. Check if user exist in MySQL based on decoded jwt token ID 
+            db.query('SELECT * FROM userdetails WHERE id = ?', [decoded.id],
+                (error, result) => {
+                    console.log(result);
+
+                    //2. a. if there is no result
+                    if (!result) {
+                        return next();
+                    }
+
+                    req.user = result[0]; //only 1 array of result
+                    return next();
+                });
+
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+    } else {
+        next(); //next() function redirect back to r_pages
+    }
+}
+
 
 //function 1 - display ALL list food(no id is passed)
 exports.view_diet = (req, res) => {
@@ -25,6 +60,7 @@ exports.view_diet = (req, res) => {
             console.log(err);
         }
         console.log(rows);
+
     })
 }
 
@@ -131,9 +167,9 @@ exports.delete_diet_id = (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                let removedFood = encodeURIComponent('Food Successfully Removed');
-                res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
-                //res.redirect('/diet/view');
+                //  let removedFood = encodeURIComponent('Food Successfully Removed');
+                //res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
+                res.redirect('/diet/view');
             } else {
                 console.log(err);
             }

@@ -138,8 +138,7 @@ exports.isLoggedIn = async(req, res, next) => {
         try {
             // 1. Verify token of the user
             //get ID from jwt token parameter - jwt token & password
-            const decoded = await promisify(jwt.verify)(req.cookies.jwt,
-                process.env.JWT_SECRET);
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
             console.log(decoded);
 
             // 2. Check if user exist in MySQL based on decoded jwt token ID 
