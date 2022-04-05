@@ -16,7 +16,7 @@ const db = mysql.createConnection({
 //localhost:5050/diet/...
 
 //GET(diet/foodlist) before get page, must check user logged in
-router.get('/view', dietContoller.isLoggedIn, (req, res) => {
+router.get('/view', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
@@ -24,7 +24,10 @@ router.get('/view', dietContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_diet', { user: req.user, rows });
+
+                let removedFood = req.query.removed; //if any food is deleted, set alert 
+                res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood });
+                //res.render('v_p_diet', { user: req.user, rows });
             } else {
                 console.log(err);
             }
