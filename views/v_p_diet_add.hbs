@@ -75,29 +75,36 @@
         <i class="uil uil-bars sidebar-toggle"></i>
     </div>
     <div class="dash-content">
-        <br><br>
-        <ol class="breadcrumb" style="background-color: #ffffff;">
-            <li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add New Food</li>
-        </ol>
-        <br>
-
-
-        {{#if alert}}
-        <div class="container mt-4" style="background-color: #ffffff;">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success! </strong>{{alert}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        
+        <div class="overview">
+			
+			<div class="title">
+                <i class="uil uil-utensils"></i>
+                <span class="text">Add New Diet List</span>
             </div>
-        </div>
-        {{/if}}
+        
+            <br><br>
+            <ol class="breadcrumb" style="background-color: #ffffff;">
+                <li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Food</li>
+            </ol>
+            <br>
 
-        <br>
-        <center><h3>Add New Food</h3></center>
-        <div class="container mt-4">
-            <form class="row g-3 needs-validation" method="POST" action="/diet/add" novalidate>
-                {{> v_p_diet_form}}
-            </form>
-        </div>	
+            {{#if alert}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{alert}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
+
+            <br>
+            <div class="activity">
+                <form class="row g-3 needs-validation" method="POST" action="/diet/add" novalidate>
+                    {{> v_p_diet_form}}
+                </form>
+            </div>	
+        </div>
     </div>
 </section>

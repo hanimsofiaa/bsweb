@@ -76,32 +76,39 @@
         <i class="uil uil-bars sidebar-toggle"></i>
     </div>
     <div class="dash-content">
-        <br><br>
-        <ol class="breadcrumb" style="background-color: #ffffff;">
-            <li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Screening</li>
-        </ol>
-        <br>
-
-
-        {{#if alert}}
-        <div class="container" style="background-color: #ffffff;">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success! </strong>{{alert}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="overview">
+			
+			<div class="title">
+                <i class="uil uil-clipboard-alt"></i>
+                <span class="text">Edit Your Screening List</span>
             </div>
-        </div>
-        {{/if}}
+            
+            <br><br>
+            <ol class="breadcrumb" style="background-color: #ffffff;">
+                <li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Screening</li>
+            </ol>
+            <br>
 
-        <br>
-        <center><h3>Edit Screening</h3></center>
-        <div class="container mt-4">
-            {{#each rows}}
-            <form class="row g-3 needs-validation" method="POST" action="/screening/update/{{this.id}}" novalidate>
-                {{> v_p_screening_form}}
-            </form>
-            {{/each}}
-        </div>	
+
+            {{#if alert}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{alert}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
+
+            <br>
+            <div class="activity">
+                {{#each rows}}
+                <form class="row g-3 needs-validation" method="POST" action="/screening/update/{{this.id}}" novalidate>
+                    {{> v_p_screening_form}}
+                </form>
+                {{/each}}
+            </div>	
+        </div>
     </div>
 </section>
 

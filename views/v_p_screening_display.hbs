@@ -73,55 +73,61 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
     </div>
+    
     <div class="dash-content">
-        <br><br>
-        <ol class="breadcrumb" style="background-color: #ffffff;">
-            <li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Display Screening</li>
-        </ol>
-        <br>
-
-
-
-        {{#if alert}}
-        <div class="container mt-4" style="background-color: #ffffff;">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success! </strong>{{alert}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="overview">
+			
+			<div class="title">
+                <i class="uil uil-clipboard-alt"></i>
+                <span class="text">Display Your Screening List</span>
             </div>
-        </div>
-        {{/if}}
+            
+            <br><br>
+            <ol class="breadcrumb" style="background-color: #ffffff;">
+                <li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Display Screening</li>
+            </ol>
+            <br>
 
-        <br>
-        <center><h3>Display Screening</h3></center>
-        <div class="container mt-4">
-            {{#each rows}} 
-            <div class="row mb-5"> 
-                <div class="col text-center">
-                    <h3>Your Score: {{this.score}} %</h3>
+            {{#if alert}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{alert}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-            <div class="row"> 
-                <div class="col"> 
-                    <table class="table table-bordered"> 
-                        <thead> 
-                            <tr>
-                            <th scope="col">Score</th> 
-                            <th scope="col">Created on</th> 
-                            <th scope="col">Last Update</th> 
-                            </tr> 
-                        </thead> 
-                        <tbody> 
-                            <tr>
-                            <th scope="row">{{this.score}}</th> 
-                            <td>{{{this.createdAt}}}</td>
-                            <td>{{this.updatedAt}}</td> 
-                            </tr>
-                        </tbody> 
-                    </table>
+            {{/if}}
+
+            <br>
+            <div class="activity">
+                {{#each rows}} 
+                <div class="row mb-5"> 
+                    <div class="col text-center">
+                        <h3>Your Score: {{this.score}} %</h3>
+                    </div>
                 </div>
+                <div class="row"> 
+                    <div class="col"> 
+                        <table class="table table-bordered"> 
+                            <thead> 
+                                <tr>
+                                <th scope="col">Score</th> 
+                                <th scope="col">Created on</th> 
+                                <th scope="col">Last Update</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody> 
+                                <tr>
+                                <th scope="row">{{this.score}}</th> 
+                                <td>{{{this.createdAt}}}</td>
+                                <td>{{this.updatedAt}}</td> 
+                                </tr>
+                            </tbody> 
+                        </table>
+                    </div>
+                </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>	
     </div>
 </section>

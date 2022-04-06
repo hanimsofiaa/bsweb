@@ -105,49 +105,57 @@
             <i class="uil uil-bars sidebar-toggle"></i>
         </div>
         <div class="dash-content">
-            {{#if message }}
-            <br>
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-danger alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
-                    <strong>Failed! </strong>{{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="overview">
+          
+                <div class="title">
+                        <i class="uil uil-signin"></i>
+                        <span class="text">BARIACT Login Form</span>
                 </div>
-            </div>
-            {{/if}}
-
-            {{#if success }}
-            <br>
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-success alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
-                    <strong>Yay! </strong>{{success}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {{/if}}
-
-            <div class="container mt-4">
-                <div class="card">
-                    <div class="card-header">Login Form</div>
-                    <div class="card-body">
-                        <form action="/auth/login" method="POST">
-                                    
-                            <div class="form-group" style="padding: 5px;">
-                                <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
-                            </div>
-                            
-                            <div class="form-group" style="padding: 5px;">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary" style="padding: 5px;">Login</button>
-                        </form>
+                
+                {{#if message }}
+                <br>
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-danger alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+                        <strong>Failed! </strong>{{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
-                {{#if message }}
-                <h4 class "alert alert-danger mt-4">{{message}}</h4>
                 {{/if}}
+
+                {{#if success }}
+                <br>
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-success alert-dismissible fade show" id="messageAlert" role="alert"  onload="setAlert()">
+                        <strong>Yay! </strong>{{success}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {{/if}}
+
+                <div class="activity">
+                    <div class="card">
+                        <div class="card-header">Login Form</div>
+                        <div class="card-body">
+                            <form action="/auth/login" method="POST">
+                                        
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
+                                </div>
+                                
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary" style="padding: 5px;">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                    {{#if message }}
+                    <h4 class "alert alert-danger mt-4">{{message}}</h4>
+                    {{/if}}
+                </div>
             </div>
         </div>
 </section>
