@@ -100,7 +100,7 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM diets', (err, row) => {
+        db.query('SELECT * FROM exercise', (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
@@ -139,7 +139,7 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM diets', (err, row) => {
+        db.query('SELECT * FROM exercise', (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
@@ -149,7 +149,7 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
                         //when done with connection
 
                         if (!err) { //if not error
-                            res.render('v_p_exercise_display', { User: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
+                            res.render('v_p_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
                         } else {
                             console.log(err);
                         }
