@@ -24,6 +24,11 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
     });
 });
 
+router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
+    res.render('v_p_analytics', {
+        user: req.user
+    });
+});
 
 router.get('/registerpatient', (req, res) => {
     res.render('v_p_register');

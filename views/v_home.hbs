@@ -45,7 +45,7 @@
                 <i class="uil uil-clipboard-alt"></i>
                 <span class="link-name">Screening Form</span>
             </a></li>   
-                <li><a href="#">
+                <li><a href="/analytics">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
             </a></li>  
@@ -92,8 +92,8 @@
 
     <ul class="nav-links">
         <li><a href="/">
-                <i class="uil uil-estate"></i>
-                <span class="link-name">Home</span>
+            <i class="uil uil-estate"></i>
+            <span class="link-name">Home</span>
         </a></li>
         <li><a href="/login">
             <i class="uil uil-signin"></i>
@@ -133,6 +133,7 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
+         <h6>{{user.email}}, {{user.ic}}</h6>
     </div>
     <div class="dash-content">
         <div class="overview">
@@ -221,7 +222,7 @@
             </div>
         </div>
 
-        <canvas id="myfirstChart" style="width:100%;max-width:700px"></canvas>
+        <!--<canvas id="myfirstChart" style="width:100%;max-width:700px"></canvas>
         <script>
             var xValues = [100,200,300,400,500,600,700,800,900,1000];
 
@@ -247,10 +248,10 @@
                 legend: {display: false}
             }
             });
-        </script>
+        </script>-->
         
         
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <!--<canvas id="myChart" width="200" height="200"></canvas>
         <script>
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
@@ -269,12 +270,12 @@
                         'rgba(255, 159, 64, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
                     ],
                     borderWidth: 1
                 }]
@@ -287,7 +288,7 @@
                 }
             }
         });
-        </script>    
+        </script> -->
     </div>
 </section>
 {{/if}}
