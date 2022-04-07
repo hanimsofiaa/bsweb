@@ -1,0 +1,249 @@
+<!--<nav>
+	<h4>Bariact</h4>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="/diet/view">Diet</a></li>
+		<li><a href="/profile">Profile</a></li>
+		<li><a href="/auth/logout">Log Out</a></li>
+	</ul>
+</nav>-->
+
+
+{{#if user}} 
+<nav>
+    <div class="logo-name">
+        <div class="logo-image">
+            <img src="logo.png" alt="">
+        </div>
+
+        <span class="logo_name">BARIACT</span>
+    </div>
+
+    <div class="menu-items">
+        
+        <ul class="nav-links">
+            <li><a href="/">
+                <i class="uil uil-estate"></i>
+                <span class="link-name">Dashboard</span>
+            </a></li>
+            <li><a href="/diet/view">
+                <i class="uil uil-utensils"></i>
+                <span class="link-name">Diet</span>
+            </a></li>
+            <li><a href="/exercise/view">
+                <i class="uil uil-basketball"></i>
+                <span class="link-name">Exercise</span>
+            </a></li>
+            <li><a href="/screening/view">
+                <i class="uil uil-clipboard-alt"></i>
+                <span class="link-name">Screening Form</span>
+            </a></li>   
+                <li><a href="/analytics">
+                <i class="uil uil-chart"></i>
+                <span class="link-name">Analytics</span>
+            </a></li>
+            
+            <li><a href="/profile">
+                <i class="uil uil-user-circle"></i>
+                <span class="link-name">Profile</span>
+            </a></li>
+          
+        </ul>
+        
+        <ul class="logout-mode">
+     
+            <li><a href="/auth/logout">
+                <i class="uil uil-signout"></i>
+                <span class="link-name">Logout</span>
+            </a></li>
+            
+
+            <li class="mode">
+                <a href="#">
+                    <i class="uil uil-moon"></i>
+                <span class="link-name">Dark Mode</span>
+                </a>
+
+                <div class="mode-toggle">
+                    <span class="switch"></span>
+                </div>
+            </li>
+        </ul>        
+    </div>
+</nav>
+
+{{else}}
+<nav>
+    <div class="logo-name">
+        <div class="logo-image">
+            <img src="logo.png" alt="">
+        </div>
+
+        <span class="logo_name">BARIACT</span>
+    </div>
+
+    <div class="menu-items">
+		
+        <ul class="nav-links">
+             <li><a href="/">
+                <i class="uil uil-estate"></i>
+                <span class="link-name">Home</span>
+            </a></li>
+			<li><a href="/login">
+				<i class="uil uil-signin"></i>
+				<span class="link-name">Login</span>
+			</a></li>
+
+			<li><a href="/register">
+				<i class="uil uil-file-info-alt"></i>
+				<span class="link-name">Register</span>
+			</a></li>
+		</ul>
+	</div>
+</nav>
+{{/if}}
+
+
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <h6>{{user.role}}, {{user.email}}, {{user.ic}}</h6>
+    </div>
+    
+    <div class="dash-content">
+        
+        <div class="overview">
+          
+            <div class="title">
+                    <i class="uil uil-user-circle"></i>
+                    <span class="text">Edit Your Profile Details</span>
+            </div>
+			
+            <br><br>
+            <ol class="breadcrumb" style="background-color: #ffffff;">
+                <li class="breadcrumb-item"><a href="/profile">Back to Profile</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+            </ol>
+            <br>
+
+            <div class="activity">
+				<div class="card">
+					<div class="card-header">Update Patient Details Form {{user.ic}}</div>
+					<div class="card-body">
+						<form action="/auth/profilepatient" method="POST">
+						
+							<!--IC Input Field--> 
+							<div class="form-group" id="ic" name= "ic">
+								<label for="ic">Registered IC</label>
+								<input type="text" class="form-control" id="ic" name= "ic" value="{{#if user.ic}}{{user.ic}}{{/if}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});" disabled>
+							</div>
+							
+                            {{#each rows}}
+                                <!--Name Input Field--> 
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="fullname">Fullname</label>
+                                    <input type="text" class="form-control" id="fullname" name= "fullname" placeholder="Enter Fullname" value = "{{this.fullname}}">
+                                </div>
+                                
+                                <!--Age Input Field
+                                <div class="form-group" id="age" name= "age">
+                                    <input type="hidden" class="form-control" id="age" name= "age" value="0">
+                                </div>-->
+                                    
+                                <!--Home Address Input Field--> 				
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="home_address">Home address</label>
+                                    <input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" value="{{this.home_address}}">
+                                </div>
+                            
+                                <!--Phone Number Input Field--> 
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="phone_number">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Eg: 0123456789" value="{{this.phone_number}}">
+                                </div>
+                                
+                                <!--Gender Input Field
+                                <div class="form-group" id="gender" name= "gender">
+                                    <input type="hidden" class="form-control" id="gender" name= "gender" value="unknown">
+                                </div>-->
+                                
+                                <!--Marital Status Input Field--> 
+                                <div class="form-group" style="padding: 5px; width:fit-content">
+                                    <label for="marital_status">Select Marital Status</label>
+                                    <select class="form-select"  id="marital_status" name="marital_status" aria-label="marital_status">
+                                        <option value="{{this.marital_status}}">{{this.marital_status}}</option> 
+                                        <option value="single">Single</option>
+                                        <option value="married">Married</option>
+                                        <option value="divorce">Divorce</option>
+                                        <option value="separated">Separated</option>
+                                        <option value="widowed">Widowed</option>
+                                    </select>
+                                </div>
+                                
+                                <!--Physical Activity Input Field--> 
+                                <div class="form-group" style="padding: 5px; width:fit-content">
+                                    <label for="activity_level">Select Physical Activity Level</label>
+                                    <select class="form-select"  id="activity_level" name="activity_level" aria-label="activity_level" >
+                                        <option value="{{this.activity_level}}" disabled selected hidden>{{this.activity_level}}</option>
+                                        <option value="sedentary">Sedentary</option>
+                                        <option value="lightly">Lightly Active</option>
+                                        <option value="moderately">Moderately Active</option>
+                                        <option value="highly">Highly Active</option>
+                                        <option value="extremely">Extremely Active</option>
+                                    </select>
+                                </div>
+                                
+                                <!--Height Input Field--> 
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="height">Height</label>
+                                    <input type="number" class="form-control" id="height" name="height" placeholder="Enter Height(cm)" value="{{this.height}}">
+                                </div>
+                                
+                                <!--Surgery Status Input Field--> 
+                                <div class="form-group" style="padding: 5px; width:fit-content">
+                                    <label for="surgery_status">Select Surgery Status</label>
+                                    <select class="form-select"  id="surgery_status" name="surgery_status" aria-label="surgery_status">
+                                        <option value="{{this.surgery_status}}" disabled selected hidden>{{this.surgery_status}}-operation</option>
+                                        <option value="post">Post-Operation</option>
+                                        <option value="pre">Pre-Operation</option>
+                                    </select>
+                                </div>
+                                
+                                <!--Current Weight Input Field--> 
+                                <div class="form-group" style="padding: 5px;">
+                                    <label for="curr_weight">Current Weight</label>
+                                    <input type="number" class="form-control" id="curr_weight" name="curr_weight" placeholder="Enter Weight(kg)" 
+                                    value="{{this.curr_weight}}">
+                                </div>
+                                
+                                <!--Weight Before Surgery Input Field--> 
+                                <div class="form-group" id="before_surg_weight" name="before_surg_weight" style="padding: 5px;">
+                                    <label for="before_surg_weight" id="before_surg_weight" name="before_surg_weight">Weight Before Operation</label>
+                                    <input type="number" class="form-control" id="before_surg_weight" name="before_surg_weight" placeholder="Enter Weight(kg)" value="{{this.before_surg_weight}}">
+                                </div>
+                                
+                                    <!--Date of Operation Input Field--> 
+                                <div class="form-group" style="padding: 5px; width:fit-content">
+                                    <label for="surgery_date">Date of Operation</label>
+                                    <div class="input-group date" id="surgery_date" name="surgery_date" data-provide="datepicker" value="{{this.surgery_date}}">
+                                        <input type="date" class="form-control" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}" placeholder="{{this.surgery_date}}">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" style="padding: 5px;">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-primary" style="padding: 5px;">Update Profile</button>
+                                    </div>
+                                </div>
+                            {{/each}}
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</section>
+

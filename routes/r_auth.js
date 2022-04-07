@@ -35,7 +35,7 @@ router.post('/registerpatient', authContoller.form_register_patient); //function
 //POST
 router.post('/register', authContoller.register_user); //function to c_auth
 router.post('/login', authContoller.login_user); //function to c_auth
-router.post('/registerpatient', authContoller.register_patient); //function to c_auth
+router.post('/profilepatient', authContoller.register_patient); //function to c_auth
 
 
 module.exports = router;

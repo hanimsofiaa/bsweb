@@ -62,6 +62,7 @@ router.get('/register', (req, res) => {
 
 });
 
+
 router.get('/login', (req, res) => {
     res.render('v_login');
 });
@@ -72,13 +73,48 @@ router.get('/login', (req, res) => {
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-        res.render('v_p_profile', {
-            user: req.user
-        });
+
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+
+            if (!err) { //if not error
+                res.render('v_p_profile', { rows, user: req.user });
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', rows);
+        })
 
     } else { //if there is no jwt token
         res.redirect('/login'); //localhost/login
     }
+
+
+
+});
+
+router.get('/profilepatient', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    if (req.user) {
+
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+
+            if (!err) { //if not error
+                res.render('v_p_profile_edit', { rows, user: req.user });
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', rows);
+        })
+
+    } else { //if there is no jwt token
+        res.redirect('/login'); //localhost/login
+    }
+
+
 
 });
 

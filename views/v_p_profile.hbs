@@ -112,6 +112,15 @@
     
     <div class="dash-content">
         
+        {{#if success}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{alert}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {{/if}}
+        
         <div class="overview">
           
             <div class="title">
@@ -120,8 +129,8 @@
             </div>
           
             <div class="activity">
-                <div class="row">
-                    <div class="col-4">
+             
+                    <div class="col d-flex justify-content-center">
                         <div class="card">
                             <div class="avatar-ctn">
                                 <img src="/avatar.png" class="avatar" alt="User Profile Picture"/>
@@ -132,27 +141,44 @@
                                 <a href="#" class="btn btn-primary">{{user.email}}</a>
                             </div>
                         </div>
+                        
+                        
                     </div>
-                    <div class="col-8">
+                   
+                        <br>
                         <div class="card text-center">
                             <div class="card-header">
-                                <h5>Profile Page</h5>
+                                <h5>Profile Page</h5> 
+                                
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">
+                                <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
-                                </h5>
-                                <p class="card-text">
-                                    This is your profile page
-                                </p>
-                                <a href="#" class="btn btn-primary">Load to Next Page</a>
+                                </h5>-->
+                                <a href="/profilepatient" class="btn btn-primary float-right">Edit My Profile</a>
+                                <div class="col d-flex justify-content-left" style="text-align: left;">
+                                    {{#each rows}}
+                                    Name: {{this.fullname}} <br><br>
+                                    Home Address: {{this.home_address}} <br><br>
+                                    Phone Number: {{this.phone_number}} <br><br>
+                                    Gender: {{this.gender}} <br><br>
+                                    Marital Status: {{this.marital_status}} <br><br>
+                                    Activity Level: {{this.activity_level}} <br><br>
+                                    Height: {{this.height}}cm <br><br>
+                                    Surgery Status: {{this.surgery_status}}-operation <br><br>
+                                    Current Weight: {{this.curr_weight}}kg <br><br>
+                                    Weight Before Surgery: {{this.before_surg_weight}}kg <br><br>
+                                    Surgery Date: {{this.surgery_date}} <br><br>
+                                    
+                                    <!--Last Update on {{this.updated_at}} <br>-->
+                                    {{/each}}
+                                
+                                </div>
                             </div>
-                            <div class="card-footer text-muted">
+                            <!--<div class="card-footer text-muted">
                                 Bariatric Surgery Web
-                            </div>
+                            </div>-->
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
