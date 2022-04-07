@@ -15,6 +15,8 @@ const db = mysql.createConnection({
 
 });
 
+
+//GET
 //router.get('/view', dietContoller.view_diet); //function 1 - display ALL list food(no id is passed)
 router.get('/view', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
@@ -203,5 +205,7 @@ router.post('/add', dietContoller.add_diet); //function 4 - add new food(pass re
 router.post('/update/:id', dietContoller.update_diet_id); //function 6 - update existing data using its id(pass req.body)
 router.post('/foodlist', dietContoller.search_foodlist_db); //function 10 - search specific food based on req.body.search
 router.post('/add_foodlist', dietContoller.add_search_diet); //function 11 - add specific food after search from database food
+
+
 
 module.exports = router;

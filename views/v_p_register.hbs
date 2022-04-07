@@ -231,7 +231,7 @@
 </section>
 
 <script>
-/*
+
 window.addEventListener('load', function() {
 	console.log('All assets are loaded');
 	
@@ -285,7 +285,7 @@ window.addEventListener('load', function() {
 	console.log(typeof birthyear);
 	console.log("Final Age" + final_age);
 	myAge.innerHTML.value = final_age;
-})*/
+
 
 //get age and gender based on IC
 function inputIC(ic){
@@ -297,18 +297,6 @@ function inputIC(ic){
 	
 	console.log(ic+" "+myGender.value+" "+myAge.value);
 	
-}
-
-
-//display surgery weight before operation
-function inputSurgery(status){
-	if(status == "pre"){
-		document.getElementById("before_surg_weight").style.display = "none";
-	}else if(status == "post"){
-		document.getElementById("before_surg_weight").style.display = "block";
-	}else{
-		console.log("Error Surgery Status" + status)
-	}
 }
 
 

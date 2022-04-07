@@ -77,52 +77,77 @@ exports.register_user = (req, res) => {
         console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
 
         if (!email || !password || !passwordConfirm || !role || !ic) {
-            return res.status(400).render('v_register', {
-                message: 'Field Cannot Be Empty'
+
+
+            db.query('SELECT * FROM healthcare', (err, rows) => {
+
+                if (!err) { //if not error
+                    return res.status(400).render('v_register', {
+                        message: 'Field Cannot Be Empty',
+                        rows: rows
+                    })
+                } else {
+                    console.log(err);
+                }
+
+                console.log('the data from user table', rows);
             })
         }
 
 
-        db.query('SELECT ic FROM userdetails WHERE ic = ? OR email = ?', [ic, email], async(error, results) => {
-            if (error) {
-                console.log(error);
-            }
-            if (results.length > 0) {
-                return res.render('v_register', {
-                    message: 'IC or Email Has Been Registered'
-                })
-            } else if (password !== passwordConfirm) {
-                return res.render('v_register', {
-                    message: 'Password Do Not Match'
-                })
-            }
+        db.query('SELECT * FROM healthcare', (err, rows) => {
 
-            let hashedPassword = await bcrypt.hash(password, 8);
-            console.log(hashedPassword);
-            db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role }, (error, results) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log(results);
-                    /*
-                    if (role == "Patient") {
-                        return res.status(200).render('v_p_profile', {
-                            message: 'Successfully Registered',
-                            ic: ic
+            if (!err) { //if not error
+
+                db.query('SELECT ic FROM userdetails WHERE ic = ? OR email = ?', [ic, email], async(error, results) => {
+
+                    if (error) {
+                        console.log(error);
+                    }
+                    if (results.length > 0) {
+                        return res.render('v_register', {
+                            message: 'IC or Email Has Been Registered',
+                            rows: rows
                         })
-                    } else if (role == "") {
-                        return res.status(200).render('v_d_register', {
-                            message: 'Successfully Registered'
+                    } else if (password !== passwordConfirm) {
+                        return res.render('v_register', {
+                            message: 'Password Do Not Match',
+                            rows: rows
                         })
-                    } else {
+                    }
 
-                    }*/
+                    let hashedPassword = await bcrypt.hash(password, 8);
+                    console.log(hashedPassword);
+                    db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role }, (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log(results);
+                            /*
+                                if (role == "Patient") {
+                                    return res.status(200).render('v_p_profile', {
+                                        message: 'Successfully Registered',
+                                        ic: ic
+                                    })
+                                } else if (role == "") {
+                                    return res.status(200).render('v_d_register', {
+                                        message: 'Successfully Registered'
+                                    })
+                                } else {
+            
+                                }*/
 
-                    return res.status(200).render('v_login', {
-                        success: 'Successfully Registered'
-                    });
-                }
-            })
+                            return res.status(200).render('v_login', {
+                                success: 'Successfully Registered'
+                            });
+                        }
+                    })
+                })
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', rows);
         })
     } catch (error) {
 

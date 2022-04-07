@@ -16,33 +16,7 @@ const db = mysql.createConnection({
 
 //GET define routes and its view
 
-//localhost/diet
-
-router.get('/diet', authContoller.isLoggedIn, (req, res) => {
-
-    //if there is request from user with jwt token
-    if (req.user) {
-
-        db.query('SELECT * FROM diets', (err, rows) => {
-            //when done with connection
-
-            if (!err) { //if not error
-                res.render('v_p_diet', { user: req.user, rows });
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
-
-        })
-
-    } else {
-        res.redirect('..');
-    }
-
-});
-
-
-
+//localhost/
 
 router.get('/', authContoller.isLoggedIn, (req, res) => {
     res.render('v_home', {
@@ -56,7 +30,18 @@ router.get('/registerpatient', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.render('v_register');
+
+    db.query('SELECT * FROM healthcare', (err, rows) => {
+
+        if (!err) { //if not error
+            res.render('v_register', { rows });
+        } else {
+            console.log(err);
+        }
+
+        console.log('the data from user table', rows);
+    })
+
 });
 
 router.get('/login', (req, res) => {
