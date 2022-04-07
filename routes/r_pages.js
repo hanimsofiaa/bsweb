@@ -25,9 +25,22 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
 });
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
-    res.render('v_p_analytics', {
-        user: req.user
-    });
+
+    db.query('SELECT calories,updatedAt FROM diets', (err, rows) => {
+
+        if (!err) { //if not error
+            res.render('v_p_analytics', {
+                user: req.user,
+                rows
+            });
+        } else {
+            console.log(err);
+        }
+
+        console.log('the data from user table', rows);
+    })
+
+
 });
 
 router.get('/registerpatient', (req, res) => {
