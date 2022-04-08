@@ -19,36 +19,22 @@ const db = mysql.createConnection({
 //GET
 router.get('/display', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
+    //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM patientdetails', (err, row) => {
-            //when done with connection
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
 
             if (!err) { //if not error
-
-                if (req.params.id) {
-                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, rows) => {
-                        //when done with connection
-
-                        if (!err) { //if not error
-                            res.render('v_p_profile', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
-                }
-
-
+                res.render('v_p_profile', { rows, user: req.user });
             } else {
                 console.log(err);
             }
-            console.log(row);
 
+            console.log('the data from user table', rows);
         })
 
-    } else {
-        res.redirect('/login');
+    } else { //if there is no jwt token
+        res.redirect('/login'); //localhost/login
     }
 });
 
