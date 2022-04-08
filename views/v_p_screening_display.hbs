@@ -114,17 +114,84 @@
                                 <tr>
                                 <th scope="col">Score</th> 
                                 <th scope="col">Created on</th> 
-                                <th scope="col">Last Update</th> 
+                               <!-- <th scope="col">Last Update</th> -->
                                 </tr> 
                             </thead> 
                             <tbody> 
                                 <tr>
                                 <th scope="row">{{this.score}}</th> 
                                 <td>{{{this.createdAt}}}</td>
-                                <td>{{this.updatedAt}}</td> 
+                               <!-- <td>{{this.updatedAt}}</td> -->
                                 </tr>
                             </tbody> 
-                        </table>
+                        </table><br>
+                        <center><h5><u><b>Depression Screening Form</b></u></h5></center>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">1. Do you feel that you don’t look attractive anymore?</th> 
+                                    <th scope="col" class="text-left">{{this.depress1}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">2. Do you experience emotional changes after undergoing bariatric surgery?</th>                                               
+                                    <th scope="col" class="text-left">{{this.depress2}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">3. Are you having sleep disturbance after undergoing bariatric surgery?</th>                                                
+                                    <th scope="col" class="text-left">{{this.depress3}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">4. Are you always tired after undergoing bariatric surgery?</th>                                     
+                                    <th scope="col" class="text-left">{{this.depress4}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">5. Do you always feel guilty after undergoing bariatric surgery?</th>                                               
+                                    <th scope="col" class="text-left">{{this.depress5}}</th>
+                                </tr>
+                            </thead>
+                        </table><br>
+                        <center><h5><u><b>Eating Habits Screening Form</b></u></h5></center>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">1. Will you eat more when you feel stressed after bariatric surgery?</th>                                          
+                                    <th scope="col" class="text-left">{{this.eat1}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">2. Do you always feel hungry after bariatric surgery?</th>                                               
+                                    <th scope="col" class="text-left">{{this.eat2}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">3. Do you have trouble to follow the dietary advice given by the dietitian after bariatric surgery?</th>                                               
+                                    <th scope="col" class="text-left">{{this.eat3}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">4. Do you have trouble to control the number of snacks consumed after bariatric surgery?</th>                                               
+                                    <th scope="col" class="text-left">{{this.eat4}}</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left">5. Do you always think about food?</th>                                               
+                                    <th scope="col" class="text-left">{{this.eat5}}</th>
+                                </tr>
+                            </thead>
+                                                            
+                        </table>  
                     </div>
                 </div>
                 {{/each}}

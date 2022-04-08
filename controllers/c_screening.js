@@ -61,10 +61,49 @@ exports.add_screening = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-    const score = 100;
+
     const ic = 000000; //temporary
 
     const { depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
+
+
+    //calculate score
+    var nonum = 0;
+
+    if (depress1 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress2 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress3 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress4 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress5 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat1 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat2 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat3 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat4 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat5 === "no") {
+        nonum = nonum + 1;
+    }
+
+    const finalscore = (nonum / 10) * 100;
+    console.log(finalscore);
+    const score = finalscore;
 
     db.query('INSERT INTO screening SET ic = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?, createdAt = ?, updatedAt = ?', [ic, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, createdAt, updatedAt], (err, rows) => {
         //when done with connection
@@ -101,10 +140,47 @@ exports.update_screening_id = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
-    const score = 100;
     const ic = 000000; //temporary
 
     const { depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
+
+    //calculate score
+    var nonum = 0;
+
+    if (depress1 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress2 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress3 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress4 === "no") {
+        nonum = nonum + 1;
+    }
+    if (depress5 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat1 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat2 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat3 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat4 === "no") {
+        nonum = nonum + 1;
+    }
+    if (eat5 === "no") {
+        nonum = nonum + 1;
+    }
+
+    const finalscore = (nonum / 10) * 100;
+    console.log(finalscore);
+    const score = finalscore;
 
 
     db.query('UPDATE screening SET ic = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?,  updatedAt = ? WHERE id = ?', [ic, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, updatedAt, req.params.id], (err, rows) => {
