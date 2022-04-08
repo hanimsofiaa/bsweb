@@ -42,7 +42,7 @@ exports.login_user = async(req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/");
+                res.status(200).redirect("/profile");
             }
         })
     } catch (error) {
@@ -73,9 +73,9 @@ exports.register_user = (req, res) => {
     try {
         console.log(req.body);
 
-        const { email, password, passwordConfirm, role, ic } = req.body;
+        const { email, password, passwordConfirm, role, ic, healthcare } = req.body;
 
-        console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic);
+        console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic + "7." + healthcare);
 
         if (!email || !password || !passwordConfirm || !role || !ic) {
 
@@ -119,7 +119,7 @@ exports.register_user = (req, res) => {
 
                     let hashedPassword = await bcrypt.hash(password, 8);
                     console.log(hashedPassword);
-                    db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role }, (error, results) => {
+                    db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role, healthcare: healthcare }, (error, results) => {
                         if (error) {
                             console.log(error);
                         } else {
@@ -217,7 +217,8 @@ exports.register_patient = (req, res) => {
         console.log(ic + " 1. " + fullname + " 2. " + home_address + " 3. " + phone_number + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
 
         if (!fullname || !home_address || !phone_number || !marital_status || !activity_level || !surgery_status || !curr_weight || !surgery_date || !height) {
-            return res.status(400).render('v_p_profile', {
+            //render back to edit and pass the data back
+            return res.render('v_p_profile_edit', {
                 message: 'Field Cannot Be Empty'
             })
         }
@@ -233,18 +234,28 @@ exports.register_patient = (req, res) => {
         }
 
         //get age from ic
-        var string_ic = String.toString(ic);
-        var birthyear = null;
+        var string_ic = ic_val.toString();
+
+
+        console.log("String ic " + string_ic);
+        console.log("String ic at 1st char " + string_ic.charAt(0));
+        console.log("String ic at 2nd char " + string_ic.charAt(1));
+        const char0 = 1;
+        const char1 = 9;
+        const birthyear = "combine" + char0 + char1 + string_ic.charAt(0) + string_ic.charAt(1);
+        console.log(birthyear);
+        console.log(typeof birthyear)
+
 
         //get birthyear
-        if (string_ic.charAt(0) == "0" || string_ic.charAt(0) == "1" || string_ic.charAt(0) == "2") {
+        /*if (string_ic.charAt(0) == "0" || string_ic.charAt(0) == "1" || string_ic.charAt(0) == "2") {
 
             //birthyear = 2000's
             const char0 = 2;
             const char1 = 0;
 
             birthyear = '' + char0 + char1 + string_ic.charAt(0) + string_ic.charAt(1);
-            console.log("My birthyear 1" + birthyear);
+            console.log("My birthyear 1 =" + birthyear);
             console.log(typeof birthyear);
         } else {
 
@@ -253,10 +264,11 @@ exports.register_patient = (req, res) => {
             const char1 = 9;
 
             birthyear = '' + char0 + char1 + string_ic.charAt(0) + string_ic.charAt(1);
-            console.log("My birthyear 2" + birthyear);
+            console.log("My birthyear 2 =" + birthyear);
             console.log(typeof birthyear);
         }
 
+        
         //get current year
         var curr_year = new Date().getFullYear();
         console.log("Current Year" + curr_year);
@@ -266,7 +278,7 @@ exports.register_patient = (req, res) => {
         var final_age = curr_year - Number(birthyear);
         console.log(typeof birthyear);
         console.log("Final Age" + final_age);
-        const age = final_age;
+        const age = final_age; */
 
 
         console.log(ic + "<br>" + fullname + "<br>" + age + "<br>" + home_address + "<br>" + phone_number + "<br>" + gender + " <br>" + marital_status + "<br>" + activity_level + "<br>" + height + "<br>" + surgery_status + "<br>" + curr_weight + "<br>" + before_surg_weight + "<br>" + surgery_date);
@@ -289,9 +301,9 @@ exports.register_patient = (req, res) => {
                         } else {
                             console.log(results);
                             //kena tukar v_login
-                            return res.status(200).render('v_p_profile', {
-                                success: 'Successfully Update Patient Profile'
-                            })
+
+                            return res.status(200).render('v_p_profile_edit', { success: 'Successfully Update Patient Profile' });
+
                         }
                     })
 
@@ -303,9 +315,8 @@ exports.register_patient = (req, res) => {
                         } else {
                             console.log(results);
                             //kena tukar v_login
-                            return res.status(200).render('v_p_profile', {
-                                success: 'Successfully Update Patient Profile'
-                            })
+
+                            return res.status(200).render('v_p_profile_edit', { success: 'Successfully Update Patient Profile' });
                         }
                     })
                 }

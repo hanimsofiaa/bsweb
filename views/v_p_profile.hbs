@@ -155,25 +155,78 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/profilepatient" class="btn btn-primary float-right">Edit My Profile</a>
-                                <div class="col d-flex justify-content-left" style="text-align: left;">
-                                    {{#each rows}}
-                                    Name: {{this.fullname}} <br><br>
-                                    Home Address: {{this.home_address}} <br><br>
-                                    Phone Number: {{this.phone_number}} <br><br>
-                                    Gender: {{this.gender}} <br><br>
-                                    Marital Status: {{this.marital_status}} <br><br>
-                                    Activity Level: {{this.activity_level}} <br><br>
-                                    Height: {{this.height}}cm <br><br>
-                                    Surgery Status: {{this.surgery_status}}-operation <br><br>
-                                    Current Weight: {{this.curr_weight}}kg <br><br>
-                                    Weight Before Surgery: {{this.before_surg_weight}}kg <br><br>
-                                    Surgery Date: {{this.surgery_date}} <br><br>
+                                <a href="/profilepatient" class="btn btn-primary float-right" >Edit My Profile</a>
+                                {{#each rows}}
+                                <center><h6>Last Update on {{this.updatedAt}}</h6></center>
+                                <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     
-                                    <!--Last Update on {{this.updated_at}} <br>-->
-                                    {{/each}}
-                                
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Name :</th> 
+                                                <th scope="col" class="text-left">{{this.fullname}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Home Address :</th>                                                <th scope="col" class="text-left">{{this.home_address}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Phone Number :</th>                                                <th scope="col" class="text-left">{{this.phone_number}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Gender :</th>                                     
+                                                <th scope="col" class="text-left">{{this.gender}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Marital Status :</th>                                               <th scope="col" class="text-left">{{this.marital_status}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Physcial Activity Level :</th>                                          
+                                                <th scope="col" class="text-left">{{this.activity_level}}</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Height :</th>                                               
+                                                <th scope="col" class="text-left">{{this.height}}cm</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Surgery Status :</th>                                               
+                                                <th scope="col" class="text-left">{{this.surgery_status}}-operation</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Current Weight :</th>                                               
+                                                <th scope="col" class="text-left">{{this.curr_weight}}kg</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Weight Before Surgery :</th>                                               
+                                                <th scope="col" class="text-left">{{this.before_surg_weight}}kg</th>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Surgery Date :</th>                                               
+                                                <th scope="col" class="text-left">{{this.surgery_date}}</th>
+                                            </tr>
+                                        </thead>                                     
+                                    </table>                    
                                 </div>
+                                {{/each}} 
                             </div>
                             <!--<div class="card-footer text-muted">
                                 Bariatric Surgery Web

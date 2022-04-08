@@ -207,16 +207,13 @@
                       <label for="healthcare">Select Healthcare Provider</label>
                       <select class="form-select"  id="healthcare" name="healthcare" aria-label="healthcare">
                         
-                        <!--<option value="USM Kubang Kerian" selected>USM Kubang Kerian</option>
-                        <option value="USM IPPT">USM Institut Perubatan & Pergigian Termaju</option>-->
-                        
                         {{#each rows}}
                         <option value="{{{this.id}}}">{{{this.name}}}, {{{this.state}}}</option>
                         {{/each}}
                         
                       </select>
                     </div>
-                    
+
                     <!--Button Register-->
                     <div class="form-group" style="padding: 5px;">
                       <div class="btn-group">

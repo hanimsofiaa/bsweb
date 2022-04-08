@@ -125,6 +125,24 @@
                 <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
             </ol>
             <br>
+            
+            {{#if message}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Fail! </strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
+            
+            {{#if success}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{success}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
 
             <div class="activity">
 				<div class="card">
@@ -134,8 +152,7 @@
 						
 							<!--IC Input Field--> 
 							<div class="form-group" id="ic" name= "ic">
-								<label for="ic">Registered IC</label>
-								<input type="text" class="form-control" id="ic" name= "ic" value="{{#if user.ic}}{{user.ic}}{{/if}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});" disabled>
+								<input type="hidden" class="form-control" id="ic" name= "ic" value="{{{user.ic}}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
 							</div>
 							
                             {{#each rows}}
@@ -184,7 +201,7 @@
                                 <div class="form-group" style="padding: 5px; width:fit-content">
                                     <label for="activity_level">Select Physical Activity Level</label>
                                     <select class="form-select"  id="activity_level" name="activity_level" aria-label="activity_level" >
-                                        <option value="{{this.activity_level}}" disabled selected hidden>{{this.activity_level}}</option>
+                                        <option value="{{this.activity_level}}" selected hidden>{{this.activity_level}}</option>
                                         <option value="sedentary">Sedentary</option>
                                         <option value="lightly">Lightly Active</option>
                                         <option value="moderately">Moderately Active</option>
@@ -203,7 +220,7 @@
                                 <div class="form-group" style="padding: 5px; width:fit-content">
                                     <label for="surgery_status">Select Surgery Status</label>
                                     <select class="form-select"  id="surgery_status" name="surgery_status" aria-label="surgery_status">
-                                        <option value="{{this.surgery_status}}" disabled selected hidden>{{this.surgery_status}}-operation</option>
+                                        <option value="{{this.surgery_status}}" selected hidden>{{this.surgery_status}}-operation</option>
                                         <option value="post">Post-Operation</option>
                                         <option value="pre">Pre-Operation</option>
                                     </select>
