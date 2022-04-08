@@ -53,10 +53,13 @@ db.connect((err) => {
 //define routes (r_pages and r_routes)
 app.use('/', require('./routes/r_pages'));
 app.use('/profile', require('./routes/r_profile'));
+
 app.use('/screening', require('./routes/r_screening'));
 app.use('/exercise', require('./routes/r_exercise'));
 app.use('/diet', require('./routes/r_diet'));
 app.use('/auth', require('./routes/r_auth'));
+
+app.use('/dashboard', require('./routes/r_dashboard'));
 
 app.listen(5050, () => {
     console.log("Server started on Port 5050");

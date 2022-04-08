@@ -23,7 +23,7 @@ exports.login_user = async(req, res) => {
             })
         }
 
-        db.query('SELECT * FROM userdetails WHERE email =?', [email], async(error, results) => {
+        db.query('SELECT * FROM userdetails WHERE email = ?', [email], async(error, results) => {
             console.log(results);
             if ((!results || !(await bcrypt.compare(password, results[0].password)))) {
                 res.status(401).render('v_login', {
@@ -42,7 +42,13 @@ exports.login_user = async(req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/profile");
+
+                if (results[0].role === "Doctor") {
+                    res.status(200).redirect("/dashboard/view");
+                } else {
+                    res.status(200).redirect("/profile");
+                }
+
             }
         })
     } catch (error) {
@@ -73,11 +79,11 @@ exports.register_user = (req, res) => {
     try {
         console.log(req.body);
 
-        const { email, password, passwordConfirm, role, ic, healthcare } = req.body;
+        const { fullname, email, password, passwordConfirm, role, ic, healthcare } = req.body;
 
         console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic + "7." + healthcare);
 
-        if (!email || !password || !passwordConfirm || !role || !ic) {
+        if (!fullname || !email || !password || !passwordConfirm || !role || !ic) {
 
 
             db.query('SELECT * FROM healthcare', (err, rows) => {
@@ -119,7 +125,7 @@ exports.register_user = (req, res) => {
 
                     let hashedPassword = await bcrypt.hash(password, 8);
                     console.log(hashedPassword);
-                    db.query('INSERT INTO userdetails SET ?', { email: email, password: hashedPassword, ic: ic, role: role, healthcare: healthcare }, (error, results) => {
+                    db.query('INSERT INTO userdetails SET ?', { fullname: fullname, email: email, password: hashedPassword, ic: ic, role: role, healthcare: healthcare }, (error, results) => {
                         if (error) {
                             console.log(error);
                         } else {

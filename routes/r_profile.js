@@ -49,7 +49,20 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_profile_add', { user: req.user, rows });
+                const role = "Doctor";
+
+                db.query('SELECT * FROM userdetails WHERE role = ? AND healthcare = ?', [role, req.user.healthcare], (error, result) => {
+
+                    if (!error) {
+                        console.log("select doctor" + result);
+                        res.render('v_p_profile_add', { user: req.user, rows, result });
+
+                    } else {
+                        console.log(error);
+                    }
+
+                });
+
             } else {
                 console.log(err);
             }
@@ -68,28 +81,48 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM patientdetails', (err, row) => {
-            //when done with connection
+        const role = "Doctor";
+        const healthcare = 1;
 
-            if (!err) { //if not error
+        db.query('SELECT * FROM userdetails WHERE healthcare = ? AND role = ?', [req.user.healthcare, role], (error, result) => {
 
-                db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (error, rows) => {
-                    if (!error) { //if not error
-                        res.render('v_p_profile_edit', { user: req.user, rows });
+            console.log("get healthcare " + result[0].healthcare + result[0].fullname);
+
+            if (!error) {
+
+                db.query('SELECT * FROM patientdetails', (err, row) => {
+                    //when done with connection
+
+                    if (!err) { //if not error
+
+                        db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (error, rows) => {
+                            if (!error) { //if not error
+                                // res.render('v_p_profile_edit', { user: req.user, rows });
+
+                                if (!error) {
+                                    console.log("select doctor" + result);
+                                    res.render('v_p_profile_edit', { user: req.user, rows, result });
+
+                                } else {
+                                    console.log(error);
+                                }
+
+                            } else {
+                                console.log(error);
+                            }
+                            console.log(rows);
+
+                        })
+
+
                     } else {
-                        console.log(error);
+                        console.log(err);
                     }
-                    console.log(rows);
+                    console.log(row);
 
-                })
-
-
-            } else {
-                console.log(err);
+                });
             }
-            console.log(row);
-
-        })
+        });
 
     } else {
         res.redirect('/login');

@@ -74,7 +74,7 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <h6>{{user.role}}, {{user.email}}, {{user.ic}}</h6>
+        <h6>{{user.role}},{{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     
     <div class="dash-content">
@@ -104,7 +104,7 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{user.ic}}</h5>
-                                <p class="card-text">Example Text of Card Text</p>
+                                <p class="card-text"><b>{{user.fullname}}({{user.role}})</b></p>
                                 <a href="#" class="btn btn-primary">{{user.email}}</a>
                             </div>
                         </div>
@@ -129,12 +129,13 @@
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     
                                     <table class="table table-bordered">
-                                        <thead>
+                                         <thead>
                                             <tr>
-                                                <th scope="col" class="text-left">Name :</th> 
-                                                <th scope="col" class="text-left">{{this.fullname}}</th>
+                                                <th scope="col" class="text-left">Assigned Doctor :</th>                                               
+                                                <th scope="col" class="text-left">{{this.assignedTo}}</th>
                                             </tr>
                                         </thead>
+                                        
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-left">Home Address :</th>                                               
