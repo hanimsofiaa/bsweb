@@ -45,7 +45,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM patientdetails', (err, rows) => {
+        db.query('SELECT * FROM userdetails', (err, rows) => {
             //when done with connection
 
             if (!err) { //if not error
@@ -75,7 +75,7 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
                 db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (error, rows) => {
                     if (!error) { //if not error
-                        res.render('v_p_patient_edit', { user: req.user, rows });
+                        res.render('v_p_profile_edit', { user: req.user, rows });
                     } else {
                         console.log(error);
                     }

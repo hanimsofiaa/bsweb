@@ -8,8 +8,6 @@
 	</ul>
 </nav>-->
 
-
-{{#if user}} 
 <nav>
     <div class="logo-name">
         <div class="logo-image">
@@ -72,37 +70,6 @@
     </div>
 </nav>
 
-{{else}}
-<nav>
-    <div class="logo-name">
-        <div class="logo-image">
-            <img src="/logo.png" alt="">
-        </div>
-
-        <span class="logo_name">BARIACT</span>
-    </div>
-
-    <div class="menu-items">
-		
-        <ul class="nav-links">
-             <li><a href="/">
-                <i class="uil uil-estate"></i>
-                <span class="link-name">Home</span>
-            </a></li>
-			<li><a href="/login">
-				<i class="uil uil-signin"></i>
-				<span class="link-name">Login</span>
-			</a></li>
-
-			<li><a href="/register">
-				<i class="uil uil-file-info-alt"></i>
-				<span class="link-name">Register</span>
-			</a></li>
-		</ul>
-	</div>
-</nav>
-{{/if}}
-
 
 <section class="dashboard">
     <div class="top">
@@ -156,8 +123,8 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/profile/update/{{this.id}}" class="btn btn-primary float-right" >Edit My Profile</a>
                                 {{#each rows}}
+                                <a href="/profile/update/{{this.id}}" class="btn btn-primary float-right">Edit My Profile</a>
                                 <center><h6>Last Update on {{this.updatedAt}}</h6></center>
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     
@@ -207,7 +174,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-left">Surgery Status :</th>                                               
-                                                <th scope="col" class="text-left">{{this.surgery_status}}-operation</th>
+                                                <th scope="col" class="text-left">{{this.surgery_status}}</th>
                                             </tr>
                                         </thead>
                                         <thead>

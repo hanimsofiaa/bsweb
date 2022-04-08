@@ -1,8 +1,16 @@
-
+{{#if user.ic}}
 <!--IC Input Field--> 
 <div class="form-group" id="ic" name= "ic">
-<input type="hidden" class="form-control" id="ic" name= "ic" value="{{{user.ic}}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
 </div>
+{{/if}}
+
+{{#if this.ic}}
+<!--IC Input Field--> 
+<div class="form-group" id="ic" name= "ic">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}" onload="inputIC({{#if this.ic}}{{this.ic}}{{/if}});">
+</div>
+{{/if}}
 
 <!--Name Input Field--> 
 <div class="form-group" style="padding: 5px;">
@@ -26,10 +34,10 @@
 	<label for="activity_level">Select Physical Activity Level</label>
 	<select class="form-select"  id="activity_level" name="activity_level" aria-label="activity_level">
 		<option value="Sedentary" selected>Sedentary</option>
-		<option value="Lightly">Lightly Active</option>
-		<option value="Moderately">Moderately Active</option>
-		<option value="Highly">Highly Active</option>
-		<option value="Extremely">Extremely Active</option>
+		<option value="Lightly Active">Lightly Active</option>
+		<option value="Moderately Active">Moderately Active</option>
+		<option value="Highly Active">Highly Active</option>
+		<option value="Extremely Active">Extremely Active</option>
 		
 		{{#if this.activity_level}}
 		<option value="{{this.activity_level}}" selected hidden>{{this.activity_level}}</option>
@@ -82,11 +90,11 @@
 <div class="form-group" style="padding: 5px; width:fit-content;">
 	<label for="surgery_status">Select Surgery Status</label>
 	<select class="form-select"  id="surgery_status" name="surgery_status" aria-label="surgery_status">
-		<option value="Post" selected>Post-Operation</option>
-		<option value="Pre">Pre-Operation</option>
+		<option value="Post-Operation" selected>Post-Operation</option>
+		<option value="Pre-Operation">Pre-Operation</option>
 		
 		{{#if this.surgery_status}}
-		<option value="{{this.surgery_status}}" selected hidden>{{this.surgery_status}}-operation</option>
+		<option value="{{this.surgery_status}}" selected hidden>{{this.surgery_status}}</option>
 		{{/if}}
 	
 	</select>
@@ -108,8 +116,9 @@
 	<!--Date of Operation Input Field--> 
 <div class="form-group" style="padding: 5px; width:fit-content">
 	<label for="surgery_date">Date of Operation</label>
-	<div class="input-group date" id="surgery_date" name="surgery_date" data-provide="datepicker" value="{{this.surgery_date}}">
-		<input type="date" class="form-control" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}" placeholder="{{this.surgery_date}}">
+	<div class="input-group date" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}">
+		<!--<input type="date" class="form-control"  data-date="" data-date-format="YYYY-MM-DD" id="surgery_date" name="surgery_date" value="2017-06-01" placeholder="{{this.surgery_date}}">-->
+		<input type="date" class="form-control"  data-date="{{this.surgery_date}}" data-date-format="YYYY-MM-DD" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}" placeholder="{{this.surgery_date}}">
 		<div class="input-group-addon">
 			<span class="glyphicon glyphicon-th"></span>
 		</div>
