@@ -156,7 +156,7 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/auth/profilepatient" class="btn btn-primary float-right" >Edit My Profile</a>
+                                <a href="/profile/update/{{this.id}}" class="btn btn-primary float-right" >Edit My Profile</a>
                                 {{#each rows}}
                                 <center><h6>Last Update on {{this.updatedAt}}</h6></center>
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
@@ -238,7 +238,7 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/auth/registerpatient" class="btn btn-primary float-right" >Edit My Profile</a>
+                                <a href="/profile/add" class="btn btn-primary float-right" >Update New Profile</a>
                             </div>
                             
                             {{/if}}

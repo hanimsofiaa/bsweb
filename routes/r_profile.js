@@ -17,23 +17,33 @@ const db = mysql.createConnection({
 
 
 //GET
-//router.get('/view', dietContoller.view_diet); //function 1 - display ALL list food(no id is passed)
-router.get('/view', authContoller.isLoggedIn, (req, res) => {
+router.get('/display', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM patientdetails', (err, rows) => {
+        db.query('SELECT * FROM patientdetails', (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
 
-                let removedFood = req.query.removed; //if any food is deleted, set alert 
-                res.render('v_p_patientdetails', { user: req.user, rows, removedFood: removedFood });
-                //res.render('v_p_diet', { user: req.user, rows });
+                if (req.params.id) {
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+                        //when done with connection
+
+                        if (!err) { //if not error
+                            res.render('v_p_profile', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
+                        } else {
+                            console.log(err);
+                        }
+                        console.log(rows);
+                    })
+                }
+
+
             } else {
                 console.log(err);
             }
-            console.log(rows);
+            console.log(row);
 
         })
 
