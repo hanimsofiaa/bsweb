@@ -86,7 +86,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
         db.query('SELECT * FROM userdetails WHERE healthcare = ? AND role = ?', [req.user.healthcare, role], (error, result) => {
 
-            console.log("get healthcare " + result[0].healthcare + result[0].fullname);
 
             if (!error) {
 

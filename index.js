@@ -59,7 +59,7 @@ app.use('/exercise', require('./routes/r_exercise'));
 app.use('/diet', require('./routes/r_diet'));
 app.use('/auth', require('./routes/r_auth'));
 
-app.use('/dashboard', require('./routes/r_dashboard'));
+app.use('/doctor', require('./routes/r_doctor'));
 
 app.listen(5050, () => {
     console.log("Server started on Port 5050");
