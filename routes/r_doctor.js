@@ -17,6 +17,35 @@ const db = mysql.createConnection({
 
 
 //GET
+
+
+router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
+    res.render('v_d_dashboard', {
+        user: req.user
+    });
+});
+
+router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
+
+    db.query('SELECT calories, updatedAt FROM diets', (err, rows) => {
+
+        if (!err) { //if not error
+            res.render('v_d_analytics', {
+                user: req.user,
+                rows
+            });
+        } else {
+            console.log(err);
+        }
+
+        console.log('the data from user table', rows);
+    })
+
+
+});
+
+
+
 //router.get('/view', dietContoller.view_diet); //function 1 - display ALL list food(no id is passed)
 router.get('/diet', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token

@@ -26,7 +26,7 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
-    db.query('SELECT calories,updatedAt FROM diets', (err, rows) => {
+    db.query('SELECT calories, updatedAt FROM diets', (err, rows) => {
 
         if (!err) { //if not error
             res.render('v_p_analytics', {
