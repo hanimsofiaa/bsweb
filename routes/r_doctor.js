@@ -135,9 +135,76 @@ router.get('/exercise/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
+
+//router.get('/view', screeningContoller.view_screening); //function 1 - display ALL list food(no id is passed)
+router.get('/screening', authContoller.isLoggedIn, (req, res) => {
+
+    //if there is request from user with jwt token
+    if (req.user) {
+
+        db.query('SELECT * FROM screening', (err, rows) => {
+            //when done with connection
+
+            if (!err) { //if not error
+                res.render('v_d_screening', { user: req.user, rows });
+                //res.render('v_p_screening');
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+        })
+
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+//router.get('/display/:id', screeningContoller.display_screening_id); //funciton 8 - display specific food based on its id(pass id)
+router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    if (req.user) {
+
+        db.query('SELECT * FROM screening', (err, row) => {
+            //when done with connection
+
+            if (!err) { //if not error
+
+                if (req.params.id) {
+
+                    db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
+                        //when done with connection
+
+                        if (!err) { //if not error
+                            res.render('v_d_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below' });
+                        } else {
+                            console.log(err);
+                        }
+                        console.log(rows);
+                    })
+                }
+
+
+            } else {
+                console.log(err);
+            }
+            console.log(row);
+
+        })
+
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+
+
 router.post('/diet/search', doctorContoller.find_diet); //function 2 - search food by name of meal(pass req.body for searchterm)
 
 router.post('/exercise/search', doctorContoller.find_exercise); //function 2 - search food by name of meal(pass req.body for searchterm)
+
+router.post('/screening/search', doctorContoller.find_screening); //function 2 - search food by name of meal(pass req.body for searchterm)
 
 
 module.exports = router;

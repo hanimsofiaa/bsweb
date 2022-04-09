@@ -107,3 +107,54 @@ exports.display_exercise_id = (req, res) => {
         console.log(rows);
     })
 }
+
+
+
+//function 1 - display ALL list food(no id is passed)
+exports.view_screening = (req, res) => {
+    db.query('SELECT * FROM screening', (err, rows) => {
+        //when done with connection
+
+        if (!err) { //if not error
+            res.render('v_d_screening', { rows });
+            //res.render('v_p_screening');
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+    })
+}
+
+//function 2 - search food by name of meal(pass req.body)
+exports.find_screening = (req, res) => {
+
+    let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+
+    db.query('SELECT * FROM screening WHERE score LIKE ? OR createdAt LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+        //when done with connection
+        if (!err) { //if not error
+            res.render('v_d_screening', { rows, alert: 'Display Searched Screening' });
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+
+    })
+
+}
+
+
+//funciton 8 - display specific food based on its id(pass id)
+exports.display_screening_id = (req, res) => {
+
+    db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
+        //when done with connection
+
+        if (!err) { //if not error
+            res.render('v_d_screening_display', { rows, alert: 'Your Selected Screening Displayed Below' });
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+    })
+}
