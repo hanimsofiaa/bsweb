@@ -18,6 +18,117 @@ const db = mysql.createConnection({
 
 //GET
 
+//GET
+router.get('/profile', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    //if there is request from user with jwt token
+    if (req.user) {
+
+        db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+
+            if (!err) { //if not error
+                res.render('v_d_profile', { rows, user: req.user });
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', rows);
+        })
+
+    } else { //if there is no jwt token
+        res.redirect('/login'); //localhost/login
+    }
+});
+
+//router.get('/add', dietContoller.form_add_diet); //function 3 - display add form to add new food
+router.get('/profile/add', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    if (req.user) {
+
+        db.query('SELECT * FROM userdetails', (err, rows) => {
+            //when done with connection
+
+            if (!err) { //if not error
+
+
+                db.query('SELECT * FROM userdetails', (error, result) => {
+
+                    if (!error) {
+
+                        res.render('v_d_profile_add', { user: req.user, rows, result });
+
+                    } else {
+                        console.log(error);
+                    }
+
+                });
+
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
+        })
+
+    } else {
+        res.redirect('/login');
+    }
+});
+
+//router.get('/update/:id', dietContoller.form_update_diet_id); //function 5 - display update form with data based on its id(pass id)
+
+router.get('/profile/:id', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    if (req.user) {
+
+
+        db.query('SELECT * FROM userdetails', (error, result) => {
+
+
+            if (!error) {
+
+                db.query('SELECT * FROM doctordetails', (err, row) => {
+                    //when done with connection
+
+                    if (!err) { //if not error
+
+                        db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (error, rows) => {
+                            if (!error) { //if not error
+                                // res.render('v_p_profile_edit', { user: req.user, rows });
+
+                                if (!error) {
+
+                                    res.render('v_d_profile_edit', { user: req.user, rows, result });
+
+                                } else {
+                                    console.log(error);
+                                }
+
+                            } else {
+                                console.log(error);
+                            }
+                            console.log(rows);
+
+                        })
+
+
+                    } else {
+                        console.log(err);
+                    }
+                    console.log(row);
+
+                });
+            }
+        });
+
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+
+
 
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
     res.render('v_d_dashboard', {
@@ -234,6 +345,15 @@ router.post('/diet/search', doctorContoller.find_diet); //function 2 - search fo
 router.post('/exercise/search', doctorContoller.find_exercise); //function 2 - search food by name of meal(pass req.body for searchterm)
 
 router.post('/screening/search', doctorContoller.find_screening); //function 2 - search food by name of meal(pass req.body for searchterm)
+
+
+//POST
+router.post('/profile/add', doctorContoller.add_profile); //function 4 - add new food(pass req.body for all data)
+
+
+router.post('/profile/:id', doctorContoller.update_profile_id); //function 6 - update existing data using its id(pass req.body)
+
+
 
 
 module.exports = router;

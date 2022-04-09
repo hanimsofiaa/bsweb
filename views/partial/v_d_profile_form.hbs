@@ -1,0 +1,43 @@
+{{#if user.ic}}
+<!--IC Input Field--> 
+<div class="form-group" id="ic" name= "ic">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
+</div>
+{{/if}}
+
+{{#if this.ic}}
+<!--IC Input Field--> 
+<div class="form-group" id="ic" name= "ic">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}" onload="inputIC({{#if this.ic}}{{this.ic}}{{/if}});">
+</div>
+{{/if}}
+
+<!--Name Input Field
+<div class="form-group" style="padding: 5px;">
+	<label for="fullname">Fullname</label>
+	<input type="text" class="form-control" id="fullname" name= "fullname" placeholder="Enter Fullname" value = "{{this.fullname}}">
+</div>-->
+
+<!--Age Input Field
+<div class="form-group" id="age" name= "age">
+	<input type="hidden" class="form-control" id="age" name= "age" value="0">
+</div>-->
+	
+<!--Home Address Input Field--> 				
+<div class="form-group" style="padding: 5px;">
+	<label for="home_address">Home address</label>
+	<input type="text" class="form-control" id="home_address" name="home_address" placeholder="Enter Home Address" value="{{this.home_address}}">
+</div>
+
+<!--Phone Number Input Field--> 
+<div class="form-group" style="padding: 5px;">
+	<label for="phone_number">Phone Number</label>
+	<input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Eg: 0123456789" value="{{this.phone_number}}">
+</div>
+
+
+<div class="form-group" style="padding: 5px;">
+	<div class="btn-group">
+		<button type="submit" class="btn btn-primary" style="padding: 5px;">Update Profile</button>
+	</div>
+</div>

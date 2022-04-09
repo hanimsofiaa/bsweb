@@ -301,10 +301,4 @@ exports.update_profile_id = (req, res) => {
     }
 
 
-
-
-
-
-
-
 }

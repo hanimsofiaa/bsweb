@@ -8,6 +8,7 @@
 	</ul>
 </nav>-->
 
+
 <nav>
     <div class="logo-name">
         <div class="logo-image">
@@ -16,32 +17,31 @@
 
         <span class="logo_name">BARIACT</span>
     </div>
-
+	
     <div class="menu-items">
-        
         <ul class="nav-links">
-            <li><a href="/">
+            <li><a href="/doctor/dashboard">
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dashboard</span>
             </a></li>
-            <li><a href="/diet/view">
+            <li><a href="/doctor/diet">
                 <i class="uil uil-utensils"></i>
                 <span class="link-name">Diet</span>
             </a></li>
-            <li><a href="/exercise/view">
+            <li><a href="/doctor/exercise">
                 <i class="uil uil-basketball"></i>
                 <span class="link-name">Exercise</span>
             </a></li>
-            <li><a href="/screening/view">
+			<li><a href="/doctor/screening">
                 <i class="uil uil-clipboard-alt"></i>
                 <span class="link-name">Screening Form</span>
             </a></li>   
-                <li><a href="/analytics">
+                <li><a href="/doctor/analytics">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
             </a></li>
             
-            <li><a href="/profile/display">
+            <li><a href="/doctor/profile">
                 <i class="uil uil-user-circle"></i>
                 <span class="link-name">Profile</span>
             </a></li>
@@ -60,12 +60,12 @@
                 <a href="#">
                     <i class="uil uil-moon"></i>
                 <span class="link-name">Dark Mode</span>
-                </a>
+				</a>
 
-                <div class="mode-toggle">
-                    <span class="switch"></span>
-                </div>
-            </li>
+				<div class="mode-toggle">
+					<span class="switch"></span>
+				</div>
+			</li>
         </ul>        
     </div>
 </nav>
@@ -124,18 +124,12 @@
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
                                 {{#each rows}}
-                                <a href="/profile/update/{{this.id}}" class="btn btn-primary float-right">Edit My Profile</a>
+                                <a href="/doctor/profile/{{this.id}}" class="btn btn-primary float-right">Edit My Profile</a>
                                 <center><h6>Last Update on {{this.updatedAt}}</h6></center>
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     
                                     <table class="table table-bordered">
-                                         <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Assigned Doctor :</th>                                               
-                                                <th scope="col" class="text-left">{{this.assignedTo}}</th>
-                                            </tr>
-                                        </thead>
-                                        
+                                       
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-left">Home Address :</th>                                               
@@ -148,67 +142,7 @@
                                                 <th scope="col" class="text-left">Phone Number :</th>                                                
                                                 <th scope="col" class="text-left">{{this.phone_number}}</th>
                                             </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Gender :</th>                                     
-                                                <th scope="col" class="text-left">{{this.gender}}</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Age :</th>                                     
-                                                <th scope="col" class="text-left">{{this.age}}</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Marital Status :</th>                                               
-                                                <th scope="col" class="text-left">{{this.marital_status}}</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Physical Activity Level :</th>                                          
-                                                <th scope="col" class="text-left">{{this.activity_level}}</th>
-                                            </tr>
-                                        </thead>
-                                         <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">BMI :</th>                                               
-                                                <th scope="col" class="text-left">{{this.bmi}}</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Height :</th>                                               
-                                                <th scope="col" class="text-left">{{this.height}}cm</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Surgery Status :</th>                                               
-                                                <th scope="col" class="text-left">{{this.surgery_status}}</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Current Weight :</th>                                               
-                                                <th scope="col" class="text-left">{{this.curr_weight}}kg</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Weight Before Surgery :</th>                                               
-                                                <th scope="col" class="text-left">{{this.before_surg_weight}}kg</th>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" class="text-left">Surgery Date :</th>                                               
-                                                <th scope="col" class="text-left">{{this.surgery_date}}</th>
-                                            </tr>
-                                        </thead>                                     
+                                        </thead>                                    
                                     </table>                    
                                 </div>
                                 {{/each}} 
@@ -219,7 +153,7 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/profile/add" class="btn btn-primary float-right" >Update New Profile</a>
+                                <a href="/doctor/profile/add" class="btn btn-primary float-right" >Update New Profile</a>
                             </div>
                             
                             {{/if}}
