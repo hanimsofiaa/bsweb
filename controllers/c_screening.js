@@ -61,10 +61,7 @@ exports.add_screening = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-
-
-    const { ic, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
-
+    const { ic, fullname, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
 
     //calculate score
     var nonum = 0;
@@ -104,7 +101,7 @@ exports.add_screening = (req, res) => {
     console.log(finalscore);
     const score = finalscore;
 
-    db.query('INSERT INTO screening SET ic = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?, createdAt = ?, updatedAt = ?', [ic, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO screening SET ic = ?, fullname = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?, createdAt = ?, updatedAt = ?', [ic, fullname, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_screening_add', {
@@ -140,7 +137,7 @@ exports.update_screening_id = (req, res) => {
     const updatedAt = new Date(Date.now());
 
 
-    const { ic, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
+    const { ic, fullname, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
 
     //calculate score
     var nonum = 0;
@@ -181,7 +178,7 @@ exports.update_screening_id = (req, res) => {
     const score = finalscore;
 
 
-    db.query('UPDATE screening SET ic = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?,  updatedAt = ? WHERE id = ?', [ic, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, updatedAt, req.params.id], (err, rows) => {
+    db.query('UPDATE screening SET ic = ?, fullname = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?,  updatedAt = ? WHERE id = ?', [ic, fullname, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 

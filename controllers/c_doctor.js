@@ -171,7 +171,7 @@ exports.add_profile = (req, res) => {
     try {
         console.log(req.body);
 
-        const { ic, home_address, phone_number } = req.body;
+        const { ic, fullname, home_address, phone_number } = req.body;
 
         if (!home_address || !phone_number) {
             //render back to edit and pass the data back
@@ -186,7 +186,7 @@ exports.add_profile = (req, res) => {
                 console.log(error + "ic retrieve");
             } else {
                 //if there is no data for patient in patientdetails table, create new one
-                db.query('INSERT INTO doctordetails SET ?', { ic: ic, home_address: home_address, phone_number: phone_number, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
+                db.query('INSERT INTO doctordetails SET ?', { ic: ic, fullname: fullname, home_address: home_address, phone_number: phone_number, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
@@ -214,7 +214,7 @@ exports.update_profile_id = (req, res) => {
 
     try {
 
-        const { ic, home_address, phone_number } = req.body;
+        const { ic, fullname, home_address, phone_number } = req.body;
 
         if (!home_address || !phone_number) {
             //render back to edit and pass the data back
@@ -241,7 +241,7 @@ exports.update_profile_id = (req, res) => {
                 console.log(error + "ic retrieve");
             } else {
 
-                db.query('UPDATE doctordetails SET ic = ?, home_address = ?, phone_number = ?, updatedAt = ? WHERE id = ?', [ic, home_address, phone_number, updatedAt, req.params.id], (error, results) => {
+                db.query('UPDATE doctordetails SET ic = ?, fullname = ?, home_address = ?, phone_number = ?, updatedAt = ? WHERE id = ?', [ic, fullname, home_address, phone_number, updatedAt, req.params.id], (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
