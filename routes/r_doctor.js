@@ -36,9 +36,12 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
                         if (!err) { //if not error
                             //get patient's name
                             console.log("number of patients" + row.length);
-                            db.query('SELECT * FROM userdetails WHERE ic = ?', [row[0].ic], (error, patientdetails) => {
-                                res.render('v_d_profile', { rows, user: req.user, patientdetails });
-                            })
+                            /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
+                                res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
+                            })*/
+                            res.render('v_d_profile', { rows, user: req.user, row });
+
+
 
                         } else {
                             console.log(err);

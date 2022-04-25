@@ -50,11 +50,11 @@ exports.add_profile = (req, res) => {
     try {
         console.log(req.body);
 
-        const { ic, assignedTo, home_address, phone_number, marital_status, activity_level, height, surgery_status, curr_weight, before_surg_weight, surgery_date } = req.body;
+        const { ic, fullname, assignedTo, home_address, phone_number, marital_status, activity_level, height, surgery_status, curr_weight, before_surg_weight, surgery_date } = req.body;
 
 
 
-        console.log(ic + assignedTo + " 1. " + " 2. " + home_address + " 3. " + phone_number + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
+        console.log(ic + fullname + assignedTo + " 1. " + " 2. " + home_address + " 3. " + phone_number + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
 
         if (!home_address || !phone_number || !marital_status || !activity_level || !surgery_status || !curr_weight || !surgery_date || !height) {
             //render back to edit and pass the data back
@@ -131,7 +131,7 @@ exports.add_profile = (req, res) => {
                 console.log(error + "ic retrieve");
             } else {
                 //if there is no data for patient in patientdetails table, create new one
-                db.query('INSERT INTO patientdetails SET ?', { ic: ic, assignedTo: assignedTo, age: age, home_address: home_address, phone_number: phone_number, gender: gender, marital_status: marital_status, activity_level: activity_level, height: height, bmi: bmi, surgery_status: surgery_status, curr_weight: curr_weight, before_surg_weight: before_surg_weight, surgery_date: surgerydate, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
+                db.query('INSERT INTO patientdetails SET ?', { ic: ic, fullname: fullname, assignedTo: assignedTo, age: age, home_address: home_address, phone_number: phone_number, gender: gender, marital_status: marital_status, activity_level: activity_level, height: height, bmi: bmi, surgery_status: surgery_status, curr_weight: curr_weight, before_surg_weight: before_surg_weight, surgery_date: surgerydate, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
@@ -176,9 +176,9 @@ exports.update_profile_id = (req, res) => {
     try {
         console.log(req.body);
 
-        const { ic, home_address, phone_number, marital_status, activity_level, height, surgery_status, curr_weight, before_surg_weight, surgery_date } = req.body;
+        const { ic, fullname, home_address, phone_number, marital_status, activity_level, height, surgery_status, curr_weight, before_surg_weight, surgery_date } = req.body;
 
-        console.log(ic + " 1. " + " 2. " + home_address + " 3. " + phone_number + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
+        console.log(ic + fullname + " 1. " + " 2. " + home_address + " 3. " + phone_number + " 4. " + marital_status + " 5. " + activity_level + " 6. " + height + " 7. " + surgery_status + " 8. " + curr_weight + " 9. " + before_surg_weight + " 10. " + surgery_date);
 
         if (!home_address || !phone_number || !marital_status || !activity_level || !surgery_status || !curr_weight || !surgery_date || !height) {
             //render back to edit and pass the data back
@@ -274,7 +274,7 @@ exports.update_profile_id = (req, res) => {
                 console.log(error + "ic retrieve");
             } else {
 
-                db.query('UPDATE patientdetails SET ic = ?, age = ?, home_address = ?, phone_number = ?, gender = ?, marital_status = ?, activity_level = ?, height = ?, bmi = ?, surgery_status = ?, curr_weight = ?, before_surg_weight = ?, surgery_date = ?, updatedAt = ? WHERE id = ?', [ic, age, home_address, phone_number, gender, marital_status, activity_level, height, bmi, surgery_status, curr_weight, before_surg_weight, surgerydate, updatedAt, req.params.id], (error, results) => {
+                db.query('UPDATE patientdetails SET ic = ?, fullname = ?, age = ?, home_address = ?, phone_number = ?, gender = ?, marital_status = ?, activity_level = ?, height = ?, bmi = ?, surgery_status = ?, curr_weight = ?, before_surg_weight = ?, surgery_date = ?, updatedAt = ? WHERE id = ?', [ic, fullname, age, home_address, phone_number, gender, marital_status, activity_level, height, bmi, surgery_status, curr_weight, before_surg_weight, surgerydate, updatedAt, req.params.id], (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {

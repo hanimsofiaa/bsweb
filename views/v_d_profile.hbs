@@ -125,7 +125,7 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                {{#if patientdetails}}
+                                {{#if row}}
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     <table class="table table-bordered">
                                     
@@ -135,6 +135,11 @@
                                                     {{#each patientdetails}}                                   
                                                     <th scope="col" class="text-left">{{this.fullname}}</th>
                                                     {{/each}}
+                                                    <th scope="col" class="text-left">
+                                                        {{#each row}}                                   
+                                                        {{this.fullname}} ({{this.ic}}) <br>
+                                                        {{/each}}
+                                                    </th>
                                                 </tr>
                                             </thead>
                                     </table>
@@ -171,7 +176,7 @@
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
-                                <a href="/doctor/profile/add" class="btn btn-primary float-right" >Update New Profile</a>
+                                <a href="/doctor/profile/add" class="btn btn-primary float-right"><i class="uil uil-user-circle"></i> Update New Profile</a>
                             </div>
                             
                             {{/if}}
