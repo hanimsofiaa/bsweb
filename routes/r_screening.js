@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 
 });
 
-//router.get('/view', screeningContoller.view_screening); //function 1 - display ALL list food(no id is passed)
+//GET
 router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
@@ -24,7 +24,7 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                let removedScreening = req.query.removed; //if any food is deleted, set alert 
+                let removedScreening = req.query.removed; //if any screening is deleted, set alert 
                 res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening });
                 //res.render('v_p_screening');
             } else {
@@ -38,7 +38,7 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/add', screeningContoller.form_add_screening); //function 3 - display add form to add new food
+
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -60,11 +60,10 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/update/:id', screeningContoller.form_update_screening_id); //function 5 - display update form with data based on its id(pass id)
-//if there is request from user with jwt token
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     if (req.user) {
 
+        //if there is request from user with jwt token
         db.query('SELECT * FROM screening WHERE ic = ?', [req.user.ic], (err, row) => {
             //when done with connection
 
@@ -93,7 +92,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/:id', screeningContoller.delete_screening_id); //function 7 - delete existing data using its id(pass id)
 router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -131,7 +129,6 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/display/:id', screeningContoller.display_screening_id); //funciton 8 - display specific food based on its id(pass id)
 router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -169,16 +166,10 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-
-
-
 //POST
-router.post('/search', screeningContoller.find_screening); //function 2 - search food by name of meal(pass req.body for searchterm)
-router.post('/add', screeningContoller.add_screening); //function 4 - add new food(pass req.body for all data)
+router.post('/search', screeningContoller.find_screening); //function 2 - search screening by score(pass req.body)
+router.post('/add', screeningContoller.add_screening); //function 4 - add new screening(pass req.body)
 router.post('/update/:id', screeningContoller.update_screening_id); //function 6 - update existing data using its id(pass req.body)
-
-
-
 
 
 module.exports = router;

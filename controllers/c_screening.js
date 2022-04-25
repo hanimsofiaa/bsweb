@@ -13,13 +13,13 @@ const db = mysql.createConnection({
 
 });
 
-//function 1 - display ALL list food(no id is passed)
+//function 1 - display ALL list screening(no id is passed)
 exports.view_screening = (req, res) => {
     db.query('SELECT * FROM screening', (err, rows) => {
         //when done with connection
 
         if (!err) { //if not error
-            let removedScreening = req.query.removed; //if any food is deleted, set alert 
+            let removedScreening = req.query.removed; //if any screening is deleted, set alert 
             res.render('v_p_screening', { rows, removedScreening: removedScreening });
             //res.render('v_p_screening');
         } else {
@@ -29,10 +29,10 @@ exports.view_screening = (req, res) => {
     })
 }
 
-//function 2 - search food by name of meal(pass req.body)
+//function 2 - search screening by score(pass req.body)
 exports.find_screening = (req, res) => {
 
-    let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    let searchTerm = req.body.search; //get req.body.search from v_p_screening(name="search")
 
     db.query('SELECT * FROM screening WHERE score LIKE ? OR createdAt LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
@@ -47,13 +47,13 @@ exports.find_screening = (req, res) => {
 
 }
 
-//function 3 - display add form to add new food
+//function 3 - display add form to add new screening
 exports.form_add_screening = (req, res) => {
     res.render('v_p_screening_add');
 }
 
 
-//function 4 - add new food(pass req.body)
+//function 4 - add new screening(pass req.body)
 exports.add_screening = (req, res) => {
 
     const createdAt = new Date(Date.now());
@@ -224,7 +224,7 @@ exports.delete_screening_id = (req, res) => {
     }
 }
 
-//funciton 8 - display specific food based on its id(pass id)
+//funciton 8 - display specific screening based on its id(pass id)
 exports.display_screening_id = (req, res) => {
 
     db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
