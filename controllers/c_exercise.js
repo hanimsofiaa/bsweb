@@ -13,13 +13,13 @@ const db = mysql.createConnection({
 
 });
 
-//function 1 - display ALL list food(no id is passed)
+//function 1 - display ALL list exercise(no id is passed)
 exports.view_exercise = (req, res) => {
     db.query('SELECT * FROM exercise', (err, rows) => {
         //when done with connection
 
         if (!err) { //if not error
-            let removedExercise = req.query.removed; //if any food is deleted, set alert 
+            let removedExercise = req.query.removed; //if any exercise is deleted, set alert 
             res.render('v_p_exercise', { rows, removedExercise: removedExercise });
             //res.render('v_p_exercise');
         } else {
@@ -29,10 +29,10 @@ exports.view_exercise = (req, res) => {
     })
 }
 
-//function 2 - search food by name of meal(pass req.body)
+//function 2 - search exercise by name of exercise(pass req.body)
 exports.find_exercise = (req, res) => {
 
-    let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    let searchTerm = req.body.search; //get req.body.search from v_p_exercise(name="search")
 
     db.query('SELECT * FROM exercise WHERE activity LIKE ? OR duration LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
@@ -47,13 +47,13 @@ exports.find_exercise = (req, res) => {
 
 }
 
-//function 3 - display add form to add new food
+//function 3 - display add form to add new exercise
 exports.form_add_exercise = (req, res) => {
     res.render('v_p_exercise_add');
 }
 
 
-//function 4 - add new food(pass req.body)
+//function 4 - add new exercise(pass req.body)
 exports.add_exercise = (req, res) => {
 
     const createdAt = new Date(Date.now());
@@ -106,8 +106,6 @@ exports.update_exercise_id = (req, res) => {
 
     const { ic, activity, duration, step_count, distance } = req.body;
 
-
-
     db.query('UPDATE exercise SET ic = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
@@ -151,7 +149,7 @@ exports.delete_exercise_id = (req, res) => {
     }
 }
 
-//funciton 8 - display specific food based on its id(pass id)
+//funciton 8 - display specific exercise based on its id(pass id)
 exports.display_exercise_id = (req, res) => {
 
     db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {

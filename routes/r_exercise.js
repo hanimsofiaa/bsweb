@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 
 });
 
-//router.get('/view', exerciseContoller.view_exercise); //function 1 - display ALL list food(no id is passed)
+//GET
 router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
@@ -24,7 +24,7 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                let removedExercise = req.query.removed; //if any food is deleted, set alert 
+                let removedExercise = req.query.removed; //if any exercise is deleted, set alert 
                 res.render('v_p_exercise', { user: req.user, rows, removedExercise: removedExercise });
                 //res.render('v_p_exercise');
             } else {
@@ -38,7 +38,6 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/add', exerciseContoller.form_add_exercise); //function 3 - display add form to add new food
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -60,7 +59,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/update/:id', exerciseContoller.form_update_exercise_id); //function 5 - display update form with data based on its id(pass id)
+
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -94,8 +93,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-//router.get('/:id', exerciseContoller.delete_exercise_id); //function 7 - delete existing data using its id(pass id)
 router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -133,8 +130,6 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-//router.get('/display/:id', exerciseContoller.display_exercise_id); //funciton 8 - display specific food based on its id(pass id)
 router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -171,9 +166,9 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-
-router.post('/search', exerciseContoller.find_exercise); //function 2 - search food by name of meal(pass req.body for searchterm)
-router.post('/add', exerciseContoller.add_exercise); //function 4 - add new food(pass req.body for all data)
+//POST
+router.post('/search', exerciseContoller.find_exercise); //function 2 - search exercise by name of exercise(pass req.body for searchterm)
+router.post('/add', exerciseContoller.add_exercise); //function 4 - add new exercise(pass req.body for all data)
 router.post('/update/:id', exerciseContoller.update_exercise_id); //function 6 - update existing data using its id(pass req.body)
 
 
