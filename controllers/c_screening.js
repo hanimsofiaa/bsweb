@@ -62,9 +62,8 @@ exports.add_screening = (req, res) => {
     console.log(createdAt, updatedAt);
 
 
-    const ic = 000000; //temporary
 
-    const { depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
+    const { ic, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
 
 
     //calculate score
@@ -140,9 +139,8 @@ exports.update_screening_id = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
-    const ic = 000000; //temporary
 
-    const { depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
+    const { ic, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
 
     //calculate score
     var nonum = 0;

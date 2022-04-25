@@ -159,15 +159,18 @@
                               
                     <!--Password Input Field-->                            
                     <div class="form-group" style="padding:5px;">
-                      <label for="password">Password</label>
+                      <label for="password">Password</label><br>
+                      <small>(At least one number, one special character and one uppercase and lowercase letter, and at least 8 or more characters)</small> 
                       <div class="input-group">
                         <input type="password" id="password" name="password" class="input form-control" placeholder="Password" aria-label="password" aria-describedby="basic-addon1" pattern="(?=.*[!@#$%^&*)(+=._-])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number, one special character and one uppercase and lowercase letter, and at least 8 or more characters" onkeyup="validatePassword(); validatePasswordConfirm();" required>
+                        
                         <div class="input-group-append">
                           <span class="input-group-text" onclick="password_show_hide();">
                             <i class="bi bi-eye-fill" id="P_show_eye"></i>
                             <i class="bi bi-eye-slash-fill d-none" id="P_hide_eye"></i>
                           </span>
-                        </div>             
+                        </div> 
+                                   
                       </div>
                       <small id="Pincorrect" class="invalid" style="display: none; color:red"><i class="bi bi-exclamation-circle-fill"></i> Must contain at least one number, one special character and one uppercase and lowercase letter, and at least 8 or more characters</small>
                       <small id="Pcorrect" class="valid" style="display: none; color:rgb(146, 231, 17);"><i class="bi bi-check-circle-fill"></i> Correct</small>

@@ -74,7 +74,7 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <h6>{{user.role}},{{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+        <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     
     <div class="dash-content">
@@ -118,18 +118,36 @@
                                 <h5>Profile Page</h5> 
                                 
                             </div>
+                            
+                            
                             {{#if rows}}
                             <div class="card-body">
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
+                                {{#if patientdetails}}
+                                <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
+                                    <table class="table table-bordered">
+                                    
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="text-left">Assigned Patient(s) :</th>  
+                                                    {{#each patientdetails}}                                   
+                                                    <th scope="col" class="text-left">{{this.fullname}}</th>
+                                                    {{/each}}
+                                                </tr>
+                                            </thead>
+                                    </table>
+                                </div>
+                                {{/if}}
+                                
                                 {{#each rows}}
                                 <a href="/doctor/profile/{{this.id}}" class="btn btn-primary float-right">Edit My Profile</a>
                                 <center><h6>Last Update on {{this.updatedAt}}</h6></center>
                                 <div class="col d-flex justify-content-left" style="text-align: left; padding: 10px">
                                     
                                     <table class="table table-bordered">
-                                       
+                                        
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-left">Home Address :</th>                                               

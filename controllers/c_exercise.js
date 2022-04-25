@@ -63,9 +63,8 @@ exports.add_exercise = (req, res) => {
 
     var numstep = parseInt(req.body.step_count);
     const calories_burn = numstep * 0.04;
-    const ic = 000000; //temporary
 
-    const { activity, duration, step_count, distance } = req.body;
+    const { ic, activity, duration, step_count, distance } = req.body;
 
     db.query('INSERT INTO exercise SET ic = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
         //when done with connection
@@ -104,9 +103,10 @@ exports.update_exercise_id = (req, res) => {
 
     var numstep = parseInt(req.body.step_count);
     const calories_burn = numstep * 0.04;
-    const ic = 000000; //temporary
 
-    const { activity, duration, step_count, distance } = req.body;
+    const { ic, activity, duration, step_count, distance } = req.body;
+
+
 
     db.query('UPDATE exercise SET ic = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
         //when done with connection

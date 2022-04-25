@@ -20,7 +20,7 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM exercise', (err, rows) => {
+        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
             //when done with connection
 
             if (!err) { //if not error
@@ -43,7 +43,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM exercise', (err, rows) => {
+        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
             //when done with connection
 
             if (!err) { //if not error
@@ -65,12 +65,12 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM exercise', (err, row) => {
+        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
 
-                db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (error, rows) => {
+                db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (error, rows) => {
                     //when done with connection
 
                     if (!error) { //if not error
@@ -100,13 +100,13 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM exercise', (err, row) => {
+        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
 
                 if (req.params.id) {
-                    db.query('DELETE FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
+                    db.query('DELETE FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
                         //when done with connection
 
                         if (!err) { //if not error
@@ -139,13 +139,13 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
 
-        db.query('SELECT * FROM exercise', (err, row) => {
+        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
             //when done with connection
 
             if (!err) { //if not error
 
                 if (req.params.id) {
-                    db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
+                    db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
                         //when done with connection
 
                         if (!err) { //if not error

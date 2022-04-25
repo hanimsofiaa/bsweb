@@ -1,4 +1,17 @@
 <center><h3><u><b>Depression Screening Form</b></u></h3></center>
+{{#if user.ic}}
+<!--IC Input Field--> 
+<div class="form-group" id="ic" name= "ic">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
+</div>
+{{/if}}
+
+{{#if this.ic}}
+<!--IC Input Field--> 
+<div class="form-group" id="ic" name= "ic">
+<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}" onload="inputIC({{#if this.ic}}{{this.ic}}{{/if}});">
+</div>
+{{/if}}
 
 <h6>1. Do you feel that you don’t look attractive anymore? </h6>
 <div class="form-check">

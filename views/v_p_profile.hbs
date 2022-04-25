@@ -74,7 +74,7 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <h6>{{user.role}},{{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+        <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     
     <div class="dash-content">
@@ -214,11 +214,18 @@
                                 {{/each}} 
                             </div>
                             {{else}}
+                            <div class="container" style="background-color: #ffffff;">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Please Update Your Profile. </strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
                             
                              <div class="card-body">
                                 <!--<h5 class="card-title">
                                     Hey {{user.ic}}, Welcome Back.
                                 </h5>-->
+                            
                                 <a href="/profile/add" class="btn btn-primary float-right" >Update New Profile</a>
                             </div>
                             

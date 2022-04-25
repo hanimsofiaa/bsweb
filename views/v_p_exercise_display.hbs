@@ -72,7 +72,7 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-		<h6>{{user.role}}, {{user.email}}, {{user.ic}}</h6>
+		<h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     <div class="dash-content">
 		
@@ -117,7 +117,7 @@
 								<th scope="col">Activity</th> 
 								<th scope="col" class="text-center">Duration</th>
 								<th scope="col" class="text-center">Step Count</th>
-								<th scope="col" class="text-center">Distance</th>
+								
 								<th scope="col" class="text-center">Calories Burn(kcal)</th>
 								<th scope="col">Created on</th> 
 								<th scope="col">Last Update</th> 
@@ -128,7 +128,7 @@
 								<th scope="row">{{this.activity}}</th> 
 								<td>{{{this.duration}}}</td>
 								<td>{{{this.step_count}}}</td>
-								<td>{{{this.distance}}}</td>
+								
 								<td>{{{this.calories_burn}}}</td>
 								<td>{{{this.createdAt}}}</td>
 								<td>{{this.updatedAt}}</td> 

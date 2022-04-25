@@ -197,7 +197,26 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
         res.redirect('/login');
     }
 });
+router.get('/add_foodlist', authContoller.isLoggedIn, (req, res) => {
+    //if there is request from user with jwt token
+    if (req.user) {
 
+        db.query('SELECT * FROM diets', (err, rows) => {
+            //when done with connection
+
+            if (!err) { //if not error
+                res.render('v_p_diet_search', { user: req.user, rows });
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
+        })
+
+    } else {
+        res.redirect('/login');
+    }
+});
 
 //POST
 router.post('/search', dietContoller.find_diet); //function 2 - search food by name of meal(pass req.body for searchterm)

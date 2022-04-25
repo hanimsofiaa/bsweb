@@ -75,7 +75,7 @@
 	
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-		<h6>{{user.role}},{{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+		<h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
 	
     <div class="dash-content">
@@ -139,10 +139,11 @@
 				</div>
 				
 				<table class="table table-bordered">
+					
 					<thead>
 						<tr>
 							<!--<th scope="col">#</th>-->
-							<th scope="col" class="text-center">Patient's Name</th>
+							
 							<th scope="col" class="text-center">Food</th>
 							<th scope="col" class="text-center">Meal</th>
 							<th scope="col" class="text-center">Serving Size</th>
@@ -153,12 +154,17 @@
 						
 						</tr>
 					</thead>
+					<thead>
+					{{#each patientdetails}}
+					<td>Patient's Name: {{{this.fullname}}}</td>
+					{{/each}}
+					</thead>
 					<tbody>
-						
-						{{#each rows}}
+					
+						{{#each patientdiet}}	
 						<tr>
 							<!--<th scope="row">{{{this.id}}}</th>-->
-							<td>{{{this.ic}}}</td>
+							
 							<td>{{{this.name}}}</td>
 							<td>{{{this.type}}}</td>
 							<td>{{{this.serving_size}}}</td>

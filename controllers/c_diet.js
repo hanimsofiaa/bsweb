@@ -63,9 +63,9 @@ exports.add_diet = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-    const { name, calories, type, serving_size, serving_type } = req.body;
+    const { ic, name, calories, type, serving_size, serving_type } = req.body;
 
-    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO diets SET ic = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_add', {
@@ -100,9 +100,9 @@ exports.update_diet_id = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
-    const { name, calories, type, serving_size, serving_type } = req.body;
+    const { ic, name, calories, type, serving_size, serving_type } = req.body;
 
-    db.query('UPDATE diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
+    db.query('UPDATE diets SET ic = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 
@@ -169,11 +169,13 @@ exports.form_search_foodlist = (req, res) => {
 exports.search_foodlist_db = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet_search(name="search")
+    const ic = req.body.ic;
+    console.log("my ic for search diet" + ic);
 
     db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet_search', { rows, alert: 'Display Searched Food', searchword: searchTerm });
+            res.render('v_p_diet_search', { ic: req.body.ic, rows, alert: 'Display Searched Food', searchword: searchTerm });
         } else {
             console.log(err);
         }
@@ -201,9 +203,11 @@ exports.add_search_diet = (req, res) => {
 
     console.log(newCal);
 
-    const { name, type, serving_type } = req.body;
+    const { ic, name, type, serving_type } = req.body;
 
-    db.query('INSERT INTO diets SET name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+    console.log("pass my ic" + req.body.ic);
+
+    db.query('INSERT INTO diets SET  name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_search', {

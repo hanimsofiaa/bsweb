@@ -1,5 +1,19 @@
 <div class="col-6">
 	<div class="form-floating mb-3">
+		
+		{{#if user.ic}}
+		<!--IC Input Field--> 
+		<div class="form-group" id="ic" name= "ic">
+		<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}" onload="inputIC({{#if user.ic}}{{user.ic}}{{/if}});">
+		</div>
+		{{/if}}
+
+		{{#if this.ic}}
+		<!--IC Input Field--> 
+		<div class="form-group" id="ic" name= "ic">
+		<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}" onload="inputIC({{#if this.ic}}{{this.ic}}{{/if}});">
+		</div>
+		{{/if}}
 	
 		<select class="form-select"  id="activity" placeholder="Activity Name" name="activity" id="activity" value="{{this.activity}}"aria-label="activity" aria-selected="{{{this.activity}}}" aria-valuetext="{{{this.activity}}}" aria-valuenow="{{{this.activity}}}" >
 			
@@ -45,6 +59,7 @@
 	</div>
 </div>
 
+<!--
 <div class="col-1" style="height: min-content;"><center><h5>OR</h5></center></div>
 
 <div class="col-6">
@@ -52,7 +67,7 @@
 		<input type="number" class="form-control" id="distance" placeholder="Distance" name="distance" id="distance" value="{{this.distance}}">
 		<label for="distance">Distance (m)</label>
 	</div>
-</div>
+</div>-->
 
 
 <div class="col-12 d-grid">
