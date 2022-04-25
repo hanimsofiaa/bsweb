@@ -15,12 +15,8 @@ const db = mysql.createConnection({
 
 });
 
-
-//GET
-
 //GET
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {
-    //if there is request from user with jwt token
     //if there is request from user with jwt token
     if (req.user) {
 
@@ -63,7 +59,7 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/add', dietContoller.form_add_diet); //function 3 - display add form to add new food
+
 router.get('/profile/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -97,8 +93,6 @@ router.get('/profile/add', authContoller.isLoggedIn, (req, res) => {
         res.redirect('/login');
     }
 });
-
-//router.get('/update/:id', dietContoller.form_update_diet_id); //function 5 - display update form with data based on its id(pass id)
 
 router.get('/profile/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
@@ -149,12 +143,7 @@ router.get('/profile/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-
-
-
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
-
 
     db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
@@ -214,15 +203,9 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
 });
 
-
-
-//router.get('/view', dietContoller.view_diet); //function 1 - display ALL list food(no id is passed)
 router.get('/diet', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-
-
-
         db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
             if (row.length === 0) {
@@ -376,7 +359,6 @@ router.get('/exercise', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/display/:id', exerciseContoller.display_exercise_id); //funciton 8 - display specific food based on its id(pass id)
 router.get('/exercise/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -413,7 +395,6 @@ router.get('/exercise/:id', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-//router.get('/view', screeningContoller.view_screening); //function 1 - display ALL list food(no id is passed)
 router.get('/screening', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
@@ -478,8 +459,6 @@ router.get('/screening', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-//router.get('/display/:id', screeningContoller.display_screening_id); //funciton 8 - display specific food based on its id(pass id)
 router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -517,22 +496,11 @@ router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-
-
-router.post('/diet/search', doctorContoller.find_diet); //function 2 - search food by name of meal(pass req.body for searchterm)
-
-router.post('/exercise/search', doctorContoller.find_exercise); //function 2 - search food by name of meal(pass req.body for searchterm)
-
-router.post('/screening/search', doctorContoller.find_screening); //function 2 - search food by name of meal(pass req.body for searchterm)
-
-
 //POST
-router.post('/profile/add', doctorContoller.add_profile); //function 4 - add new food(pass req.body for all data)
-
-
-router.post('/profile/:id', doctorContoller.update_profile_id); //function 6 - update existing data using its id(pass req.body)
-
-
-
+router.post('/diet/search', doctorContoller.find_diet); //function 3 - search database food(req.body passed)
+router.post('/exercise/search', doctorContoller.find_exercise); //function 5 - search database exercise(req.body passed)
+router.post('/screening/search', doctorContoller.find_screening); //function 8 - search database screening(req.body passed)
+router.post('/profile/add', doctorContoller.add_profile); //function 10 - add doctor profile
+router.post('/profile/:id', doctorContoller.update_profile_id); //function 11 - edit doctor profile
 
 module.exports = router;

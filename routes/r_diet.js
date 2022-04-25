@@ -17,7 +17,6 @@ const db = mysql.createConnection({
 
 
 //GET
-//router.get('/view', dietContoller.view_diet); //function 1 - display ALL list food(no id is passed)
 router.get('/view', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -42,7 +41,6 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/foodlist', dietContoller.form_search_foodlist); //function 9 - display search form to search existing food
 router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -64,8 +62,6 @@ router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-//router.get('/add', dietContoller.form_add_diet); //function 3 - display add form to add new food
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -87,7 +83,6 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-//router.get('/update/:id', dietContoller.form_update_diet_id); //function 5 - display update form with data based on its id(pass id)
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -120,8 +115,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-//router.get('/:id', dietContoller.delete_diet_id); //function 7 - delete existing data using its id(pass id)
 router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -159,9 +152,6 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-
-//router.get('/display/:id', dietContoller.display_diet_id); //funciton 8 - display specific food based on its id(pass id)
 router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {

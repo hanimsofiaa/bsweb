@@ -30,7 +30,8 @@ exports.view_diet = (req, res) => {
     })
 }
 
-//function 1 - display ALL list food(no id is passed)
+
+//function 2 - display specific diet(ID is passed)
 exports.display_diet_id = (req, res) => {
     db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
         //when done with connection
@@ -44,6 +45,8 @@ exports.display_diet_id = (req, res) => {
     })
 }
 
+
+//function 3 - search database food(req.body passed)
 exports.find_diet = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
@@ -61,6 +64,7 @@ exports.find_diet = (req, res) => {
 
 }
 
+//function 4 - display ALL list exercise(no id is passed)
 exports.view_exercise = (req, res) => {
     db.query('SELECT * FROM exercise', (err, rows) => {
         //when done with connection
@@ -75,7 +79,7 @@ exports.view_exercise = (req, res) => {
     })
 }
 
-//function 2 - search food by name of meal(pass req.body)
+//function 5 - search database exercise(req.body passed)
 exports.find_exercise = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
@@ -93,7 +97,7 @@ exports.find_exercise = (req, res) => {
 
 }
 
-//funciton 8 - display specific food based on its id(pass id)
+//function 6 - display specific exercise(ID is passed)
 exports.display_exercise_id = (req, res) => {
 
     db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
@@ -108,9 +112,7 @@ exports.display_exercise_id = (req, res) => {
     })
 }
 
-
-
-//function 1 - display ALL list food(no id is passed)
+//function 7 - display ALL list screening(no id is passed)
 exports.view_screening = (req, res) => {
     db.query('SELECT * FROM screening', (err, rows) => {
         //when done with connection
@@ -125,7 +127,7 @@ exports.view_screening = (req, res) => {
     })
 }
 
-//function 2 - search food by name of meal(pass req.body)
+//function 8 - search database screening(req.body passed)
 exports.find_screening = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
@@ -144,7 +146,7 @@ exports.find_screening = (req, res) => {
 }
 
 
-//funciton 8 - display specific food based on its id(pass id)
+//function 9 - display specific screening based on its id(pass id)
 exports.display_screening_id = (req, res) => {
 
     db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
@@ -159,7 +161,8 @@ exports.display_screening_id = (req, res) => {
     })
 }
 
-//function 4 - add new food(pass req.body)
+
+//function 10 - add doctor profile
 exports.add_profile = (req, res) => {
 
     const createdAt = new Date(Date.now());
@@ -203,7 +206,7 @@ exports.add_profile = (req, res) => {
     }
 }
 
-//function 6 - update existing data using its id(pass req.body)
+//function 11 - edit doctor profile
 exports.update_profile_id = (req, res) => {
 
     const createdAt = new Date(Date.now());
