@@ -189,7 +189,7 @@ exports.add_search_diet = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
-    console.log(createdAt, updatedAt);
+    //console.log(createdAt, updatedAt);
 
     var size = req.body.serving_size;
     const serving_size = parseInt(size);
@@ -197,15 +197,15 @@ exports.add_search_diet = (req, res) => {
     var cal = req.body.calories;
     let calories = parseInt(cal);
 
-    console.log(serving_size, calories);
+    //console.log(serving_size, calories);
 
     const newCal = calories * serving_size;
 
-    console.log(newCal);
+    //console.log(newCal);
 
     const { ic, name, type, serving_type } = req.body;
 
-    console.log("pass my ic" + req.body.ic);
+    //console.log("pass my ic" + req.body.ic);
 
     db.query('INSERT INTO diets SET  name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection

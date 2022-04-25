@@ -88,7 +88,6 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 });
 
 //router.get('/update/:id', dietContoller.form_update_diet_id); //function 5 - display update form with data based on its id(pass id)
-
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -197,6 +196,7 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
         res.redirect('/login');
     }
 });
+
 router.get('/add_foodlist', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -224,7 +224,5 @@ router.post('/add', dietContoller.add_diet); //function 4 - add new food(pass re
 router.post('/update/:id', dietContoller.update_diet_id); //function 6 - update existing data using its id(pass req.body)
 router.post('/foodlist', dietContoller.search_foodlist_db); //function 10 - search specific food based on req.body.search
 router.post('/add_foodlist', dietContoller.add_search_diet); //function 11 - add specific food after search from database food
-
-
 
 module.exports = router;
