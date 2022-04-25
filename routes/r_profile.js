@@ -4,8 +4,7 @@ const router = express.Router();
 const profileContoller = require('../controllers/c_profile');
 const authContoller = require('../controllers/c_auth');
 
-//localhost:5050/diet/...
-//GET(diet/foodlist) before get page, must check user logged in
+//localhost:5050/profile/...
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -18,7 +17,6 @@ const db = mysql.createConnection({
 
 //GET
 router.get('/display', authContoller.isLoggedIn, (req, res) => {
-    //if there is request from user with jwt token
     //if there is request from user with jwt token
     if (req.user) {
 
@@ -38,9 +36,6 @@ router.get('/display', authContoller.isLoggedIn, (req, res) => {
     }
 });
 
-
-
-//router.get('/add', dietContoller.form_add_diet); //function 3 - display add form to add new food
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
@@ -74,8 +69,6 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
         res.redirect('/login');
     }
 });
-
-//router.get('/update/:id', dietContoller.form_update_diet_id); //function 5 - display update form with data based on its id(pass id)
 
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
@@ -129,14 +122,9 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-
-
-
 //POST
-router.post('/add', profileContoller.add_profile); //function 4 - add new food(pass req.body for all data)
-router.post('/update/:id', profileContoller.update_profile_id); //function 6 - update existing data using its id(pass req.body)
-
-
+router.post('/add', profileContoller.add_profile); //function 2 - add new profile(pass req.body)
+router.post('/update/:id', profileContoller.update_profile_id); //function 4 - update existing data using its id(pass req.body)
 
 
 module.exports = router;

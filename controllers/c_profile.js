@@ -15,13 +15,13 @@ const db = mysql.createConnection({
 });
 
 
-//function 3 - display add form to add new food
+//function 1 - display add form to add new profile data
 exports.form_add_profile = (req, res) => {
     res.render('v_p_profile_add');
 }
 
 
-//function 4 - add new food(pass req.body)
+//function 2 - add new profile(pass req.body)
 exports.add_profile = (req, res) => {
 
     /*const createdAt = new Date(Date.now());
@@ -153,7 +153,7 @@ exports.add_profile = (req, res) => {
 
 }
 
-//function 5 - display update form with data based on its id(pass id)
+//function 3 - display update form with data based on its id(pass id)
 exports.form_update_profile_id = (req, res) => {
     db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (err, rows) => {
         //when done with connection
@@ -167,7 +167,7 @@ exports.form_update_profile_id = (req, res) => {
     })
 }
 
-//function 6 - update existing data using its id(pass req.body)
+//function 4 - update existing data using its id(pass req.body)
 exports.update_profile_id = (req, res) => {
 
     const createdAt = new Date(Date.now());
