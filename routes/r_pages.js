@@ -26,13 +26,22 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
-    db.query('SELECT calories, updatedAt FROM diets', (err, rows) => {
+    db.query('SELECT * FROM diets WHERE ic = ?', [req.user.ic], (err, rows) => {
 
         if (!err) { //if not error
 
             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                 if (!error) {
-                    res.render('v_p_analytics', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, result) => {
+
+                        if (!err) { //if not error
+                            res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(err);
+                        }
+
+                    })
+
                 } else {
                     console.log(error);
                 }

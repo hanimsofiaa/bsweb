@@ -68,71 +68,91 @@
 	
     <div class="dash-content">
 		<div class="overview">
-			
 			<div class="title">
                 <i class="uil uil-chart"></i>
                 <span class="text">Your Calories Analytics</span>
             </div>
-			
-			<div class="activity">
-                <canvas id="myChart" width="200" height="200"></canvas>
+			<div class="boxes">
+                <canvas id="myChart"></canvas>
                 <script>
+                   
                 const ctx = document.getElementById('myChart').getContext('2d');
                // const labels = Utils.months({count: 7});
+                //const labels =  {{#each rows}}{{{this.type}}}{{/each}};
+                
+                var labels = [];
+                var typeofmeal;
+                {{#each rows}}
+                    typeofmeal = "{{{this.updatedAt}}}";
+                    console.log(typeofmeal);
+                    console.log(typeof typeofmeal);
+                    labels.push(typeofmeal);
+                {{/each}}
+                
                 
                 const myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                        labels: labels,
                         //labels: labels,
                         datasets: [{
-                            label: '# of Calories',
-                          
-                            data: [12, 19, 3, 5, 2, 3, 7],
-                            fill: true,
-                            
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderWidth: 1
+                            label: 'Total Food Calories Intake',
+                            data: [ {{#each rows}}{{{this.calories}}},{{/each}} ],
+                            borderWidth: 1,
+                             backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+                             
+                            ]
                         }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
                     }
+                    
+                    
                 });
                 </script> 
             </div>
-			
 		</div>
+        
+        
+        <div class="overview">
+			<div class="title">
+                <i class="uil uil-chart"></i>
+                <span class="text">Your Exercise Analytics</span>
+            </div>
+			<div class="boxes">
+                <canvas id="mySecChart"></canvas>
+                <script>
+                   
+                const secctx = document.getElementById('mySecChart').getContext('2d');
+               // const labels = Utils.months({count: 7});
+                //const labels =  {{#each rows}}{{{this.type}}}{{/each}};
+                
+                var labels = [];
+                var typeofmeal;
+                {{#each result}}
+                    typeofmeal = "{{{this.updatedAt}}}";
+                    console.log(typeofmeal);
+                    console.log(typeof typeofmeal);
+                    labels.push(typeofmeal);
+                {{/each}}
+                
+                
+                const mySecChart = new Chart(secctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        //labels: labels,
+                        datasets: [{
+                            label: 'Total Calories Burned',
+                            data: [ {{#each result}}{{{this.calories_burn}}},{{/each}} ],
+                            borderWidth: 1
+                        }]
+                    }
+                    
+                    
+                });
+                </script> 
+            </div>
+		</div>
+        
 	</div>
 </section>
