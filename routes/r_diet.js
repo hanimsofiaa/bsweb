@@ -57,7 +57,15 @@ router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_diet_search', { user: req.user, rows });
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
             } else {
                 console.log(err);
             }
@@ -109,13 +117,23 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
                 db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (error, rows) => {
                     if (!error) { //if not error
-                        res.render('v_p_diet_edit', { user: req.user, rows });
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                            if (!error) {
+                                res.render('v_p_diet_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
                     } else {
                         console.log(error);
                     }
                     console.log(rows);
 
                 })
+
+
 
 
             } else {
@@ -181,7 +199,15 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
                         //when done with connection
 
                         if (!err) { //if not error
-                            res.render('v_p_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
+
+                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                if (!error) {
+                                    res.render('v_p_diet_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Food Displayed Below' });
+                                } else {
+                                    console.log(error);
+                                }
+                            })
+
                         } else {
                             console.log(err);
                         }
@@ -210,7 +236,14 @@ router.get('/add_foodlist', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_diet_search', { user: req.user, rows });
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
             } else {
                 console.log(err);
             }

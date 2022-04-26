@@ -25,8 +25,16 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
             if (!err) { //if not error
                 let removedExercise = req.query.removed; //if any exercise is deleted, set alert 
-                res.render('v_p_exercise', { user: req.user, rows, removedExercise: removedExercise });
-                //res.render('v_p_exercise');
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_exercise', { user: req.user, rows, assignedTo: row[0].assignedTo, removedExercise: removedExercise });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
             } else {
                 console.log(err);
             }
@@ -46,7 +54,16 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_exercise_add', { user: req.user, rows });
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_exercise_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
             } else {
                 console.log(err);
             }
@@ -73,7 +90,16 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
                     //when done with connection
 
                     if (!error) { //if not error
-                        res.render('v_p_exercise_edit', { user: req.user, rows });
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                            if (!error) {
+                                res.render('v_p_exercise_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
+
                     } else {
                         console.log(error);
                     }
@@ -144,7 +170,16 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
                         //when done with connection
 
                         if (!err) { //if not error
-                            res.render('v_p_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
+
+                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                if (!error) {
+                                    res.render('v_p_exercise_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Exercise Displayed Below' });
+                                } else {
+                                    console.log(error);
+                                }
+                            })
+
+
                         } else {
                             console.log(err);
                         }
