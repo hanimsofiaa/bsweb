@@ -28,7 +28,12 @@
 			<input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{this.fullname}}">
 		</div>
 		{{/if}}
-	
+		
+		{{#if assignedTo}}     
+		<div class="form-group" id="assignedTo" name= "assignedTo">
+			<input type="hidden" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
+		</div>
+		{{/if}}
 	
 		<select class="form-select"  id="serving_type" name="serving_type" placeholder="Serving Type" aria-label="serving_type" aria-selected="{{{this.serving_type}}}" aria-valuetext="{{{this.serving_type}}}" aria-valuenow="{{{this.serving_type}}}" >
 			

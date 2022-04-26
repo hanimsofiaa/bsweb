@@ -173,9 +173,20 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
 
                 //get patient's name
                 console.log("number of patients" + row.length);
-                db.query('SELECT * FROM userdetails WHERE ic = ?', [row[0].ic], (error, patientdetails) => {
-                    res.render('v_d_dashboard', { user: req.user, patientdetails, patientdate: row[0].surgery_date, patientstatus: row[0].surgery_status, patientnum: row.length });
-                })
+
+                res.render('v_d_dashboard', { user: req.user, row, patientnum: row.length });
+
+
+                /* if (!err) { //if not error
+                     //get patient's name
+                     console.log("number of patients" + row.length);
+                     /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
+                         res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
+                     })
+                     res.render('v_d_profile', { rows, user: req.user, row });
+                 }*/
+
+
 
             } else {
                 console.log(err);
@@ -239,10 +250,11 @@ router.get('/diet', authContoller.isLoggedIn, (req, res) => {
                     console.log("number of patients" + row.length);
 
                     db.query('SELECT * FROM diets WHERE ic = ?', [row[0].ic], (error, patientdiet) => {
-                        db.query('SELECT * FROM userdetails WHERE ic = ?', [row[0].ic], (error, patientdetails) => {
-                            res.render('v_d_diet', { user: req.user, patientdiet, patientdetails, patientnum: row.length });
-                        })
+                        res.render('v_d_diet', { user: req.user, patientdiet, row, patientnum: row.length });
                     })
+
+
+
 
                 } else {
                     console.log(err);

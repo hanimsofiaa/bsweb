@@ -23,6 +23,12 @@
 				<input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{this.fullname}}">
 			</div>
 		{{/if}}
+		
+		{{#if assignedTo}}     
+		<div class="form-group" id="assignedTo" name= "assignedTo">
+			<input type="hidden" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
+		</div>
+		{{/if}}
 	
 		<select class="form-select"  id="activity" placeholder="Activity Name" name="activity" id="activity" value="{{this.activity}}"aria-label="activity" aria-selected="{{{this.activity}}}" aria-valuetext="{{{this.activity}}}" aria-valuenow="{{{this.activity}}}" >
 			

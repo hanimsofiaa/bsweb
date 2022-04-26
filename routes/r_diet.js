@@ -27,8 +27,16 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
             if (!err) { //if not error
 
                 let removedFood = req.query.removed; //if any food is deleted, set alert 
-                res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood });
-                //res.render('v_p_diet', { user: req.user, rows });
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
             } else {
                 console.log(err);
             }
@@ -70,7 +78,14 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_diet_add', { user: req.user, rows });
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_diet_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
             } else {
                 console.log(err);
             }

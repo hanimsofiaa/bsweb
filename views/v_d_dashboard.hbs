@@ -172,42 +172,41 @@
             <div class="activity-data">
                 <div class="data names">
                     <span class="data-title">Name</span>
-                    {{#each patientdetails}}
+                    {{#each row}}
                     <span class="data-list">{{this.fullname}}</span>
                     {{/each}}
                 </div>
                 <div class="data email">
-                    <span class="data-title">Email</span>
-                    {{#each patientdetails}}
-                    <span class="data-list">{{this.email}}</span>
+                    <span class="data-title">IC</span>
+                    {{#each row}}
+                    <span class="data-list">{{this.ic}}</span>
                     {{/each}}
                 </div>
-              
-                <div class="data type">
-                    
-                    <span class="data-title">Status</span>
-                    {{#if patientstatus}}
-                    <span class="data-list">{{patientstatus}}</span>
-                    {{/if}}
-                   
-                </div>
-                  <div class="data joined">
-                    <span class="data-title">Operation Date</span>
-                    {{#if patientdate}}
-                    <span class="data-list">{{patientdate}}</span>
-                    {{/if}}
-                </div>
-                <!--
                 <div class="data status">
+                    <span class="data-title">Phone Number</span>
+                    {{#each row}}
+                    <span class="data-list">{{this.phone_number}}</span>
+                    {{/each}}
+                </div>
+                <div class="data status">
+                    <span class="data-title">BMI</span>
+                    {{#each row}}
+                    <span class="data-list">{{this.bmi}}</span>
+                    {{/each}}
+                </div>
+                <div class="data type">
                     <span class="data-title">Status</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                </div>-->
+                    {{#each row}}
+                    <span class="data-list">{{this.surgery_status}}</span>
+                    {{/each}} 
+                </div>
+                <div class="data joined">
+                    <span class="data-title">Operation Date</span>
+                    {{#each row}}
+                    <span class="data-list">{{this.surgery_date}}</span>
+                    {{/each}}
+                </div>
+                
             </div>
         </div>
 

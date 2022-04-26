@@ -19,7 +19,7 @@ const db = mysql.createConnection({
 //localhost/
 
 router.get('/', authContoller.isLoggedIn, (req, res) => {
-    res.render('v_home', {
+    res.render('v_p_dashboard', {
         user: req.user
     });
 });

@@ -14,6 +14,9 @@ const db = mysql.createConnection({
 });
 
 //GET
+
+router.get('/logout', authContoller.logout_user); //function to c_auth
+
 router.get('/register', (req, res) => {
 
     db.query('SELECT * FROM healthcare', (err, rows) => {
@@ -29,11 +32,13 @@ router.get('/register', (req, res) => {
 
 });
 
-router.get('/logout', authContoller.logout_user); //function to c_auth
+
 
 
 //POST
 router.post('/register', authContoller.register_user); //function to c_auth
 router.post('/login', authContoller.login_user); //function to c_auth
+
+
 
 module.exports = router;

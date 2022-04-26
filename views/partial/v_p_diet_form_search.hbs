@@ -27,6 +27,12 @@
 </div>
 {{/if}}
 
+{{#if assignedTo}}     
+<div class="form-group" id="assignedTo" name= "assignedTo">
+	<input type="hidden" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
+</div>
+{{/if}}
+
 <center><h6>{{{this.name}}} ({{{this.serving_size}}} {{{this.serving_type}}})</h6></center>
 <center><h6>{{{this.serving_size}}} serving size: {{{this.calories}}} kcal </h6></center>
 
