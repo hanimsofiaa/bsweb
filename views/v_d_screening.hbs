@@ -138,7 +138,7 @@
 					<thead>
 						<tr>
 							<!--<th scope="col">#</th>-->
-						
+							<th scope="col" class="text-center">Patient's Name</th>
 							<th scope="col" class="text-center">Score</th>
 							<th scope="col" class="text-center">Last Update</th>
 							<!--column for READ, EDIT, DELETE -->
@@ -146,18 +146,12 @@
 						</tr>
 					</thead>
 					
-					<thead>
-					{{#each patientdetails}}
-					<td>Patient's Name: {{{this.fullname}}}</td>
-					{{/each}}
-					</thead>
-					
 					<tbody>
 						
 						{{#each patientscreening}}
 						<tr>
 							<!--<th scope="row">{{{this.id}}}</th>-->
-							
+							<td>{{{this.fullname}}}</td>
 							<td>{{{this.score}}}</td>
 							<td>{{{this.updatedAt}}}</td>
 							<td  class="text-center">

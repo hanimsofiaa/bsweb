@@ -249,11 +249,9 @@ router.get('/diet', authContoller.isLoggedIn, (req, res) => {
                     //get patient's name
                     console.log("number of patients" + row.length);
 
-                    db.query('SELECT * FROM diets WHERE ic = ?', [row[0].ic], (error, patientdiet) => {
+                    db.query('SELECT * FROM diets WHERE assignedTo = ?', [req.user.fullname], (error, patientdiet) => {
                         res.render('v_d_diet', { user: req.user, patientdiet, row, patientnum: row.length });
                     })
-
-
 
 
                 } else {
@@ -353,10 +351,8 @@ router.get('/exercise', authContoller.isLoggedIn, (req, res) => {
                     //get patient's name
                     console.log("number of patients" + row.length);
 
-                    db.query('SELECT * FROM exercise WHERE ic = ?', [row[0].ic], (error, patientexercise) => {
-                        db.query('SELECT * FROM userdetails WHERE ic = ?', [row[0].ic], (error, patientdetails) => {
-                            res.render('v_d_exercise', { user: req.user, patientexercise, patientdetails, patientnum: row.length });
-                        })
+                    db.query('SELECT * FROM exercise WHERE assignedTo = ?', [req.user.fullname], (error, patientexercise) => {
+                        res.render('v_d_exercise', { user: req.user, patientexercise, row, patientnum: row.length });
                     })
 
                 } else {
@@ -454,10 +450,8 @@ router.get('/screening', authContoller.isLoggedIn, (req, res) => {
                     //get patient's name
                     console.log("number of patients" + row.length);
 
-                    db.query('SELECT * FROM screening WHERE ic = ?', [row[0].ic], (error, patientscreening) => {
-                        db.query('SELECT * FROM userdetails WHERE ic = ?', [row[0].ic], (error, patientdetails) => {
-                            res.render('v_d_screening', { user: req.user, patientscreening, patientdetails, patientnum: row.length });
-                        })
+                    db.query('SELECT * FROM screening WHERE assignedTo = ?', [req.user.fullname], (error, patientscreening) => {
+                        res.render('v_d_screening', { user: req.user, patientscreening, row, patientnum: row.length });
                     })
 
                 } else {

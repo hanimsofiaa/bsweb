@@ -138,31 +138,25 @@
 					<thead>
 						<tr>
 							<!--<th scope="col">#</th>-->
-							
+							<th scope="col" class="text-center">Patient's Name</th>
 							<th scope="col" class="text-center">Activity</th>
 							<th scope="col" class="text-center">Duration</th>
 							<th scope="col" class="text-center">Step Count</th>
-						
 							<th scope="col" class="text-center">Calories Burn(kcal)</th>
 							<!--column for READ, EDIT, DELETE -->
 							<th scope="col" class="text-center">View</th> 
 						</tr>
 					</thead>
-					<thead>
-					{{#each patientdetails}}
-					<td>Patient's Name: {{{this.fullname}}}</td>
-					{{/each}}
-					</thead>
+					
 					<tbody>
 						
 						{{#each patientexercise}}
 						<tr>
 							<!--<th scope="row">{{{this.id}}}</th>-->
-							
+							<td>{{{this.fullname}}}</td>
 							<td>{{{this.activity}}}</td>
 							<td>{{{this.duration}}}</td>
 							<td>{{{this.step_count}}}</td>
-							
 							<td>{{{this.calories_burn}}}</td>
 							<td  class="text-center">
 								<a href="/doctor/exercise/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye-fill"></i></a>
