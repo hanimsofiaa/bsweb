@@ -19,9 +19,35 @@ const db = mysql.createConnection({
 //localhost/
 
 router.get('/', authContoller.isLoggedIn, (req, res) => {
-    res.render('v_p_dashboard', {
-        user: req.user
-    });
+    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
+        if (!err) {
+
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [row[0].assignedTo], (err, rows) => {
+                if (!err) {
+
+
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [row[0].assignedTo], (err, result) => {
+                        if (!err) {
+                            res.render('v_p_dashboard', { user: req.user, assignedTo: row[0].assignedTo, rows, result });
+                        } else {
+                            console.log(err);
+                        }
+                    })
+
+
+                } else {
+                    console.log(err);
+                }
+            })
+
+
+
+
+        } else {
+            console.log(err);
+        }
+    })
+
 });
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {

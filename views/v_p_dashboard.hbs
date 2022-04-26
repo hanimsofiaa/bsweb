@@ -149,8 +149,10 @@
                
                 <div class="box box2">
                     <i class="uil uil-user-circle"></i>
-                    <span class="text">Patient</span>
-                    <span class="number"></span>
+                    <span class="text">Assigned Doctor :</span>
+                     {{#if assignedTo}}
+                    <span class="text">{{{assignedTo}}}</span>
+                    {{/if}}
                 </div>
               
             </div>
@@ -159,25 +161,30 @@
         <div class="activity">
             <div class="title">
                 <i class="uil uil-clock-three"></i>
-                <span class="text">Your Activity</span>
+                <span class="text">Doctor's Details</span>
             </div>
 
             <div class="activity-data">
                 <div class="data names">
                     <span class="data-title">Name</span>
-                 
+                    
+                    {{#each result}}
+                    <span class="data-list">{{this.fullname}}</span>
+                    {{/each}}
                 </div>
                 <div class="data email">
                     <span class="data-title">Email</span>
-                
+                    
+                    {{#each result}}
+                    <span class="data-list">{{this.email}}</span>
+                    {{/each}}
                 </div>
                 <div class="data joined">
-                    <span class="data-title">Operation Date</span>
-                 
-                </div>
-                <div class="data type">
-                    <span class="data-title">Operation Status</span>
-                   
+                    <span class="data-title">Phone Number</span>
+                    
+                    {{#each rows}}
+                    <span class="data-list">{{this.phone_number}}</span>
+                    {{/each}}
                 </div>
                 <!--
                 <div class="data status">
