@@ -25,8 +25,15 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
             if (!err) { //if not error
                 let removedScreening = req.query.removed; //if any screening is deleted, set alert 
-                res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening });
-                //res.render('v_p_screening');
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
             } else {
                 console.log(err);
             }
@@ -47,7 +54,16 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
             //when done with connection
 
             if (!err) { //if not error
-                res.render('v_p_screening_add', { user: req.user, rows });
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_screening_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
             } else {
                 console.log(err);
             }
@@ -73,7 +89,15 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
                     //when done with connection
 
                     if (!err) { //if not error
-                        res.render('v_p_screening_edit', { user: req.user, rows, update: 'update' });
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                            if (!error) {
+                                res.render('v_p_screening_edit', { user: req.user, rows, update: 'update', assignedTo: row[0].assignedTo });
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
                     } else {
                         console.log(err);
                     }
@@ -144,7 +168,16 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
                         //when done with connection
 
                         if (!err) { //if not error
-                            res.render('v_p_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below' });
+
+                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                if (!error) {
+                                    res.render('v_p_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below', assignedTo: row[0].assignedTo });
+                                } else {
+                                    console.log(error);
+                                }
+                            })
+
+
                         } else {
                             console.log(err);
                         }

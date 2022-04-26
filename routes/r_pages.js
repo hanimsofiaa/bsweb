@@ -29,10 +29,15 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
     db.query('SELECT calories, updatedAt FROM diets', (err, rows) => {
 
         if (!err) { //if not error
-            res.render('v_p_analytics', {
-                user: req.user,
-                rows
-            });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                if (!error) {
+                    res.render('v_p_analytics', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }

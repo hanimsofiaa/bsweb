@@ -64,9 +64,9 @@ exports.add_exercise = (req, res) => {
     var numstep = parseInt(req.body.step_count);
     const calories_burn = numstep * 0.04;
 
-    const { ic, fullname, activity, duration, step_count, distance } = req.body;
+    const { ic, fullname, assignedTo, activity, duration, step_count, distance } = req.body;
 
-    db.query('INSERT INTO exercise SET ic = ?, fullname = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO exercise SET ic = ?, fullname = ?, assignedTo = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_exercise_add', {
@@ -104,9 +104,9 @@ exports.update_exercise_id = (req, res) => {
     var numstep = parseInt(req.body.step_count);
     const calories_burn = numstep * 0.04;
 
-    const { ic, fullname, activity, duration, step_count, distance } = req.body;
+    const { ic, fullname, assignedTo, activity, duration, step_count, distance } = req.body;
 
-    db.query('UPDATE exercise SET ic = ?, fullname = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, fullname, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
+    db.query('UPDATE exercise SET ic = ?, fullname = ?, assignedTo = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 

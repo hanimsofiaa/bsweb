@@ -23,7 +23,15 @@ router.get('/display', authContoller.isLoggedIn, (req, res) => {
         db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
 
             if (!err) { //if not error
-                res.render('v_p_profile', { rows, user: req.user });
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                    if (!error) {
+                        res.render('v_p_profile', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                    } else {
+                        console.log(error);
+                    }
+                })
+
             } else {
                 console.log(err);
             }
@@ -50,7 +58,14 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 
                     if (!error) {
                         console.log("select doctor" + result);
-                        res.render('v_p_profile_add', { user: req.user, rows, result });
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                            if (!error) {
+                                res.render('v_p_profile_add', { user: req.user, rows, result, assignedTo: row[0].assignedTo });
+                            } else {
+                                console.log(error);
+                            }
+                        })
 
                     } else {
                         console.log(error);
@@ -93,7 +108,15 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
                                 if (!error) {
                                     console.log("select doctor" + result);
-                                    res.render('v_p_profile_edit', { user: req.user, rows, result });
+
+                                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                        if (!error) {
+                                            res.render('v_p_profile_edit', { user: req.user, rows, result, assignedTo: row[0].assignedTo });
+                                        } else {
+                                            console.log(error);
+                                        }
+                                    })
+
 
                                 } else {
                                     console.log(error);
