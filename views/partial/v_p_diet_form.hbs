@@ -1,5 +1,32 @@
 <div class="col-6">
 	<div class="form-floating mb-3">
+		<input type="datetime-local" class="form-control" id="time" placeholder="Select Time" name="time" id="time" value="{{this.time}}">
+		<label for="time">Select Time</label>
+	</div>
+</div>
+
+
+<div class="col-6">
+	<div class="form-floating mb-3">	
+		<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
+			
+			{{#if this.type}}
+			<option value="{{this.type}}" selected>{{this.type}}</option>
+			{{/if}}
+			
+			<option value="breakfast">breakfast</option>
+			<option value="brunch">brunch</option>
+			<option value="lunch">lunch</option>
+			<option value="tea">tea</option>
+			<option value="dinner">dinner</option>
+			<option value="supper">supper</option>
+		</select>
+		<label for="type">Meal</label>
+	</div>
+</div>
+
+<div class="col-6">
+	<div class="form-floating mb-3">
 		<input type="text" class="form-control" id="name" placeholder="Food Name" name="name" id="name" value="{{this.name}}">
 		<label for="name">Food Name</label>
 	</div>
@@ -124,25 +151,6 @@
 	<div class="form-floating mb-3">
 		<input type="text" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}">
 		<label for="calories">Calories</label>
-	</div>
-</div>
-
-<div class="col-6">
-	<div class="form-floating mb-3">	
-		<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
-			
-			{{#if this.type}}
-			<option value="{{this.type}}" selected>{{this.type}}</option>
-			{{/if}}
-			
-			<option value="breakfast">breakfast</option>
-			<option value="brunch">brunch</option>
-			<option value="lunch">lunch</option>
-			<option value="tea">tea</option>
-			<option value="dinner">dinner</option>
-			<option value="supper">supper</option>
-		</select>
-		<label for="type">Meal</label>
 	</div>
 </div>
 

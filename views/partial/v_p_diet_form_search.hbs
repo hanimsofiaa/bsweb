@@ -44,6 +44,13 @@
 	
 <center><div class="col-6">
 	<div class="form-floating mb-3">
+		<input type="datetime-local" class="form-control" id="time" placeholder="Select Time" name="time" id="time" value="{{this.time}}">
+		<label for="time">Select Time</label>
+	</div>
+</div></center>
+
+<center><div class="col-6">
+	<div class="form-floating mb-3">
 		<select class="form-select"  id="type" name="type" placeholder="Meal" aria-label="type" aria-selected="{{{this.type}}}" aria-valuetext="{{{this.type}}}" aria-valuenow="{{{this.type}}}">
 	
 		{{#if this.type}}
