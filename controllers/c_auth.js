@@ -48,7 +48,7 @@ exports.login_user = async(req, res) => {
                 } else if (results[0].role === "Patient") {
                     res.status(200).redirect("/profile/display");
                 } else {
-
+                    res.status(200).redirect("/admin/healthcare");
                 }
 
             }

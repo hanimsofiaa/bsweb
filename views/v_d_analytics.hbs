@@ -75,67 +75,90 @@
 			
 			<div class="title">
                 <i class="uil uil-chart"></i>
-                <span class="text">Your Patients' Calories Analytics</span>
+                <span class="text">Your Patients' Analytics</span>
             </div>
 			
+				<!-- Diet Main View-->
+			{{#if removedFood}}
+			<div class="container" style="background-color: #ffffff;">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Success! </strong>{{removedFood}}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</div>
+			{{/if}}
+ 
+			{{#if alert}}
+
+			<br><br>
+			<ol class="breadcrumb" style="background-color: #ffffff;">
+				<li class="breadcrumb-item"><a href="/doctor/analytics">Back to Patient's Analytics</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Search Patients' Name</li>
+			</ol>
+			<br>
+
+			<div class="container" style="background-color: #ffffff;">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<strong>Success! </strong>{{alert}}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</div>
+			{{/if}}
+
 			<div class="activity">
-                <canvas id="myChart" width="200" height="200"></canvas>
-                <script>
-                const ctx = document.getElementById('myChart').getContext('2d');
-               // const labels = Utils.months({count: 7});
-                
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
-                        //labels: labels,
-                        datasets: [{
-                            label: '# of Calories',
-                          
-                            data: [12, 19, 3, 5, 2, 3, 7],
-                            fill: true,
-                            
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-                </script> 
-            </div>
+		
+				<!--button for ADD 
+				<div class="d-flex justify-content-end">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle align-self-center" type="button" id="dropdownMenu2" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							+ Add Food
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<a class="dropdown-item" href="/diet/foodlist">Search Food Database</a>
+							<a class="dropdown-item" href="/diet/add">Enter Form</a>
+						</div>
+					</div>
+				</div>-->
+				
+				<!--button for SEARCH -->
+				<div class="input-group mb-3">
+					<form class="input-group mb-3" method="POST" action="/doctor/analytics/search">
+						<input type="search" class="form-control" name="search" placeholder="Search Patients' Name" aria-label="Search">
+						<div class="input-group-append">
+							<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
+						</div>
+					</form>
+				</div>
+				
+				<table class="table table-bordered">
+					
+					<thead>
+						<tr>
+							<!--<th scope="col">#</th>-->
+							<th scope="col" class="text-center">Patient's Name</th>
+							<th scope="col" class="text-center">Patient's ID</th>
+							<th scope="col" class="text-center">View</th> 
+						
+						
+						</tr>
+					</thead>
+				
+					<tbody>
+					
+						{{#each patientanalytics}}	
+						<tr>
+							<!--<th scope="row">{{{this.id}}}</th>-->
+							<td>{{{this.fullname}}}</td>
+							<td>{{{this.ic}}}</td>
+							<td  class="text-center">
+								<a href="/doctor/analytics/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye-fill"></i></a>
+							</td>
+						</tr>
+						{{/each}}
+						
+					</tbody>
+				</table>
+			</div>
 			
 		</div>
 	</div>
