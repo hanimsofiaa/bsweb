@@ -83,6 +83,10 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
 });
 
+router.get('/calendar', (req, res) => {
+    res.render('v_p_calendar');
+});
+
 router.get('/registerpatient', (req, res) => {
     res.render('v_p_register');
 });
