@@ -18,7 +18,7 @@ const db = mysql.createConnection({
 
 //localhost/
 
-router.get('/', authContoller.isLoggedIn, (req, res) => {
+router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
         if (!err) {
 
@@ -39,16 +39,14 @@ router.get('/', authContoller.isLoggedIn, (req, res) => {
                     console.log(err);
                 }
             })
-
-
-
-
         } else {
             console.log(err);
         }
     })
 
 });
+
+
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
@@ -111,7 +109,9 @@ router.get('/login', (req, res) => {
     res.render('v_login');
 });
 
-
+router.get('/', (req, res) => {
+    res.render('v_p_dashboard');
+});
 
 //check whether user has already login using jwt -> c_auth(isLoggedIn function)
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {

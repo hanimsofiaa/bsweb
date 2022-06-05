@@ -26,7 +26,7 @@ router.get('/display', authContoller.isLoggedIn, (req, res) => {
 
                 db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                     if (!error) {
-                        res.render('v_p_profile', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                        res.render('v_p_profile', { user: req.user, rows });
                     } else {
                         console.log(error);
                     }
@@ -61,7 +61,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 
                         db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                             if (!error) {
-                                res.render('v_p_profile_add', { user: req.user, rows, result, assignedTo: row[0].assignedTo });
+                                res.render('v_p_profile_add', { user: req.user, rows, result });
                             } else {
                                 console.log(error);
                             }
