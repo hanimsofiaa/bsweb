@@ -15,7 +15,6 @@
 -->
 
 
-
 {{#if user}} 
 <nav>
     <div class="logo-name">
@@ -124,9 +123,12 @@
                 <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
             </p>
         </div>
+        
         </div>
     </div>
 </section>
+
+
 {{/if}}
 
 {{#if user}} 
@@ -159,6 +161,14 @@
         </div>
 
         <div class="activity">
+              
+            
+        <form class="contact-form">
+            <input type="text" class = "name" id = "name" name = "name" value = "{{{user.fullname}}}" placeholder = "Enter Name"> 
+            <input type = "email" class = "email"  id = "email" name = "email" value = "{{{user.email}}}" placeholder = "Enter Email">
+            <button onclick="sendEmail()">Submit</button> 
+        </form>
+       
             <div class="title">
                 <i class="uil uil-clock-three"></i>
                 <span class="text">Doctor's Details</span>
@@ -199,7 +209,7 @@
                 </div>-->
             </div>
         </div>
-
+        
         <!--<canvas id="myfirstChart" style="width:100%;max-width:700px"></canvas>
         <script>
             var xValues = [100,200,300,400,500,600,700,800,900,1000];
@@ -270,3 +280,28 @@
     </div>
 </section>
 {{/if}}
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+    function sendEmail() { 
+        
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+    
+        
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "hanimsofiaa@gmail.com",
+            Password: "ED6A55ADA4306DF7F9DBEF1F4EAC4B3FD1BC",
+            To: "hanimsofiah@student.usm.my",
+            From: "hanimsofiaa@gmail.com",
+            Subject: `Bariact : Patient named ${name} has exceeded the maximum calories today`,
+            Body: `Patient Name: ${name} <br> Patient Email: ${email} <br>`,
+        }).then((success) => {
+            alert("message sent successfully. Please check the spam folder in your mail.");
+        }).catch((error) => {
+            alert("error sending message");
+        })
+        
+    }
+    document.querySelector(".contact-form").reset();
+</script>

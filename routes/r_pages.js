@@ -18,6 +18,9 @@ const db = mysql.createConnection({
 
 //localhost/
 
+
+
+
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
         if (!err) {

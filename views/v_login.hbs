@@ -136,12 +136,12 @@
                     <div class="card">
                         <div class="card-header">Login Form</div>
                         <div class="card-body">
-                            
+                            <!--
                             <div id="g_id_onload"
                                 data-client_id="812135292440-utdtvo48jbephucsn5j6ucl88a3upnlh.apps.googleusercontent.com"
                                 data-callback="handleCredentialResponse">
                             </div>
-                            <div class="g_id_signin" data-type="standard"></div>
+                            <div class="g_id_signin" data-type="standard" data-onsuccess="onSignIn"></div>-->
                             
                             <form action="/auth/login" method="POST">
                                         
@@ -157,12 +157,19 @@
                                 
                                 <button type="submit" class="btn btn-primary" style="padding: 5px;">Login</button>
                             </form>
+                            
+                            
+                            
                         </div>
                     </div>
                     {{#if message }}
                     <h4 class "alert alert-danger mt-4">{{message}}</h4>
                     {{/if}}
                 </div>
+                
+                <script>
+                    function onSignIn()    
+                </script>
             </div>
         </div>
 </section>
