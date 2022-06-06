@@ -65,13 +65,13 @@
 			
 			<div class="title">
                 <i class="uil uil-clipboard-alt"></i>
-                <span class="text">Display Your Healthcare Result</span>
+                <span class="text">Display Your Patient List </span>
             </div>
             
             <br><br>
             <ol class="breadcrumb" style="background-color: #ffffff;">
-                <li class="breadcrumb-item"><a href="/admin/healthcare">Back to Healthcare</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Display Healthcare Result</li>
+                <li class="breadcrumb-item"><a href="/admin/patientlist">Back to Patient List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Display Patient List</li>
             </ol>
             <br>
 
@@ -93,17 +93,19 @@
                         <table class="table table-bordered"> 
                             <thead> 
                                 <tr>
-                                <th scope="col">Healthcare Provider</th> 
-                                <th scope="col">Address</th> 
-								<th scope="col">State</th> 
+                                <th scope="col">Name</th> 
+                                <th scope="col">IC</th> 
+								<th scope="col">Gender</th> 
+								<th scope="col">Phone Number</th> 
                                <!-- <th scope="col">Last Update</th> -->
                                 </tr> 
                             </thead> 
                             <tbody> 
                                 <tr>
-                                <th scope="row">{{this.name}}</th> 
-                                <td>{{{this.address}}}</td>
-                               	<td>{{this.state}}</td>
+                                <th scope="row">{{this.fullname}}</th> 
+                                <td>{{{this.ic}}}</td>
+								<td>{{{this.gender}}}</td>
+                               	<td>{{this.phone_number}}</td>
                                 </tr>
                             </tbody> 
                         </table><br>

@@ -1,4 +1,5 @@
-<!--<nav>
+<!--
+<nav>
 	<h4>Bariact</h4>
 	<ul>
 		<li><a href="/">Home</a></li>
@@ -7,6 +8,7 @@
 		<li><a href="/auth/logout">Log Out</a></li>
 	</ul>
 </nav>-->
+
 <nav>
     <div class="logo-name">
         <div class="logo-image">
@@ -54,26 +56,27 @@
     </div>
 </nav>
 
+
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+        <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>    
     </div>
-    
     <div class="dash-content">
         <div class="overview">
 			
 			<div class="title">
                 <i class="uil uil-clipboard-alt"></i>
-                <span class="text">Display Your Healthcare Result</span>
+                <span class="text">Edit Your Patient List</span>
             </div>
             
             <br><br>
             <ol class="breadcrumb" style="background-color: #ffffff;">
-                <li class="breadcrumb-item"><a href="/admin/healthcare">Back to Healthcare</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Display Healthcare Result</li>
+                <li class="breadcrumb-item"><a href="/admin/patientlist">Back to Patient List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Patient List</li>
             </ol>
             <br>
+
 
             {{#if alert}}
             <div class="container" style="background-color: #ffffff;">
@@ -86,33 +89,15 @@
 
             <br>
             <div class="activity">
-                {{#each rows}} 
-                
-                <div class="row"> 
-                    <div class="col"> 
-                        <table class="table table-bordered"> 
-                            <thead> 
-                                <tr>
-                                <th scope="col">Healthcare Provider</th> 
-                                <th scope="col">Address</th> 
-								<th scope="col">State</th> 
-                               <!-- <th scope="col">Last Update</th> -->
-                                </tr> 
-                            </thead> 
-                            <tbody> 
-                                <tr>
-                                <th scope="row">{{this.name}}</th> 
-                                <td>{{{this.address}}}</td>
-                               	<td>{{this.state}}</td>
-                                </tr>
-                            </tbody> 
-                        </table><br>
-                    </div>
-                </div>
+                {{#each rows}}
+                <form class="row g-3 needs-validation" method="POST" action="/admin/patientlist/update/{{this.id}}" novalidate>
+                    {{> v_a_patientlist_form}}
+                </form>
                 {{/each}}
-            </div>
-        </div>	
+            </div>	
+        </div>
     </div>
 </section>
+
 
 
