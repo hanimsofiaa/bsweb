@@ -54,6 +54,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
             if (!err) { //if not error
                 const role = "Doctor";
 
+                //take the list of doctor working at same healthcare as the user
                 db.query('SELECT * FROM userdetails WHERE role = ? AND healthcare = ?', [role, req.user.healthcare], (error, result) => {
 
                     if (!error) {
@@ -92,6 +93,7 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
         const role = "Doctor";
         const healthcare = 1;
 
+        //take the list of doctor working at same healthcare as the user
         db.query('SELECT * FROM userdetails WHERE healthcare = ? AND role = ?', [req.user.healthcare, role], (error, result) => {
 
 

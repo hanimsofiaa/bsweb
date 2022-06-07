@@ -92,22 +92,38 @@
                     <div class="col"> 
                         <table class="table table-bordered"> 
                             <thead> 
-                                <tr>
-                                <th scope="col">Name</th> 
-                                <th scope="col">IC</th> 
-								<th scope="col">Home Address</th> 
-								<th scope="col">Phone Number</th> 
-                               <!-- <th scope="col">Last Update</th> -->
-                                </tr> 
+                                <tr><th scope="col">Name</th></tr> 
                             </thead> 
                             <tbody> 
-                                <tr>
-                                <th scope="row">{{this.fullname}}</th> 
-                                <td>{{{this.ic}}}</td>
-								<td>{{{this.home_address}}}</td>
-                               	<td>{{this.phone_number}}</td>
-                                </tr>
-                            </tbody> 
+                                <tr><td>{{this.fullname}}</td></tr>
+                            </tbody>
+                        </table><br>
+                        
+                        <table class="table table-bordered"> 
+                            <thead> 
+                                <tr><th scope="col">IC</th></tr> 
+                            </thead> 
+                            <tbody> 
+                                <tr><td>{{this.ic}}</td></tr>
+                            </tbody>
+                        </table><br>
+                        
+                        <table class="table table-bordered"> 
+                            <thead> 
+                                <tr><th scope="col">Home Address</th></tr> 
+                            </thead> 
+                            <tbody> 
+                                <tr><td>{{this.home_address}}</td></tr>
+                            </tbody>
+                        </table><br>
+                        
+                        <table class="table table-bordered"> 
+                            <thead> 
+                                <tr><th scope="col">Phone Number</th></tr> 
+                            </thead> 
+                            <tbody> 
+                                <tr><td>{{this.phone_number}}</td></tr>
+                            </tbody>
                         </table><br>
                     </div>
                 </div>
