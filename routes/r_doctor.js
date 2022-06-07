@@ -198,6 +198,50 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
     })
 });
 
+router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
+
+
+    db.query('SELECT * FROM patientdetails WHERE assignedTo = ? AND ic = ?', [req.user.fullname, req.params.ic], (error, row) => {
+
+        if (row.length === 0) {
+            if (!error) {
+                //get patient details
+
+                //get patient's name
+
+                db.query('SELECT * FROM userdetails', (error, result) => {
+                    res.render('v_d_dashboard_edit', { user: req.user, result });
+                })
+
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', row);
+
+        } else {
+
+            if (!error) {
+                //get patient details
+
+                //get patient's name
+                console.log("number of patients" + row.length);
+
+                db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, rowpatient) => {
+
+                    res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: rowpatient.length });
+                })
+
+            } else {
+                console.log(err);
+            }
+
+            console.log('the data from user table', row);
+
+        }
+    })
+});
+
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
@@ -582,5 +626,6 @@ router.post('/exercise/search', doctorContoller.find_exercise); //function 5 - s
 router.post('/screening/search', doctorContoller.find_screening); //function 8 - search database screening(req.body passed)
 router.post('/profile/add', doctorContoller.add_profile); //function 10 - add doctor profile
 router.post('/profile/:id', doctorContoller.update_profile_id); //function 11 - edit doctor profile
+router.post('/dashboard/:ic', doctorContoller.update_dashboard_ic); //function 12 - edit patient profile
 
 module.exports = router;

@@ -21,7 +21,7 @@ exports.view_diet = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_diet', { rows });
+            res.render('v_d_diet', { user: req.user, rows });
         } else {
             console.log(err);
         }
@@ -37,7 +37,7 @@ exports.display_diet_id = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_diet_display', { rows, alert: 'Your Selected Food Displayed Below' });
+            res.render('v_d_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
         } else {
             console.log(err);
         }
@@ -54,7 +54,7 @@ exports.find_diet = (req, res) => {
     db.query('SELECT * FROM diets WHERE name LIKE ? OR type LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_diet', { rows, alert: 'Display Searched Food' });
+            res.render('v_d_diet', { user: req.user, rows, alert: 'Display Searched Food' });
         } else {
             console.log(err);
         }
@@ -70,7 +70,7 @@ exports.view_exercise = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_exercise', { rows });
+            res.render('v_d_exercise', { user: req.user, rows });
             //res.render('v_p_exercise');
         } else {
             console.log(err);
@@ -87,7 +87,7 @@ exports.find_exercise = (req, res) => {
     db.query('SELECT * FROM exercise WHERE activity LIKE ? OR duration LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_exercise', { rows, alert: 'Display Searched Exercise' });
+            res.render('v_d_exercise', { user: req.user, rows, alert: 'Display Searched Exercise' });
         } else {
             console.log(err);
         }
@@ -104,7 +104,7 @@ exports.display_exercise_id = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_exercise_display', { rows, alert: 'Your Selected Exercise Displayed Below' });
+            res.render('v_d_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
         } else {
             console.log(err);
         }
@@ -118,7 +118,7 @@ exports.view_screening = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_screening', { rows });
+            res.render('v_d_screening', { user: req.user, rows });
             //res.render('v_p_screening');
         } else {
             console.log(err);
@@ -135,7 +135,7 @@ exports.find_screening = (req, res) => {
     db.query('SELECT * FROM screening WHERE score LIKE ? OR createdAt LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_screening', { rows, alert: 'Display Searched Screening' });
+            res.render('v_d_screening', { user: req.user, rows, alert: 'Display Searched Screening' });
         } else {
             console.log(err);
         }
@@ -153,7 +153,7 @@ exports.display_screening_id = (req, res) => {
         //when done with connection
 
         if (!err) { //if not error
-            res.render('v_d_screening_display', { rows, alert: 'Your Selected Screening Displayed Below' });
+            res.render('v_d_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below' });
         } else {
             console.log(err);
         }
@@ -193,7 +193,7 @@ exports.add_profile = (req, res) => {
                         console.log(results);
                         //kena tukar v_login
 
-                        return res.status(200).render('v_d_profile_add', { success: 'Successfully Update Doctor Profile' });
+                        return res.status(200).render('v_d_profile_add', { user: req.user, success: 'Successfully Update Doctor Profile' });
 
                     }
                 })
@@ -223,7 +223,7 @@ exports.update_profile_id = (req, res) => {
 
                 //when done with connection
                 if (!err) { //if not error
-                    res.render('v_d_profile_edit', { rows, message: 'Field Cannot Be Empty' });
+                    res.render('v_d_profile_edit', { user: req.user, rows, message: 'Field Cannot Be Empty' });
                 } else {
                     console.log(err);
                 }
@@ -252,7 +252,7 @@ exports.update_profile_id = (req, res) => {
                             //when done with connection
                             if (!err) { //if not error
                                 // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                                return res.status(200).render('v_d_profile_edit', { rows, success: 'Successfully Update Doctor Profile' });
+                                return res.status(200).render('v_d_profile_edit', { user: req.user, rows, success: 'Successfully Update Doctor Profile' });
                             } else {
                                 console.log(err);
                             }
@@ -266,5 +266,31 @@ exports.update_profile_id = (req, res) => {
     } catch (error) {
 
     }
+
+}
+
+//function 12 - edit patient profile
+exports.update_dashboard_ic = (req, res) => {
+
+
+    const { daily_intake, assignedTo } = req.body;
+
+    db.query('UPDATE patientdetails SET daily_intake = ? where ic = ?', [daily_intake, req.params.ic], (err, rows) => {
+        //when done with connection
+
+        if (!err) { //if not error
+
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [assignedTo], (error, rowpatient) => {
+
+                res.render('v_d_dashboard_edit', { user: req.user, rows, patientnum: rowpatient.length });
+            })
+
+
+        } else {
+            console.log(err);
+        }
+        console.log(rows);
+    })
+
 
 }

@@ -162,123 +162,36 @@
                 </div>-->
             </div>
         </div>
-        
-        
+
         <div class="activity">
             <div class="title">
                 <i class="uil uil-clock-three"></i>
                 <span class="text">Patients' Details</span>
             </div>
-    
-            <div class="activity-data">
+			
+			<div class="activity">
                 
-                <div class="data names">
-                    <span class="data-title">Name</span>
-                    {{#each row}}
-                    <span class="data-list"><a href="/doctor/dashboard/{{this.ic}}">{{this.fullname}}   <i class="bi bi-eye-fill"></i></a></span>
-                    {{/each}}
-                </div>
-                <div class="data email">
-                    <span class="data-title">IC</span>
-                    {{#each row}}
-                    <span class="data-list">{{this.ic}}</span>
-                    {{/each}}
-                </div>
-                <div class="data status">
-                    <span class="data-title">Phone Number</span>
-                    {{#each row}}
-                    <span class="data-list">{{this.phone_number}}</span>
-                    {{/each}}
-                </div>
-                <div class="data status">
-                    <span class="data-title">BMI</span>
-                    {{#each row}}
-                    <span class="data-list">{{this.bmi}}</span>
-                    {{/each}}
-                </div>
-                <div class="data type">
-                    <span class="data-title">Status</span>
-                    {{#each row}}
-                    <span class="data-list">{{this.surgery_status}}</span>
-                    {{/each}} 
-                </div>
-                <div class="data joined">
-                    <span class="data-title">Operation Date</span>
-                    {{#each row}}
-                    <span class="data-list">{{this.surgery_date}}</span>
-                    {{/each}}
-                </div>
-                
-            </div>
+				{{#each row}}
+				<br>
+				<ol class="breadcrumb" style="background-color: #ffffff;">
+					<li class="breadcrumb-item"><a href="/doctor/dashboard">Back to All Patients' Details</a></li>
+					<li class="breadcrumb-item active" aria-current="page">View {{this.fullname}}'s Details</li>
+				</ol>
+				<br>
+				
+				<center>
+				<div class="card" style="max-width: 70rem;">
+            		<div class="card-header text-white bg-primary"><h5 class="card-title"><label class="form-label">{{this.fullname}}'s Details</label></h5></div>
+					<div class="card-body">
+						<form class="row g-3 needs-validation" method="POST" action="/doctor/dashboard/{{this.ic}}" novalidate>
+						{{> v_d_dashboard_form}}
+						</form>
+					</div>
+        		</div></center>
+				
+				{{/each}}
+			</div>	
         </div>
-
-        <!--<canvas id="myfirstChart" style="width:100%;max-width:700px"></canvas>
-        <script>
-            var xValues = [100,200,300,400,500,600,700,800,900,1000];
-
-            new Chart("myfirstChart", {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{ 
-                data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-                borderColor: "red",
-                fill: false
-                }, { 
-                data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-                borderColor: "green",
-                fill: false
-                }, { 
-                data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-                borderColor: "blue",
-                fill: false
-                }]
-            },
-            options: {
-                legend: {display: false}
-            }
-            });
-        </script>-->
-        
-        
-        <!--<canvas id="myChart" width="200" height="200"></canvas>
-        <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        </script> -->
     </div>
 </section>
 {{/if}}
