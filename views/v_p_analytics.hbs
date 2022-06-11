@@ -83,7 +83,7 @@
                 var labels = [];
                 var typeofmeal;
                 {{#each rows}}
-                    typeofmeal = "{{{this.updatedAt}}}";
+                    typeofmeal = "{{{this.createdAt}}}";
                     console.log(typeofmeal);
                     console.log(typeof typeofmeal);
                     labels.push(typeofmeal);
@@ -104,6 +104,14 @@
                              
                             ]
                         }]
+                    },options: {
+                       scales: {
+                            xAxes: [{
+                                ticks: {
+                                    display: false //this will remove only the label
+                                }
+                            }]
+                        }
                     }
                     
                     
@@ -121,6 +129,10 @@
 			<div class="boxes">
                 <canvas id="mySecChart"></canvas>
                 <script>
+                    
+                const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+                const d = new Date();
+                document.write("The current month is " + monthNames[d.getMonth()]);
                    
                 const secctx = document.getElementById('mySecChart').getContext('2d');
                // const labels = Utils.months({count: 7});
@@ -129,13 +141,13 @@
                 var labels = [];
                 var typeofmeal;
                 {{#each result}}
-                    typeofmeal = "{{{this.updatedAt}}}";
+                    typeofmeal = "{{{this.createdAt}}}";
                     console.log(typeofmeal);
                     console.log(typeof typeofmeal);
                     labels.push(typeofmeal);
                 {{/each}}
                 
-                
+              
                 const mySecChart = new Chart(secctx, {
                     type: 'line',
                     data: {
@@ -146,9 +158,16 @@
                             data: [ {{#each result}}{{{this.calories_burn}}},{{/each}} ],
                             borderWidth: 1
                         }]
+                        
+                    },options: {
+                       scales: {
+                            xAxes: [{
+                                ticks: {
+                                    display: false //this will remove only the label
+                                }
+                            }]
+                        }
                     }
-                    
-                    
                 });
                 </script> 
             </div>

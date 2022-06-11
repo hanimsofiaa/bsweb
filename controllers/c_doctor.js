@@ -275,21 +275,12 @@ exports.update_dashboard_ic = (req, res) => {
 
     const { daily_intake, assignedTo } = req.body;
 
-    db.query('UPDATE patientdetails SET daily_intake = ? where ic = ?', [daily_intake, req.params.ic], (err, rows) => {
+    db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ? AND assignedTo = ?', [daily_intake, req.params.ic, assignedTo], (err, row) => {
         //when done with connection
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
+            res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+        })
 
-        if (!err) { //if not error
-
-            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [assignedTo], (error, row) => {
-
-                res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: row.length, success: 'Patients Details Have Been Updated' });
-            })
-
-
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
     })
 
 
