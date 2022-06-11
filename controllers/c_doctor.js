@@ -280,9 +280,9 @@ exports.update_dashboard_ic = (req, res) => {
 
         if (!err) { //if not error
 
-            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [assignedTo], (error, rowpatient) => {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [assignedTo], (error, row) => {
 
-                res.render('v_d_dashboard_edit', { user: req.user, rows, patientnum: rowpatient.length });
+                res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: row.length, success: 'Patients Details Have Been Updated' });
             })
 
 

@@ -14,7 +14,7 @@
 </nav>
 -->
 
-{{#if user}} 
+
 <nav>
     <div class="logo-name">
         <div class="logo-image">
@@ -77,97 +77,44 @@
     </div>
 </nav>
 
-{{else}}
-<nav>
-    <div class="logo-name">
-    <div class="logo-image">
-        <img src="/logo.png" alt="">
-    </div>
-
-    <span class="logo_name">BARIACT</span>
-    </div>
-
-    <div class="menu-items">
-
-    <ul class="nav-links">
-        <li><a href="/doctor/dashboard">
-            <i class="uil uil-estate"></i>
-            <span class="link-name">Home</span>
-        </a></li>
-        <li><a href="/login">
-            <i class="uil uil-signin"></i>
-            <span class="link-name">Login</span>
-        </a></li>
-
-        <li><a href="/register">
-            <i class="uil uil-file-info-alt"></i>
-            <span class="link-name">Register</span>
-        </a></li>
-    </ul>
-    </div>
-</nav>
-
-<section class="dashboard">
-    <div class="top">
-        <i class="uil uil-bars sidebar-toggle"></i>
-    </div>
-    <div class="dash-content">
-        <div class="container mt-4">
-        <div class="jumbotron">
-            <h1 class="display-4">Bariatric Surgery Web</h1>
-            <p class="lead">BARIACT aka Bariatric Surgery Monitoring System for Patients and Doctors in Universiti Sains Malaysia.</p>
-            <hr class="my-4">
-            <p>Log In or Register to know more! </p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="/login" role="button">Log In</a>
-                <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
-            </p>
-        </div>
-        </div>
-    </div>
-</section>
-{{/if}}
-
-{{#if user}} 
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
          <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     <div class="dash-content">
-        <div class="overview">
-            <div class="title">
-                <i class="uil uil-estate"></i>
-                <span class="text">Dashboard</span>
-            </div>
-
-            <div class="boxes">
-                <!--<div class="box box1">
-                    <i class="uil uil-utensils"></i>
-                    <span class="text">Food</span>
-                    <span class="number">2000</span>
-                </div>-->
-                <div class="box box2">
-                    <i class="uil uil-user-circle"></i>
-                    <span class="text">Total Patients</span>
-                    {{#if patientnum}}
-                    <span class="number">{{{patientnum}}}</span>
-                    {{/if}}
-                    
-                </div>
-               <!-- <div class="box box3">
-                    <i class="uil uil-share"></i>
-                    <span class="text">Testing</span>
-                    <span class="number">10,120</span>
-                </div>-->
-            </div>
-        </div>
-
+             
         <div class="activity">
             <div class="title">
                 <i class="uil uil-clock-three"></i>
                 <span class="text">Patients' Details</span>
             </div>
+            
+            
+            {{#if message}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Fail! </strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
+            
+            {{#if success}}
+            <br>
+				<ol class="breadcrumb" style="background-color: #ffffff;">
+					<li class="breadcrumb-item"><a href="/doctor/dashboard">Back to All Patients' Details</a></li>
+					<li class="breadcrumb-item active" aria-current="page">View {{this.fullname}}'s Details</li>
+				</ol>
+			<br>
+                
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success! </strong>{{success}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
 			
 			<div class="activity">
                 
@@ -194,4 +141,4 @@
         </div>
     </div>
 </section>
-{{/if}}
+

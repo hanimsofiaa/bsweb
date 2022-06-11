@@ -13,8 +13,6 @@
 </ul>
 </nav>
 -->
-
-{{#if user}} 
 <nav>
     <div class="logo-name">
         <div class="logo-image">
@@ -39,10 +37,6 @@
                 <i class="uil uil-basketball"></i>
                 <span class="link-name">Exercise</span>
             </a></li>
-			<li><a href="/doctor/screening">
-                <i class="uil uil-clipboard-alt"></i>
-                <span class="link-name">Screening Form</span>
-            </a></li>   
                 <li><a href="/doctor/analytics">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
@@ -77,58 +71,6 @@
     </div>
 </nav>
 
-{{else}}
-<nav>
-    <div class="logo-name">
-    <div class="logo-image">
-        <img src="/logo.png" alt="">
-    </div>
-
-    <span class="logo_name">BARIACT</span>
-    </div>
-
-    <div class="menu-items">
-
-    <ul class="nav-links">
-        <li><a href="/doctor/dashboard">
-            <i class="uil uil-estate"></i>
-            <span class="link-name">Home</span>
-        </a></li>
-        <li><a href="/login">
-            <i class="uil uil-signin"></i>
-            <span class="link-name">Login</span>
-        </a></li>
-
-        <li><a href="/register">
-            <i class="uil uil-file-info-alt"></i>
-            <span class="link-name">Register</span>
-        </a></li>
-    </ul>
-    </div>
-</nav>
-
-<section class="dashboard">
-    <div class="top">
-        <i class="uil uil-bars sidebar-toggle"></i>
-    </div>
-    <div class="dash-content">
-        <div class="container mt-4">
-        <div class="jumbotron">
-            <h1 class="display-4">Bariatric Surgery Web</h1>
-            <p class="lead">BARIACT aka Bariatric Surgery Monitoring System for Patients and Doctors in Universiti Sains Malaysia.</p>
-            <hr class="my-4">
-            <p>Log In or Register to know more! </p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="/login" role="button">Log In</a>
-                <a class="btn btn-primary btn-lg" href="/register" role="button">Register</a>
-            </p>
-        </div>
-        </div>
-    </div>
-</section>
-{{/if}}
-
-{{#if user}} 
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
@@ -185,9 +127,9 @@
                     {{/each}}
                 </div>
                 <div class="data status">
-                    <span class="data-title">Phone Number</span>
+                    <span class="data-title">Daily Intake(kcal)</span>
                     {{#each row}}
-                    <span class="data-list">{{this.phone_number}}</span>
+                    <span class="data-list">{{this.daily_intake}}</span>
                     {{/each}}
                 </div>
                 <div class="data status">
@@ -281,4 +223,4 @@
         </script> -->
     </div>
 </section>
-{{/if}}
+
