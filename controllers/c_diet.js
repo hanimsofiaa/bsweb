@@ -100,6 +100,10 @@ exports.update_diet_id = (req, res) => {
     const createdAt = new Date(Date.now());
     const updatedAt = new Date(Date.now());
 
+    console.log("Day: " + createdAt.getDate());
+    console.log("Month: " + (createdAt.getMonth() + 1));
+    console.log("Year: " + createdAt.getFullYear());
+
     const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type } = req.body;
 
     db.query('UPDATE diets SET ic = ?, fullname = ?,  assignedTo = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
