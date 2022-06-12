@@ -108,16 +108,30 @@
             </div>
             {{/if}}
 
-            <div class="activity">
-                
+            <div class="activity"> 
+                        
                 <div class="card">
                     <div class="card-header">Update Patient Details Form {{user.ic}}</div>
                     <div class="card-body">
+                         
                         
                         {{#each rows}}
                             <form class="row g-3 needs-validation" method="POST" action="/profile/update/{{this.id}}" novalidate>
+                                <div class="form-group" style="padding: 5px; width:fit-content;">
+                                    <label for="assignedTo">Select Doctor</label>
+                                    <select class="form-select"  id="assignedTo" name="assignedTo" aria-label="assignedTo">
+                                        {{#each ../result}}
+                                            <option value="{{this.fullname}}">{{this.fullname}}</option>
+                                        {{/each}}
+                                    
+                                        {{#if ../this.assignedTo}}
+                                            <option value="{{../this.assignedTo}}" selected hidden>{{../this.assignedTo}}</option>
+                                        {{/if}}
+                                    </select>
+                                </div>
                             {{> v_p_profile_form}}
-                            </form>
+                            </form>  
+
                         {{/each}}
                         
                     </div>

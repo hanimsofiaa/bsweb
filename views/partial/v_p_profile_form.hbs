@@ -1,21 +1,21 @@
 {{#if user.ic}}
 <!--IC Input Field--> 
-<div class="form-group" id="ic" name= "ic">
+<div class="form-group" id="ic" name= "ic" style="display: none;">
 <input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
 </div>
 <!--Name Input Field--> 
-<div class="form-group" id="fullname" name= "fullname">
+<div class="form-group" id="fullname" name= "fullname"  style="display: none;">
 <input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{user.fullname}}">
 </div>
 {{/if}}
 
 {{#if this.ic}}
 <!--IC Input Field--> 
-<div class="form-group" id="ic" name= "ic">
+<div class="form-group" id="ic" name= "ic"  style="display: none;">
 <input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
 </div>
 <!--Name Input Field--> 
-<div class="form-group" id="fullname" name= "fullname">
+<div class="form-group" id="fullname" name= "fullname"  style="display: none;">
 <input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{this.fullname}}">
 </div>
 {{/if}}
@@ -35,21 +35,6 @@
 
 
 <!--Select Doctor Field--> 
-
-<div class="form-group" style="padding: 5px; width:fit-content;">
-	<label for="assignedTo">Select Your Doctor</label>
-	<select class="form-select"  id="assignedTo" name="assignedTo" aria-label="assignedTo">
-	
-		{{#each result}}
-		<option value="{{{this.fullname}}}">{{{this.fullname}}}</option>
-		{{/each}}
-		
-		{{#if this.assignedTo}}
-		<option value="{{this.assignedTo}}" selected hidden>{{this.assignedTo}}</option>
-		{{/if}}
-	
-	</select>
-</div>
 
 
 	
@@ -141,9 +126,9 @@
 	<!--Date of Operation Input Field--> 
 <div class="form-group" style="padding: 5px; width:fit-content">
 	<label for="surgery_date">Date of Operation</label>
-	<div class="input-group date" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}">
+	<div class="input-group date" id="surgery_date_group" name="surgery_date_group">
 		<!--<input type="date" class="form-control"  data-date="" data-date-format="YYYY-MM-DD" id="surgery_date" name="surgery_date" value="2017-06-01" placeholder="{{this.surgery_date}}">-->
-		<input type="date" class="form-control"  data-date="{{this.surgery_date}}" data-date-format="YYYY-MM-DD" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}" placeholder="{{this.surgery_date}}">
+		<input type="date" class="form-control" data-date="{{this.surgery_date}}" data-date-format="YYYY-MM-DD" id="surgery_date" name="surgery_date" value="{{this.surgery_date}}" placeholder="{{this.surgery_date}}">
 		<div class="input-group-addon">
 			<span class="glyphicon glyphicon-th"></span>
 		</div>
@@ -151,9 +136,9 @@
 </div>
 
 
-
 <div class="form-group" style="padding: 5px;">
 	<div class="btn-group">
 		<button type="submit" class="btn btn-primary" style="padding: 5px;">Update Profile</button>
 	</div>
 </div>
+

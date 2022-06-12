@@ -213,9 +213,10 @@ function displayCalories(){
     
         typeofmeal = "{{{this.time}}}"; //get all createdAt 
         sdate = new Date(typeofmeal); //assign ad Date format
+    
         
         if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
-            
+       
             getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
             //document.write("getsdate: "+getsdate);
             
@@ -239,7 +240,7 @@ function displayCalories(){
             
             c.push(calofmeal);
             labels.push(getsdate);
-            
+            document.getElementById('myChart').style.display = "block";
         }
         else{
             document.getElementById('myChart').style.display = "none";
@@ -322,7 +323,7 @@ function displayExercise(){
            
             c.push(calofmeal);
             labels.push(getsdate);
-            
+            document.getElementById('mySecChart').style.display = "block";
         }
         else{
             document.getElementById('mySecChart').style.display = "none";

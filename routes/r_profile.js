@@ -87,6 +87,7 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 });
 
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
+
     //if there is request from user with jwt token
     if (req.user) {
 
@@ -95,7 +96,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
         //take the list of doctor working at same healthcare as the user
         db.query('SELECT * FROM userdetails WHERE healthcare = ? AND role = ?', [req.user.healthcare, role], (error, result) => {
-
 
             if (!error) {
 
