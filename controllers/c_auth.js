@@ -67,7 +67,16 @@ exports.register_user = (req, res) => {
 
         //console.log(req.body);
 
-        const { fullname, email, password, passwordConfirm, role, ic, healthcare } = req.body;
+        const { email, password, passwordConfirm, role, ic, healthcare } = req.body;
+
+        var r = req.body.role;
+        var fullname = req.body.fullname;
+
+        if (r === "Doctor") {
+            if (!(fullname.includes("dr")) || !(fullname.includes("DR")) || !(fullname.includes("Dr")) || !(fullname.includes("dR"))) {
+                fullname = "Dr " + fullname;
+            }
+        }
 
         //console.log(" 2. " + email + " 3. " + password + " 4. " + passwordConfirm + " 5. " + role + " 6. " + ic + "7." + healthcare);
 
@@ -113,6 +122,7 @@ exports.register_user = (req, res) => {
 
                     let hashedPassword = await bcrypt.hash(password, 8);
                     console.log(hashedPassword);
+
                     db.query('INSERT INTO userdetails SET ?', { fullname: fullname, email: email, password: hashedPassword, ic: ic, role: role, healthcare: healthcare }, (error, results) => {
                         if (error) {
                             console.log(error);
