@@ -273,9 +273,9 @@ exports.update_profile_id = (req, res) => {
 exports.update_dashboard_ic = (req, res) => {
 
 
-    const { daily_intake, assignedTo } = req.body;
+    const { daily_intake } = req.body;
 
-    db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ? AND assignedTo = ?', [daily_intake, req.params.ic, assignedTo], (err, row) => {
+    db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ?', [daily_intake, req.params.ic], (err, row) => {
         //when done with connection
         db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
             res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: row.length, success: 'Patients Details Have Been Updated' });
