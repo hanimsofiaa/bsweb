@@ -50,40 +50,6 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-
-router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
-
-    db.query('SELECT * FROM diets WHERE ic = ?', [req.user.ic], (err, rows) => {
-
-        if (!err) { //if not error
-
-            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                if (!error) {
-                    db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, result) => {
-
-                        if (!err) { //if not error
-                            res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
-                        } else {
-                            console.log(err);
-                        }
-
-                    })
-
-                } else {
-                    console.log(error);
-                }
-            })
-
-        } else {
-            console.log(err);
-        }
-
-        console.log('the data from user table', rows);
-    })
-
-
-});
-
 router.get('/calendar', (req, res) => {
     res.render('v_p_calendar');
 });

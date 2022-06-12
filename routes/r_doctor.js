@@ -275,7 +275,7 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
                     //get patient's name
                     console.log("number of patients" + row.length);
 
-                    db.query('SELECT * FROM diets WHERE assignedTo = ?', [req.user.fullname], (error, patientanalytics) => {
+                    db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, patientanalytics) => {
                         res.render('v_d_analytics', { user: req.user, patientanalytics, row, patientnum: row.length });
                     })
 
@@ -297,39 +297,35 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 });
 
 
-router.get('/analytics/:id', authContoller.isLoggedIn, (req, res) => {
+router.get('/analytics/:ic', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
-    if (req.user) {
+    db.query('SELECT * FROM diets WHERE ic = ?', [req.params.ic], (err, rows) => {
 
-        db.query('SELECT * FROM diets', (err, row) => {
-            //when done with connection
+        if (!err) { //if not error
 
-            if (!err) { //if not error
-
-                if (req.params.id) {
-                    db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM exercise WHERE ic = ?', [req.params.ic], (err, result) => {
 
                         if (!err) { //if not error
-                            res.render('v_d_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
+                            res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
                         } else {
                             console.log(err);
                         }
-                        console.log(rows);
+
                     })
+
+                } else {
+                    console.log(error);
                 }
+            })
 
+        } else {
+            console.log(err);
+        }
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
-
-    } else {
-        res.redirect('/login');
-    }
+        console.log('the data from user table', rows);
+    })
 });
 
 router.get('/diet', authContoller.isLoggedIn, (req, res) => {
