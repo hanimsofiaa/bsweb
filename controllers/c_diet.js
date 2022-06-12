@@ -63,9 +63,9 @@ exports.add_diet = (req, res) => {
 
     console.log(createdAt, updatedAt);
 
-    const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type } = req.body;
+    const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, time } = req.body;
 
-    db.query('INSERT INTO diets SET ic = ?, fullname = ?,  assignedTo = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_add', {
@@ -104,9 +104,9 @@ exports.update_diet_id = (req, res) => {
     console.log("Month: " + (createdAt.getMonth() + 1));
     console.log("Year: " + createdAt.getFullYear());
 
-    const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type } = req.body;
+    const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, time } = req.body;
 
-    db.query('UPDATE diets SET ic = ?, fullname = ?,  assignedTo = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
+    db.query('UPDATE diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
 
@@ -207,11 +207,11 @@ exports.add_search_diet = (req, res) => {
 
     //console.log(newCal);
 
-    const { ic, fullname, assignedTo, name, type, serving_type } = req.body;
+    const { ic, fullname, assignedTo, name, type, serving_type, time } = req.body;
 
     //console.log("pass my ic" + req.body.ic);
 
-    db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+    db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             res.render('v_p_diet_search', {

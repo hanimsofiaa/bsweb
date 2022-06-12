@@ -67,6 +67,7 @@
     </div>
 	
     <div class="dash-content">
+        
 		<div class="overview">
 			<div class="title">
                 <i class="uil uil-chart"></i>
@@ -169,15 +170,13 @@ function displayCalories(){
     var datepick = document.getElementById('datepicker').value;
     var datep = new Date(datepick);
     //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
-    
-    const ctx = document.getElementById('myChart').getContext('2d');
-                
+             
     var labels = [], c = [];
     var typeofmeal, calofmeal;
-    var sdate, getsdate;;
+    var sdate, getsdate;
     {{#each rows}}
     
-        typeofmeal = "{{{this.createdAt}}}"; //get all createdAt 
+        typeofmeal = "{{{this.time}}}"; //get all createdAt 
         sdate = new Date(typeofmeal); //assign ad Date format
         
         if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
@@ -217,7 +216,7 @@ function displayCalories(){
     //document.write("Type of meal : ["+ labels + "]<br>");
     //document.write("Cal of meal : ["+ c + "]<br>");
    
-    var displaydate1 = "", displaycalories1 = "";;
+    var displaydate1 = "", displaycalories1 = "";
     
     for(var i = 0 ; i < (labels.length); i++ ){
         displaydate1 = displaydate1  + labels[i] + "<br>";
@@ -227,6 +226,7 @@ function displayCalories(){
     document.getElementById("date1").innerHTML = displaydate1;
     document.getElementById("calories1").innerHTML = displaycalories1;
     
+    const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -263,14 +263,13 @@ function displayExercise(){
     var datep = new Date(datepick);
     //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
     
-    const secctx = document.getElementById('mySecChart').getContext('2d');
-                
+            
     var labels = [], c = [];
     var typeofmeal, calofmeal;
-    var sdate, getsdate;;
+    var sdate, getsdate;
     {{#each result}}
     
-        typeofmeal = "{{{this.createdAt}}}"; //get all createdAt 
+        typeofmeal = "{{{this.time}}}"; //get all createdAt 
         sdate = new Date(typeofmeal); //assign ad Date format
         
         if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
@@ -301,7 +300,7 @@ function displayExercise(){
     //document.write("Type of meal : ["+ labels + "]<br>");
     //document.write("Cal of meal : ["+ c + "]<br>");
    
-    var displaydate2 = "", displaycalories2 = "";;
+    var displaydate2 = "", displaycalories2 = "";
     
     for(var i = 0 ; i < (labels.length); i++ ){
         displaydate2 = displaydate2  + labels[i] + "<br>";
@@ -311,6 +310,7 @@ function displayExercise(){
     document.getElementById("date2").innerHTML = displaydate2;
     document.getElementById("calories2").innerHTML = displaycalories2;
     
+    const secctx = document.getElementById('mySecChart').getContext('2d');
     const mySecChart = new Chart(secctx, {
         type: 'line',
         data: {
