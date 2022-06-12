@@ -73,26 +73,37 @@
                 <span class="text">Your Calories Analytics</span>
             </div>
 			<div class="boxes">
-                
-                <label for="datepicker">Select Month and Year:</label>
-                <input type="month" class="form-control" name="datepicker" id="datepicker"/>
-                <button type="submit" class="btn btn-primary" onclick="display()">Save</button>
-                <p id="demo"></p>
-               
-                
+    
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                         <label for="datepicker">Select Month and Year:</label>
+                    </div>
+                    <div class="col-auto">
+                       <input type="month" class="form-control" name="datepicker" id="datepicker"/>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2" onclick="displayCalories()">Save</button>
+                    </div>
+                </div><br>
+            
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert" id="alert1">
+                        <strong>Display Analytics based on Month</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+        
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col" class="text-center">Date</th>
-                            <th scope="col" class="text-center">Total Daily Calories (kcal)</th>
-
+                            <th scope="col" class="text-center">Calories (kcal)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
                         <tr>
-                             <td id="demo2"></td>
-                             <td id="demo3"></td>
+                             <td id="date1"></td>
+                             <td id="calories1"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -108,61 +119,43 @@
                 <span class="text">Your Exercise Analytics</span>
             </div>
 			<div class="boxes">
+                
+                 <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                         <label for="datepicker2">Select Month and Year:</label>
+                    </div>
+                    <div class="col-auto">
+                       <input type="month" class="form-control" name="datepicker2" id="datepicker2"/>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2" onclick="displayExercise()">Save</button>
+                    </div>
+                </div><br>
+                
+                 <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert" id="alert2">
+                        <strong>Display Analytics based on Month</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                
+                 <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Date</th>
+                            <th scope="col" class="text-center">Calories Burned (kcal)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                             <td id="date2"></td>
+                             <td id="calories2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
                 <canvas id="mySecChart" style="display: none;"></canvas>
-                <script>
-                    
-                const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-                const d = new Date();
-               // document.write("The current month is " + monthNames[d.getMonth()]);
-                   
-                const secctx = document.getElementById('mySecChart').getContext('2d');
-               // const labels = Utils.months({count: 7});
-                //const labels =  {{#each rows}}{{{this.type}}}{{/each}};
-               
                 
-                var labels = [];
-                var typeofmeal;
-                var separatedate;
-                var i = 0;
-                {{#each result}}
-                    typeofmeal = "{{{this.createdAt}}}";
-                  
-                    separatedate = new Date(typeofmeal);
-                    
-                    document.write("Year : " + separatedate.getFullYear() + "<br>");
-                    document.write("Month : " + (separatedate.getMonth()+1) + "<br>");
-                    document.write("Day : " + separatedate.getDate() + "<br>");
-                    
-                    console.log(typeofmeal);
-                    console.log(typeof typeofmeal);
-                    labels.push(typeofmeal);
-                    i++;
-                    
-                {{/each}}
-                
-              
-                const mySecChart = new Chart(secctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        //labels: labels,
-                        datasets: [{
-                            label: 'Total Calories Burned',
-                            data: [ {{#each result}}{{{this.calories_burn}}},{{/each}} ],
-                            borderWidth: 1
-                        }]
-                        
-                    },options: {
-                       scales: {
-                            xAxes: [{
-                                ticks: {
-                                    display: false //this will remove only the label
-                                }
-                            }]
-                        }
-                    }
-                });
-                </script> 
             </div>
 		</div>
         
@@ -170,91 +163,74 @@
 </section>
 
 <script>
-function display(){
+function displayCalories(){
     document.getElementById('myChart').style.display = "block";
     
     var datepick = document.getElementById('datepicker').value;
-    
     var datep = new Date(datepick);
-    document.getElementById("demo").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
+    //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
     
     const ctx = document.getElementById('myChart').getContext('2d');
                 
-    var labels = [];
-    var c = [];
+    var labels = [], c = [];
     var typeofmeal, calofmeal;
     var sdate, getsdate;;
     {{#each rows}}
     
-        typeofmeal = "{{{this.createdAt}}}";
-        sdate = new Date(typeofmeal);
-        if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){
-            getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear();
+        typeofmeal = "{{{this.createdAt}}}"; //get all createdAt 
+        sdate = new Date(typeofmeal); //assign ad Date format
+        
+        if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
+            
+            getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
             //document.write("getsdate: "+getsdate);
             
-        // labels.push(getsdate);
-            // c.push(calofmeal);
+            //labels.push(getsdate);
+            //c.push(calofmeal);
+            
             calofmeal = "{{{this.calories}}}";
             calofmeal = parseInt(calofmeal);
-    
-            if(labels.length === 0){
-                c.push(calofmeal);
-                labels.push(getsdate);
-            }else{
-                for(var i = 0 ; i < labels.length; i++ ){
-                // document.write("Label " + i + ":"+ labels[i]+ "<br>");
-                    // document.write("C " + i + ":"+ c[i]+ "<br>");
-                
-                    if(labels[i] === getsdate){
-                        c[i] = c[i] + calofmeal;//if date exist in label. just increase calories on that day
-                    }else{
-                        c.push(calofmeal);
-                        labels.push(getsdate);
-                    }
-                    
-                }
-            }
             
+            document.getElementById("alert1").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
         
-            // document.write(labels.length+ "<br>");
+            //document.write(labels.length+ "<br>");
             //document.write(c.length+ "<br>");
-            
-        // document.write("Calories 1" + {{{this.calories}}}+ "<br>");
+            //document.write("Calories 1" + {{{this.calories}}}+ "<br>");
             //document.write("Calories 2" + calofmeal+ "<br>");
-        // document.write("Year : " + sdate.getFullYear() + "<br>");
+            // document.write("Year : " + sdate.getFullYear() + "<br>");
             //document.write("Month : " + (sdate.getMonth()+1) + "<br>");
             //document.write("Day : " + sdate.getDate() + "<br>");
             //document.write("Time : " + sdate.getHours() + "<br>");
             //document.write("Minute : " + sdate.getMinutes() + "<br>");
+            
+            c.push(calofmeal);
+            labels.push(getsdate);
+            
         }
         else{
             document.getElementById('myChart').style.display = "none";
-            document.getElementById("demo").innerHTML = "No Data Recorded on " + sdate.toLocaleString('default', { month: 'long' }) + sdate.getFullYear();
+            document.getElementById("alert1").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
         }
             
     {{/each}}
     
     //document.write("Type of meal : ["+ labels + "]<br>");
     //document.write("Cal of meal : ["+ c + "]<br>");
-    var displaydemo2 = "";
+   
+    var displaydate1 = "", displaycalories1 = "";;
     
-    for(var i = 0 ; i < labels.length; i++ ){
-        displaydemo2 = displaydemo2  + labels[i] + "<br>";
+    for(var i = 0 ; i < (labels.length); i++ ){
+        displaydate1 = displaydate1  + labels[i] + "<br>";
+        displaycalories1 = displaycalories1 + c[i] + "<br>";
     }
     
-    document.getElementById("demo2").innerHTML = displaydemo2;
-    
-    var displaydemo3 = "";
-    for(var i = 0 ; i < labels.length; i++ ){
-        displaydemo3 = displaydemo3 + c[i] + "<br>";
-    }
-    document.getElementById("demo3").innerHTML = displaydemo3;
+    document.getElementById("date1").innerHTML = displaydate1;
+    document.getElementById("calories1").innerHTML = displaycalories1;
     
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
-            //labels: labels,
             datasets: [{
                 label: 'Total Food Calories Intake',
                 data: c,
@@ -276,5 +252,86 @@ function display(){
         
         
     });
+}
+
+
+function displayExercise(){
+    
+    document.getElementById('mySecChart').style.display = "block";
+    
+    var datepick = document.getElementById('datepicker2').value;
+    var datep = new Date(datepick);
+    //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
+    
+    const secctx = document.getElementById('mySecChart').getContext('2d');
+                
+    var labels = [], c = [];
+    var typeofmeal, calofmeal;
+    var sdate, getsdate;;
+    {{#each result}}
+    
+        typeofmeal = "{{{this.createdAt}}}"; //get all createdAt 
+        sdate = new Date(typeofmeal); //assign ad Date format
+        
+        if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
+            
+            getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
+            //document.write("getsdate: "+getsdate);
+            
+            //labels.push(getsdate);
+            //c.push(calofmeal);
+            
+            calofmeal = "{{{this.calories_burn}}}";
+            calofmeal = parseInt(calofmeal);
+            
+            document.getElementById("alert2").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+        
+           
+            c.push(calofmeal);
+            labels.push(getsdate);
+            
+        }
+        else{
+            document.getElementById('mySecChart').style.display = "none";
+            document.getElementById("alert2").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+        }
+            
+    {{/each}}
+    
+    //document.write("Type of meal : ["+ labels + "]<br>");
+    //document.write("Cal of meal : ["+ c + "]<br>");
+   
+    var displaydate2 = "", displaycalories2 = "";;
+    
+    for(var i = 0 ; i < (labels.length); i++ ){
+        displaydate2 = displaydate2  + labels[i] + "<br>";
+        displaycalories2 = displaycalories2 + c[i] + "<br>";
+    }
+    
+    document.getElementById("date2").innerHTML = displaydate2;
+    document.getElementById("calories2").innerHTML = displaycalories2;
+    
+    const mySecChart = new Chart(secctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            //labels: labels,
+            datasets: [{
+                label: 'Total Calories Burned',
+                data: c,
+                borderWidth: 1
+            }]
+            
+        },options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        display: false //this will remove only the label
+                    }
+                }]
+            }
+        }
+    });
+    
 }
 </script>
