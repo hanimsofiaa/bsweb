@@ -150,11 +150,17 @@
                                 </div>
                                 
                                 <button type="submit" class="btn btn-primary" style="padding: 5px;">Login</button>
+                                
                                 <!--<div id="g_id_onload"
                                     data-client_id="812135292440-utdtvo48jbephucsn5j6ucl88a3upnlh.apps.googleusercontent.com"
                                     data-callback="handleCredentialResponse">
                                 </div>
                                 <div class="g_id_signin" data-type="standard" data-onsuccess="onSignIn"></div>-->
+                                
+                                
+                                
+                                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                                
                                 
                             </form>
                             
@@ -168,7 +174,20 @@
                 </div>
                 
                 <script>
-                    function onSignIn()    
+                    function onSignIn(googleUser) {
+                        // Useful data for your client-side scripts:
+                        var profile = googleUser.getBasicProfile();
+                        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                        console.log('Full Name: ' + profile.getName());
+                        console.log('Given Name: ' + profile.getGivenName());
+                        console.log('Family Name: ' + profile.getFamilyName());
+                        console.log("Image URL: " + profile.getImageUrl());
+                        console.log("Email: " + profile.getEmail());
+
+                        // The ID token you need to pass to your backend:
+                        var id_token = googleUser.getAuthResponse().id_token;
+                        console.log("ID Token: " + id_token);
+                    }  
                 </script>
             </div>
         </div>

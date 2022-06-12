@@ -123,7 +123,15 @@
 	<input type="number" class="form-control" id="before_surg_weight" name="before_surg_weight" placeholder="Enter Weight(kg)" value="{{this.before_surg_weight}}">
 </div>
 
-	<!--Date of Operation Input Field--> 
+
+<!--Date of Operation Input Field--> 
+<div class="form-group" style="padding: 5px; width:fit-content; display:none;">
+	<div class="input-group date">
+		<input type="datetime" class="form-control" id="temp_surgery_date" name="temp_surgery_date" value="{{this.surgery_date}}">
+	</div>
+</div>
+
+<!--Date of Operation Input Field--> 
 <div class="form-group" style="padding: 5px; width:fit-content">
 	<label for="surgery_date">Date of Operation</label>
 	<div class="input-group date" id="surgery_date_group" name="surgery_date_group">
@@ -142,3 +150,20 @@
 	</div>
 </div>
 
+<script>
+	console.log("Surgery Date: "+document.getElementById("temp_surgery_date").value);
+	
+	var datep = new Date(document.getElementById("temp_surgery_date").value);
+	var dayp = datep.getDate();
+	if(dayp < 10){
+		dayp = '0' + dayp.toString();
+	}
+	
+	var monthp = (datep.getMonth()+1);
+	if(monthp < 10){
+		monthp = '0' + monthp.toString();
+	}
+	 
+	 document.getElementById("surgery_date").value = datep.getFullYear() + "-" + monthp + "-" + dayp;
+	 
+</script>
