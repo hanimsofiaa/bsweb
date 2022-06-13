@@ -136,10 +136,31 @@
                                        
                                 {{#each ../result}}
                                     <img src="/images/{{this.image}}" class="avatar" id="avatar" alt="User Profile Picture"/>
-                                
                                 {{/each}}
                             </div>
                         </div>
+                        
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="daily_intake" name= "daily_intake" value="{{this.daily_intake}}">
+                                <label class="form-label" id="daily_intake" name= "daily_intake">{{this.fullname}}'s Recommended Daily Calories Intake(kcal):</label>
+                            </div>
+                        </div>
+                        
+                        {{#each ../result}}
+                         <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="ic" name= "ic" value="{{this.ic}}" disabled>
+                                <label class="form-label" id="ic" name= "ic">Patient's IC:</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="email" name= "email" value="{{this.email}}" disabled>
+                                <label class="form-label" id="email" name= "email">Patient's Email:</label>
+                            </div>
+                        </div>
+                        {{/each}}
 
 						{{> v_d_dashboard_form}}
 						</form>

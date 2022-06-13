@@ -18,9 +18,6 @@ const db = mysql.createConnection({
 
 //localhost/
 
-
-
-
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
         if (!err) {
@@ -42,6 +39,28 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
                     console.log(err);
                 }
             })
+        } else {
+            console.log(err);
+        }
+    })
+
+});
+
+
+router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
+
+
+    db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+        if (!err) {
+            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, result) => {
+                if (!err) {
+                    res.render('v_p_dashboard_edit', { user: req.user, assignedTo: result[0].fullname, rows, result });
+                } else {
+                    console.log(err);
+                }
+            })
+
+
         } else {
             console.log(err);
         }
@@ -164,6 +183,7 @@ router.get('/profilepatient', authContoller.isLoggedIn, (req, res) => {
 
 
 });
+
 
 
 

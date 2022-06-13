@@ -193,7 +193,7 @@
                     <span class="data-title">Name</span>
                     
                     {{#each result}}
-                    <span class="data-list">{{this.fullname}}</span>
+                    <span class="data-list"><a href="/dashboard/{{this.ic}}">{{this.fullname}}   <i class="bi bi-eye-fill"></i></a></span>
                     {{/each}}
                 </div>
                 <div class="data email">
