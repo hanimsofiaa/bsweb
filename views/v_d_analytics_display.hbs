@@ -117,7 +117,7 @@
 									<button type="submit" class="btn btn-primary mb-2" id="buttonsave" onclick='displayCalories()'>Save</button>
 								</div>
 							</div><br>
-						
+    
 							<div class="container" style="background-color: #ffffff;">
 								<div class="alert alert-primary alert-dismissible fade show" role="alert" id="alert1">
 									<strong>Display Analytics based on Month</strong>
@@ -129,7 +129,7 @@
 								<thead>
 									<tr>
 										<th scope="col" class="text-center">Date</th>
-										<th scope="col" class="text-center">Calories (kcal)</th>
+										<th scope="col" class="text-center">Total Daily Calories Intake (kcal)</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -139,7 +139,7 @@
 									</tr>
 								</tbody>
 							</table>
-							
+       
 							<canvas id="myChart" style="display: none;"></canvas>
 						</div>
 					</div>
@@ -175,7 +175,7 @@
 								<thead>
 									<tr>
 										<th scope="col" class="text-center">Date</th>
-										<th scope="col" class="text-center">Calories Burned (kcal)</th>
+										<th scope="col" class="text-center">Total Daily Calories Burned (kcal)</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -266,7 +266,7 @@ function displayCalories(){
     //document.write("Cal of meal : ["+ c + "]<br>");
    
     var displaydate1 = "", displaycalories1 = "";
-    
+
     for(var i = 0 ; i < (labels.length); i++ ){
         displaydate1 = displaydate1  + labels[i] + "<br>";
         displaycalories1 = displaycalories1 + c[i] + "<br>";
