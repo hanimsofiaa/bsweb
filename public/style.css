@@ -484,12 +484,13 @@ nav.close~.dashboard .top {
 }
 
 .avatar {
-    max-width: 100%;
-    max-height: 100%;
+    width: 300px;
+    height: 300px;
     border-radius: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     padding: 5px;
     overflow: hidden;
+    object-fit: cover;
 }
 
 input {
