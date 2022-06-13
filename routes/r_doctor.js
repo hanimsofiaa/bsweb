@@ -209,7 +209,7 @@ router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
 
                 //get patient's name
 
-                db.query('SELECT * FROM userdetails', (error, result) => {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
                     res.render('v_d_dashboard_edit', { user: req.user, result });
                 })
 
@@ -229,7 +229,11 @@ router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
 
                 db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, rowpatient) => {
 
-                    res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: rowpatient.length });
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+                        res.render('v_d_dashboard_edit', { user: req.user, row, result, patientnum: rowpatient.length });
+                    })
+
+
                 })
 
             } else {

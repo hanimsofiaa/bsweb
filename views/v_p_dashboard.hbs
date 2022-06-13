@@ -143,10 +143,16 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-         <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}},
-		{{#if assignedTo}}
-        Assigned to {{assignedTo}}</h6>
-        {{/if}}
+         <h6 style="float: right;">
+            {{#if user.image}}
+                <img src="/images/{{user.image}}" class="pp" id="pp"/>
+            {{else}}
+                <img src="/images/profileimage.png" class="pp" id="pp"/>
+            {{/if}}
+            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
+            {{#if assignedTo}}
+                Assigned to {{assignedTo}}
+            {{/if}}</h6>
     </div>
     <div class="dash-content">
         <div class="overview">
@@ -300,7 +306,7 @@
             Host: "smtp.elasticemail.com",
             Username: "hanimsofiaa@gmail.com",
             Password: "ED6A55ADA4306DF7F9DBEF1F4EAC4B3FD1BC",
-            To: "hanimsofiah@student.usm.my",
+            To: "hansof230799@gmail.com",
             From: "hanimsofiaa@gmail.com",
             Subject: `Bariact : Patient named ${name} has exceeded the maximum calories today`,
             Body: `Patient Name: ${name} <br> Patient Email: ${email} <br>`,

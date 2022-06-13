@@ -69,10 +69,16 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}},
-		{{#if assignedTo}}
-        Assigned to {{assignedTo}}</h6>
-        {{/if}}
+        <h6 style="float: right;">
+            {{#if user.image}}
+                <img src="/images/{{user.image}}" class="pp" id="pp"/>
+            {{else}}
+                <img src="/images/profileimage.png" class="pp" id="pp"/>
+            {{/if}}
+            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
+            {{#if assignedTo}}
+                Assigned to {{assignedTo}}
+            {{/if}}</h6>
     </div>
     
     <div class="dash-content">

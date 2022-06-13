@@ -80,7 +80,13 @@
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-         <h6>{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+         <h6 style="float: right;">
+            {{#if user.image}}
+                <img src="/images/{{user.image}}" class="pp" id="pp"/>
+            {{else}}
+                <img src="/images/profileimage.png" class="pp" id="pp"/>
+            {{/if}}
+            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
     </div>
     <div class="dash-content">
              
@@ -120,15 +126,25 @@
 				</ol>
 				<br>
 				
-				<center>
-				<div class="card" style="max-width: 70rem;">
+				<div class="card" style="width: 80%;margin: 0 auto;text-align:center">
             		<div class="card-header text-white bg-primary"><h5 class="card-title"><label class="form-label">{{this.fullname}}'s Details</label></h5></div>
 					<div class="card-body">
-						<form class="row g-3 needs-validation" method="POST" action="/doctor/dashboard/{{this.ic}}" novalidate>
+						<form style="width: 100%;margin: 0 auto;text-align:center" class="row g-3 needs-validation" method="POST" action="/doctor/dashboard/{{this.ic}}" novalidate>
+                        
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                       
+                                {{#each ../result}}
+                                    <img src="/images/{{this.image}}" class="avatar" id="avatar" alt="User Profile Picture"/>
+                                
+                                {{/each}}
+                            </div>
+                        </div>
+
 						{{> v_d_dashboard_form}}
 						</form>
 					</div>
-        		</div></center>
+        		</div>
 				
 				{{/each}}
 			</div>	

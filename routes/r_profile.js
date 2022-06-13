@@ -26,7 +26,7 @@ router.get('/display', authContoller.isLoggedIn, (req, res) => {
 
                 db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                     if (!error) {
-                        res.render('v_p_profile', { user: req.user, rows });
+                        res.render('v_p_profile', { user: req.user, rows, assignedTo: row[0].assignedTo });
                     } else {
                         console.log(error);
                     }
