@@ -299,13 +299,13 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/analytics/:ic', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
-    db.query('SELECT * FROM diets WHERE ic = ?', [req.params.ic], (err, rows) => {
+    db.query('SELECT * FROM diets WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, rows) => {
 
         if (!err) { //if not error
 
-            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (error, row) => {
+            db.query('SELECT * FROM patientdetails WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (error, row) => {
                 if (!error) {
-                    db.query('SELECT * FROM exercise WHERE ic = ?', [req.params.ic], (err, result) => {
+                    db.query('SELECT * FROM exercise WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, result) => {
 
                         if (!err) { //if not error
                             res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });

@@ -280,16 +280,27 @@ exports.update_profile_id = (req, res) => {
                     } else {
                         console.log(results);
                         //display back updated version
-                        db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (err, rows) => {
+                        db.query('UPDATE diets SET assignedTo = ? WHERE ic = ?', [assignedTo, ic], (error, results) => {
 
-                            //when done with connection
-                            if (!err) { //if not error
-                                // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                                return res.status(200).render('v_p_profile_edit', { rows, success: 'Successfully Update Patient Profile' });
-                            } else {
-                                console.log(err);
-                            }
-                            console.log(rows);
+
+                            db.query('UPDATE exercise SET assignedTo = ? WHERE ic = ?', [assignedTo, ic], (error, results) => {
+
+
+                                db.query('UPDATE screening SET assignedTo = ? WHERE ic = ?', [assignedTo, ic], (error, results) => {
+
+                                    db.query('SELECT * FROM patientdetails WHERE id = ?', [req.params.id], (err, rows) => {
+
+                                        //when done with connection
+                                        if (!err) { //if not error
+                                            // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
+                                            return res.status(200).render('v_p_profile_edit', { rows, success: 'Successfully Update Patient Profile' });
+                                        } else {
+                                            console.log(err);
+                                        }
+                                        console.log(rows);
+                                    })
+                                })
+                            })
                         })
                     }
                 })

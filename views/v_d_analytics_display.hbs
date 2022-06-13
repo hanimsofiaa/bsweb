@@ -238,8 +238,21 @@ function displayCalories(){
             //document.write("Time : " + sdate.getHours() + "<br>");
             //document.write("Minute : " + sdate.getMinutes() + "<br>");
             
-            c.push(calofmeal);
-            labels.push(getsdate);
+            if(labels.includes(getsdate)){
+                
+                for (let i = 0; i < labels.length; i++) {
+                    if (labels[i] == getsdate) {
+                        c[i] = c[i] + calofmeal;
+                        console.log(c[i]);
+                        break;
+                    }
+                }
+                
+            }else{
+                c.push(calofmeal);
+                labels.push(getsdate);
+            }
+            
             document.getElementById('myChart').style.display = "block";
         }
         else{
@@ -320,9 +333,21 @@ function displayExercise(){
             
             document.getElementById("alert2").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
         
-           
-            c.push(calofmeal);
-            labels.push(getsdate);
+            if(labels.includes(getsdate)){
+                
+                for (let i = 0; i < labels.length; i++) {
+                    if (labels[i] == getsdate) {
+                        c[i] = c[i] + calofmeal;
+                        console.log(c[i]);
+                        break;
+                    }
+                }
+                
+            }else{
+                c.push(calofmeal);
+                labels.push(getsdate);
+            }
+            
             document.getElementById('mySecChart').style.display = "block";
         }
         else{

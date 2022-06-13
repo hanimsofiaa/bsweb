@@ -1,3 +1,10 @@
+<div class="col-6" style="display:none;">
+	<div class="form-floating mb-3">
+		<input type="datetime" class="form-control" id="temp_time" name="temp_time" value="{{{this.time}}}">
+		<label for="temp_time">Select Temporary Time</label>
+	</div>
+</div>
+
 <div class="col-6">
 	<div class="form-floating mb-3">
 		<input type="datetime-local" class="form-control" id="time" placeholder="Select Time" name="time" id="time" value="{{this.time}}">
@@ -95,4 +102,41 @@
 <div class="col-12 d-grid">
 	<button class="btn btn-primary" type="submit">Submit</button>
 </div>	
+			
+			
+<script>
+	
+	//2013-02-27T23:57:55
+	
+	console.log("Time: "+document.getElementById("temp_time").value);
+	
+	var datep = new Date(document.getElementById("temp_time").value);
+	var dayp = datep.getDate();
+	if(dayp < 10){
+		dayp = '0' + dayp.toString();
+	}
+	
+	var monthp = (datep.getMonth()+1);
+	if(monthp < 10){
+		monthp = '0' + monthp.toString();
+	}
+	
+	var hourp = datep.getHours();
+	if(hourp < 10){
+		hourp = '0' + hourp.toString();
+	}
+	
+	var minp = datep.getMinutes();
+	if(minp < 10){
+		minp = '0' + minp.toString();
+	}
+	
+	var secp = datep.getSeconds();
+	if(secp < 10){
+		secp = '0' + secp.toString();
+	}
+	
+	document.getElementById("time").value = datep.getFullYear() + "-" + monthp + "-" + dayp + "T" + hourp + ":" + minp + ":" + secp ;
+	
+</script>	
 			
