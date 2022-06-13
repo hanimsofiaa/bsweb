@@ -285,3 +285,47 @@ exports.update_dashboard_ic = (req, res) => {
 
 
 }
+
+
+exports.add_upload_ic = (req, res) => {
+
+    let sampleFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    // name of the input is name="image"
+    sampleFile = req.files.image;
+    uploadPath = __dirname + '../../public/images/' + req.params.ic;
+
+    console.log(sampleFile);
+
+    // Use mv() to place file on the server 
+    sampleFile.mv(uploadPath, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        } else {
+
+            db.query('UPDATE userdetails SET image = ? WHERE ic = ?', [req.params.ic, req.params.ic], (error, results) => {
+
+                db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+
+
+                    //when done with connection
+                    if (!err) { //if not error
+                        // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
+                        return res.render('v_d_profile', { success: 'Profile Photo Updated' });
+                    } else {
+                        console.log(err);
+                    }
+                    console.log(rows);
+
+                })
+
+            });
+        }
+    });
+
+}

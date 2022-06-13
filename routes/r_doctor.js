@@ -617,6 +617,7 @@ router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
 
 
 //POST
+router.post('/upload/:ic', doctorContoller.add_upload_ic);
 router.post('/diet/search', doctorContoller.find_diet); //function 3 - search database food(req.body passed)
 router.post('/exercise/search', doctorContoller.find_exercise); //function 5 - search database exercise(req.body passed)
 router.post('/screening/search', doctorContoller.find_screening); //function 8 - search database screening(req.body passed)

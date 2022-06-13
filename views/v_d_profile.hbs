@@ -80,14 +80,21 @@
     <div class="dash-content">
         
         {{#if success}}
+            <br><br>
+			<ol class="breadcrumb" style="background-color: #ffffff;">
+				<li class="breadcrumb-item"><a href="/doctor/profile">Back to Profile</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Upload Image</li>
+			</ol>
+			<br>
+            
             <div class="container" style="background-color: #ffffff;">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong>{{alert}}
+                    <strong>Success! </strong>{{success}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
         {{/if}}
-        
+        {{#if rows}}
         <div class="overview">
           
             <div class="title">
@@ -100,8 +107,22 @@
                     <div class="col d-flex justify-content-center">
                         <div class="card">
                             <div class="avatar-ctn">
-                                <img src="/profileimage.png" class="avatar" alt="User Profile Picture"/>
+                                {{#if user.image}}
+                                    <img src="/images/{{user.image}}" class="avatar" id="avatar" alt="User Profile Picture"/>
+                                {{else}}
+                                    <img src="/images/profileimage.png" class="avatar" id="avatar" alt="User Profile Picture"/>
+                                {{/if}}
+                                
+                                <form  class="form-inline" action="/doctor/upload/{{user.ic}}" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group mb-2">
+                                        <input type="file" name="image" id="image" accept="image/*" onclick="displayBtn()"/>
+                                    </div>
+                                    <div class="btn-group" style="padding-right: 6px;">
+                                        <button type="submit" class="btn btn-primary mb-2" id="btnUpload" style="display:none;" >Upload</button>
+                                    </div>  
+                                </form>
                             </div>
+                            <hr>
                             <div class="card-body">
                                 <h5 class="card-title">{{user.ic}}</h5>
                                 <p class="card-text"><b>{{user.fullname}}({{user.role}})</b></p>
@@ -186,6 +207,12 @@
                         </div>
             </div>
         </div>
+    {{/if}}
     </div>
 </section>
 
+<script>
+    function displayBtn(){
+        document.getElementById("btnUpload").style.display = "block";
+    }
+</script>

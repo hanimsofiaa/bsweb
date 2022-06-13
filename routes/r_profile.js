@@ -148,7 +148,7 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
 
 //POST
-router.post('/upload/:ic', profileContoller.add_upload_ic); //function 2 - add new profile(pass req.body)
+router.post('/upload/:ic', profileContoller.add_upload_ic);
 router.post('/add', profileContoller.add_profile); //function 2 - add new profile(pass req.body)
 router.post('/update/:id', profileContoller.update_profile_id); //function 4 - update existing data using its id(pass req.body)
 
