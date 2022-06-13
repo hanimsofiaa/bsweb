@@ -342,7 +342,7 @@ exports.add_upload_ic = (req, res) => {
                     //when done with connection
                     if (!err) { //if not error
                         // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                        return res.render('v_p_profile', { success: 'Successfully Update Patient Profile' });
+                        return res.render('v_p_profile', { success: 'Profile Photo Updated' });
                     } else {
                         console.log(err);
                     }

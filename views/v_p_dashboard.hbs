@@ -16,17 +16,27 @@
 
 
 {{#if user}} 
+<!--<nav>
+	<h4>Bariact</h4>
+	<ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="/diet/view">Diet</a></li>
+		<li><a href="/profile">Profile</a></li>
+		<li><a href="/auth/logout">Log Out</a></li>
+	</ul>
+</nav>-->
+
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="logo.png" alt="">
+            <img src="/logo.png" alt="">
         </div>
 
         <span class="logo_name">BARIACT</span>
     </div>
 
     <div class="menu-items">
-
+        
         <ul class="nav-links">
             <li><a href="/dashboard">
                 <i class="uil uil-estate"></i>
@@ -40,23 +50,20 @@
                 <i class="uil uil-basketball"></i>
                 <span class="link-name">Exercise</span>
             </a></li>
-            <li><a href="/screening/view">
-                <i class="uil uil-clipboard-alt"></i>
-                <span class="link-name">Screening Form</span>
-            </a></li>   
-                <li><a href="/analytics">
+            <li><a href="/analytics">
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
-            </a></li>  
+            </a></li>
+            
             <li><a href="/profile/display">
                 <i class="uil uil-user-circle"></i>
                 <span class="link-name">Profile</span>
             </a></li>
-            
+          
         </ul>
-
+        
         <ul class="logout-mode">
-
+     
             <li><a href="/auth/logout">
                 <i class="uil uil-signout"></i>
                 <span class="link-name">Logout</span>
@@ -76,6 +83,7 @@
         </ul>        
     </div>
 </nav>
+
 
 {{else}}
 <nav>

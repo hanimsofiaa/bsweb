@@ -67,6 +67,7 @@
 </nav>
 
 
+
 <section class="dashboard">
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
@@ -91,12 +92,12 @@
             
             <div class="container" style="background-color: #ffffff;">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong>{{alert}}
+                    <strong>Success! </strong>{{success}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
         {{/if}}
-        
+        {{#if rows}}
         <div class="overview">
           
             <div class="title">
@@ -135,7 +136,7 @@
                     </div>
                    
                         <br>
-                        {{#if rows}}
+                       
                         <div class="card text-center">
                             <div class="card-header">
                                 <h5>Profile Page</h5> 
@@ -259,9 +260,10 @@
                                 Bariatric Surgery Web
                             </div>-->
                         </div>
-                        {{/if}}
+                        
             </div>
         </div>
+        {{/if}}
     </div>
 </section>
 
