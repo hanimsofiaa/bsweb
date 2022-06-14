@@ -19,46 +19,50 @@ const db = mysql.createConnection({
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+            db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.user.ic], (err, rows) => {
 
 
-            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
-                if (!error) {
+                db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+                    if (!error) {
 
-                    if (row.length === 0) {
-                        db.query('SELECT * FROM userdetails', (error, result) => {
-                            res.render('v_d_profile', { rows, user: req.user, result });
-                        })
+                        if (row.length === 0) {
+                            db.query('SELECT * FROM userdetails', (error, result) => {
+                                res.render('v_d_profile', { rows, user: req.user, result });
+                            })
+                        } else {
+
+                            //get patient details
+                            if (!err) { //if not error
+                                //get patient's name
+                                console.log("number of patients" + row.length);
+                                /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
+                                    res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
+                                })*/
+                                res.render('v_d_profile', { rows, user: req.user, row });
+
+
+
+                            } else {
+                                console.log(err);
+                            }
+                        }
+
+                        console.log('the data from user table', rows);
+
                     } else {
 
-                        //get patient details
-                        if (!err) { //if not error
-                            //get patient's name
-                            console.log("number of patients" + row.length);
-                            /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
-                                res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
-                            })*/
-                            res.render('v_d_profile', { rows, user: req.user, row });
-
-
-
-                        } else {
-                            console.log(err);
-                        }
                     }
+                })
 
-                    console.log('the data from user table', rows);
-
-                } else {
-
-                }
             })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
-        })
-
-    } else { //if there is no jwt token
-        res.redirect('/login'); //localhost/login
+    } else {
+        res.redirect('/login');
     }
 });
 
@@ -66,31 +70,36 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
 router.get('/profile/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        db.query('SELECT * FROM userdetails', (err, rows) => {
-            //when done with connection
+            db.query('SELECT * FROM userdetails', (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
 
-                db.query('SELECT * FROM userdetails', (error, result) => {
+                    db.query('SELECT * FROM userdetails', (error, result) => {
 
-                    if (!error) {
+                        if (!error) {
 
-                        res.render('v_d_profile_add', { user: req.user, rows, result });
+                            res.render('v_d_profile_add', { user: req.user, rows, result });
 
-                    } else {
-                        console.log(error);
-                    }
+                        } else {
+                            console.log(error);
+                        }
 
-                });
+                    });
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
 
-        })
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -100,46 +109,50 @@ router.get('/profile/add', authContoller.isLoggedIn, (req, res) => {
 router.get('/profile/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
+
+            db.query('SELECT * FROM userdetails', (error, result) => {
 
 
-        db.query('SELECT * FROM userdetails', (error, result) => {
+                if (!error) {
 
+                    db.query('SELECT * FROM doctordetails', (err, row) => {
+                        //when done with connection
 
-            if (!error) {
+                        if (!err) { //if not error
 
-                db.query('SELECT * FROM doctordetails', (err, row) => {
-                    //when done with connection
+                            db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (error, rows) => {
+                                if (!error) { //if not error
+                                    // res.render('v_p_profile_edit', { user: req.user, rows });
 
-                    if (!err) { //if not error
+                                    if (!error) {
 
-                        db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (error, rows) => {
-                            if (!error) { //if not error
-                                // res.render('v_p_profile_edit', { user: req.user, rows });
+                                        res.render('v_d_profile_edit', { user: req.user, rows, result });
 
-                                if (!error) {
-
-                                    res.render('v_d_profile_edit', { user: req.user, rows, result });
+                                    } else {
+                                        console.log(error);
+                                    }
 
                                 } else {
                                     console.log(error);
                                 }
+                                console.log(rows);
 
-                            } else {
-                                console.log(error);
-                            }
-                            console.log(rows);
-
-                        })
+                            })
 
 
-                    } else {
-                        console.log(err);
-                    }
-                    console.log(row);
+                        } else {
+                            console.log(err);
+                        }
+                        console.log(row);
 
-                });
-            }
-        });
+                    });
+                }
+            });
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -148,152 +161,175 @@ router.get('/profile/:id', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
 
-    db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+    if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        if (row.length === 0) {
-            if (!error) {
-                //get patient details
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
-                //get patient's name
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-                db.query('SELECT * FROM userdetails', (error, result) => {
-                    res.render('v_d_dashboard', { user: req.user, result });
-                })
+                        //get patient's name
 
-            } else {
-                console.log(err);
-            }
+                        db.query('SELECT * FROM userdetails', (error, result) => {
+                            res.render('v_d_dashboard', { user: req.user, result });
+                        })
 
-            console.log('the data from user table', row);
+                    } else {
+                        console.log(err);
+                    }
 
+                    console.log('the data from user table', row);
+
+                } else {
+
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        res.render('v_d_dashboard', { user: req.user, row, patientnum: row.length });
+
+
+                        /* if (!err) { //if not error
+                             //get patient's name
+                             console.log("number of patients" + row.length);
+                             /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
+                                 res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
+                             })
+                             res.render('v_d_profile', { rows, user: req.user, row });
+                         }*/
+
+
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
+
+                }
+            })
         } else {
-
-            if (!error) {
-                //get patient details
-
-                //get patient's name
-                console.log("number of patients" + row.length);
-
-                res.render('v_d_dashboard', { user: req.user, row, patientnum: row.length });
-
-
-                /* if (!err) { //if not error
-                     //get patient's name
-                     console.log("number of patients" + row.length);
-                     /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
-                         res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
-                     })
-                     res.render('v_d_profile', { rows, user: req.user, row });
-                 }*/
-
-
-
-            } else {
-                console.log(err);
-            }
-
-            console.log('the data from user table', row);
-
+            res.status(404).send('Not Found');
         }
-    })
+
+    } else {
+        res.redirect('/login');
+    }
 });
 
 router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
 
+    if (req.user) {
+        if (req.user.role === "Doctor") {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ? AND ic = ?', [req.user.fullname, req.params.ic], (error, row) => {
 
-    db.query('SELECT * FROM patientdetails WHERE assignedTo = ? AND ic = ?', [req.user.fullname, req.params.ic], (error, row) => {
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-        if (row.length === 0) {
-            if (!error) {
-                //get patient details
+                        //get patient's name
 
-                //get patient's name
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+                            res.render('v_d_dashboard_edit', { user: req.user, result });
+                        })
 
-                db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
-                    res.render('v_d_dashboard_edit', { user: req.user, result });
-                })
+                    } else {
+                        console.log(err);
+                    }
 
-            } else {
-                console.log(err);
-            }
+                    console.log('the data from user table', row);
 
-            console.log('the data from user table', row);
+                } else {
 
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, rowpatient) => {
+
+                            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+                                res.render('v_d_dashboard_edit', { user: req.user, row, result, patientnum: rowpatient.length });
+                            })
+
+
+                        })
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
+
+                }
+            })
         } else {
-
-            if (!error) {
-                //get patient details
-
-                //get patient's name
-                console.log("number of patients" + row.length);
-
-                db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, rowpatient) => {
-
-                    db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
-                        res.render('v_d_dashboard_edit', { user: req.user, row, result, patientnum: rowpatient.length });
-                    })
-
-
-                })
-
-            } else {
-                console.log(err);
-            }
-
-            console.log('the data from user table', row);
-
+            res.status(404).send('Not Found');
         }
-    })
+
+    } else {
+        res.redirect('/login');
+    }
 });
 
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+        if (req.user.role === "Doctor") {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
-            if (row.length === 0) {
-                if (!error) {
-                    //get patient details
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-                    //get patient's name
+                        //get patient's name
 
 
-                    db.query('SELECT * FROM diets', (error, result) => {
-                        db.query('SELECT * FROM userdetails', (error, rows) => {
-                            res.render('v_d_analytics', { user: req.user, rows, result });
+                        db.query('SELECT * FROM diets', (error, result) => {
+                            db.query('SELECT * FROM userdetails', (error, rows) => {
+                                res.render('v_d_analytics', { user: req.user, rows, result });
+                            })
                         })
-                    })
 
 
 
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 } else {
-                    console.log(err);
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, patientanalytics) => {
+                            res.render('v_d_analytics', { user: req.user, patientanalytics, row, patientnum: row.length });
+                        })
+
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 }
 
-                console.log('the data from user table', row);
-            } else {
-                if (!error) {
-                    //get patient details
 
-                    //get patient's name
-                    console.log("number of patients" + row.length);
-
-                    db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, patientanalytics) => {
-                        res.render('v_d_analytics', { user: req.user, patientanalytics, row, patientnum: row.length });
-                    })
+            })
 
 
-                } else {
-                    console.log(err);
-                }
-
-                console.log('the data from user table', row);
-            }
-
-
-        })
-
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -302,83 +338,95 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
 
 router.get('/analytics/:ic', authContoller.isLoggedIn, (req, res) => {
-    //if there is request from user with jwt token
-    db.query('SELECT * FROM diets WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, rows) => {
+    if (req.user) {
+        if (req.user.role === "Doctor") {
+            //if there is request from user with jwt token
+            db.query('SELECT * FROM diets WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, rows) => {
 
-        if (!err) { //if not error
+                if (!err) { //if not error
 
-            db.query('SELECT * FROM patientdetails WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (error, row) => {
-                if (!error) {
-                    db.query('SELECT * FROM exercise WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, result) => {
+                    db.query('SELECT * FROM patientdetails WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (error, row) => {
+                        if (!error) {
+                            db.query('SELECT * FROM exercise WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, result) => {
 
-                        if (!err) { //if not error
-                            res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                if (!err) { //if not error
+                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                } else {
+                                    console.log(err);
+                                }
+
+                            })
+
                         } else {
-                            console.log(err);
+                            console.log(error);
                         }
-
                     })
 
                 } else {
-                    console.log(error);
+                    console.log(err);
                 }
-            })
 
+                console.log('the data from user table', rows);
+            })
         } else {
-            console.log(err);
+            res.status(404).send('Not Found');
         }
 
-        console.log('the data from user table', rows);
-    })
+    } else {
+        res.redirect('/login');
+    }
 });
 
 router.get('/diet', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+        if (req.user.role === "Doctor") {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
-            if (row.length === 0) {
-                if (!error) {
-                    //get patient details
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-                    //get patient's name
+                        //get patient's name
 
 
-                    db.query('SELECT * FROM diets', (error, result) => {
-                        db.query('SELECT * FROM userdetails', (error, rows) => {
-                            res.render('v_d_diet', { user: req.user, rows, result });
+                        db.query('SELECT * FROM diets', (error, result) => {
+                            db.query('SELECT * FROM userdetails', (error, rows) => {
+                                res.render('v_d_diet', { user: req.user, rows, result });
+                            })
                         })
-                    })
 
 
 
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 } else {
-                    console.log(err);
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        db.query('SELECT * FROM diets WHERE assignedTo = ?', [req.user.fullname], (error, patientdiet) => {
+                            res.render('v_d_diet', { user: req.user, patientdiet, row, patientnum: row.length });
+                        })
+
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 }
 
-                console.log('the data from user table', row);
-            } else {
-                if (!error) {
-                    //get patient details
 
-                    //get patient's name
-                    console.log("number of patients" + row.length);
-
-                    db.query('SELECT * FROM diets WHERE assignedTo = ?', [req.user.fullname], (error, patientdiet) => {
-                        res.render('v_d_diet', { user: req.user, patientdiet, row, patientnum: row.length });
-                    })
-
-
-                } else {
-                    console.log(err);
-                }
-
-                console.log('the data from user table', row);
-            }
-
-
-        })
-
+            })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -388,32 +436,37 @@ router.get('/diet', authContoller.isLoggedIn, (req, res) => {
 router.get('/diet/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        db.query('SELECT * FROM diets', (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM diets', (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                if (req.params.id) {
-                    db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+                    if (req.params.id) {
+                        db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
+                            //when done with connection
 
-                        if (!err) { //if not error
-                            res.render('v_d_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                            if (!err) { //if not error
+                                res.render('v_d_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -425,60 +478,65 @@ router.get('/exercise', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        /*db.query('SELECT * FROM exercise', (err, rows) => {
-            //when done with connection
+            /*db.query('SELECT * FROM exercise', (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                res.render('v_d_exercise', { user: req.user, rows });
-                //res.render('v_p_exercise');
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
-        })*/
+                    res.render('v_d_exercise', { user: req.user, rows });
+                    //res.render('v_p_exercise');
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+            })*/
 
 
-        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
-            if (row.length === 0) {
-                if (!error) {
-                    //get patient details
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-                    //get patient's name
+                        //get patient's name
 
-                    db.query('SELECT * FROM exercise', (error, result) => {
-                        db.query('SELECT * FROM userdetails', (error, rows) => {
-                            res.render('v_d_exercise', { user: req.user, result, rows });
+                        db.query('SELECT * FROM exercise', (error, result) => {
+                            db.query('SELECT * FROM userdetails', (error, rows) => {
+                                res.render('v_d_exercise', { user: req.user, result, rows });
+                            })
                         })
-                    })
 
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 } else {
-                    console.log(err);
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        db.query('SELECT * FROM exercise WHERE assignedTo = ?', [req.user.fullname], (error, patientexercise) => {
+                            res.render('v_d_exercise', { user: req.user, patientexercise, row, patientnum: row.length });
+                        })
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 }
 
-                console.log('the data from user table', row);
-            } else {
-                if (!error) {
-                    //get patient details
 
-                    //get patient's name
-                    console.log("number of patients" + row.length);
+            })
 
-                    db.query('SELECT * FROM exercise WHERE assignedTo = ?', [req.user.fullname], (error, patientexercise) => {
-                        res.render('v_d_exercise', { user: req.user, patientexercise, row, patientnum: row.length });
-                    })
-
-                } else {
-                    console.log(err);
-                }
-
-                console.log('the data from user table', row);
-            }
-
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -488,32 +546,37 @@ router.get('/exercise', authContoller.isLoggedIn, (req, res) => {
 router.get('/exercise/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        db.query('SELECT * FROM exercise', (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise', (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                if (req.params.id) {
-                    db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+                    if (req.params.id) {
+                        db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
+                            //when done with connection
 
-                        if (!err) { //if not error
-                            res.render('v_d_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                            if (!err) { //if not error
+                                res.render('v_d_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -525,58 +588,63 @@ router.get('/screening', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        /*db.query('SELECT * FROM screening', (err, rows) => {
-            //when done with connection
+            /*db.query('SELECT * FROM screening', (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
-                res.render('v_d_screening', { user: req.user, rows });
-                //res.render('v_p_screening');
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
-        })*/
+                if (!err) { //if not error
+                    res.render('v_d_screening', { user: req.user, rows });
+                    //res.render('v_p_screening');
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+            })*/
 
-        db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
+            db.query('SELECT * FROM patientdetails WHERE assignedTo = ?', [req.user.fullname], (error, row) => {
 
-            if (row.length === 0) {
-                if (!error) {
-                    //get patient details
+                if (row.length === 0) {
+                    if (!error) {
+                        //get patient details
 
-                    //get patient's name
+                        //get patient's name
 
 
-                    db.query('SELECT * FROM screening', (error, result) => {
-                        db.query('SELECT * FROM userdetails', (error, rows) => {
-                            res.render('v_d_screening', { user: req.user, result, rows });
+                        db.query('SELECT * FROM screening', (error, result) => {
+                            db.query('SELECT * FROM userdetails', (error, rows) => {
+                                res.render('v_d_screening', { user: req.user, result, rows });
+                            })
                         })
-                    })
 
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 } else {
-                    console.log(err);
+                    if (!error) {
+                        //get patient details
+
+                        //get patient's name
+                        console.log("number of patients" + row.length);
+
+                        db.query('SELECT * FROM screening WHERE assignedTo = ?', [req.user.fullname], (error, patientscreening) => {
+                            res.render('v_d_screening', { user: req.user, patientscreening, row, patientnum: row.length });
+                        })
+
+                    } else {
+                        console.log(err);
+                    }
+
+                    console.log('the data from user table', row);
                 }
 
-                console.log('the data from user table', row);
-            } else {
-                if (!error) {
-                    //get patient details
+            })
 
-                    //get patient's name
-                    console.log("number of patients" + row.length);
-
-                    db.query('SELECT * FROM screening WHERE assignedTo = ?', [req.user.fullname], (error, patientscreening) => {
-                        res.render('v_d_screening', { user: req.user, patientscreening, row, patientnum: row.length });
-                    })
-
-                } else {
-                    console.log(err);
-                }
-
-                console.log('the data from user table', row);
-            }
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -586,33 +654,38 @@ router.get('/screening', authContoller.isLoggedIn, (req, res) => {
 router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Doctor") {
 
-        db.query('SELECT * FROM screening', (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM screening', (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                if (req.params.id) {
+                    if (req.params.id) {
 
-                    db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+                        db.query('SELECT * FROM screening WHERE id = ?', [req.params.id], (err, rows) => {
+                            //when done with connection
 
-                        if (!err) { //if not error
-                            res.render('v_d_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below' });
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                            if (!err) { //if not error
+                                res.render('v_d_screening_display', { user: req.user, rows, alert: 'Your Selected Screening Displayed Below' });
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
