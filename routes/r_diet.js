@@ -70,7 +70,11 @@ router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
 
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_diet_search', { user: req.user, rows });
+                            }
                         } else {
                             console.log(error);
                         }
@@ -104,7 +108,11 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
                 if (!err) { //if not error
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_diet_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_diet_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_diet_add', { user: req.user, rows });
+                            }
                         } else {
                             console.log(error);
                         }
@@ -142,7 +150,11 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
                             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                                 if (!error) {
-                                    res.render('v_p_diet_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                    if (row.length != 0) {
+                                        res.render('v_p_diet_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                    } else {
+                                        res.render('v_p_diet_edit', { user: req.user, rows });
+                                    }
                                 } else {
                                     console.log(error);
                                 }
@@ -236,7 +248,11 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
 
                                 db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                                     if (!error) {
-                                        res.render('v_p_diet_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Food Displayed Below' });
+                                        if (row.length != 0) {
+                                            res.render('v_p_diet_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Food Displayed Below' });
+                                        } else {
+                                            res.render('v_p_diet_display', { user: req.user, rows, alert: 'Your Selected Food Displayed Below' });
+                                        }
                                     } else {
                                         console.log(error);
                                     }
@@ -278,7 +294,11 @@ router.get('/add_foodlist', authContoller.isLoggedIn, (req, res) => {
                 if (!err) { //if not error
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_diet_search', { user: req.user, rows });
+                            }
                         } else {
                             console.log(error);
                         }

@@ -67,7 +67,11 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_exercise_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_exercise_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_exercise_add', { user: req.user, rows });
+                            }
                         } else {
                             console.log(error);
                         }
@@ -108,7 +112,11 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 
                             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                                 if (!error) {
-                                    res.render('v_p_exercise_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                    if (row.length != 0) {
+                                        res.render('v_p_exercise_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                    } else {
+                                        res.render('v_p_exercise_edit', { user: req.user, rows });
+                                    }
                                 } else {
                                     console.log(error);
                                 }
@@ -197,7 +205,11 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
 
                                 db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                                     if (!error) {
-                                        res.render('v_p_exercise_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Exercise Displayed Below' });
+                                        if (row.length != 0) {
+                                            res.render('v_p_exercise_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Exercise Displayed Below' });
+                                        } else {
+                                            res.render('v_p_exercise_display', { user: req.user, rows, alert: 'Your Selected Exercise Displayed Below' });
+                                        }
                                     } else {
                                         console.log(error);
                                     }

@@ -69,7 +69,11 @@ router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
                 if (!err) {
                     db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, result) => {
                         if (!err) {
-                            res.render('v_p_dashboard_edit', { user: req.user, assignedTo: result[0].fullname, rows, result });
+                            if (result.length != 0) {
+                                res.render('v_p_dashboard_edit', { user: req.user, assignedTo: result[0].fullname, rows, result });
+                            } else {
+                                res.render('v_p_dashboard_edit', { user: req.user, rows, result });
+                            }
                         } else {
                             console.log(err);
                         }
