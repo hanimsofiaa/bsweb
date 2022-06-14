@@ -24,23 +24,28 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
                 if (!err) {
 
-                    db.query('SELECT * FROM doctordetails WHERE fullname = ?', [row[0].assignedTo], (err, rows) => {
-                        if (!err) {
+                    if (row.length != 0) {
+                        db.query('SELECT * FROM doctordetails WHERE fullname = ?', [row[0].assignedTo], (err, rows) => {
+                            if (!err) {
+
+                                db.query('SELECT * FROM userdetails WHERE fullname = ?', [row[0].assignedTo], (err, result) => {
+                                    if (!err) {
+                                        res.render('v_p_dashboard', { user: req.user, assignedTo: row[0].assignedTo, rows, result });
+                                    } else {
+                                        console.log(err);
+                                    }
+                                })
 
 
-                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [row[0].assignedTo], (err, result) => {
-                                if (!err) {
-                                    res.render('v_p_dashboard', { user: req.user, assignedTo: row[0].assignedTo, rows, result });
-                                } else {
-                                    console.log(err);
-                                }
-                            })
+                            } else {
+                                console.log(err);
+                            }
+                        })
+                    } else {
 
+                        res.render('v_p_dashboard', { user: req.user });
 
-                        } else {
-                            console.log(err);
-                        }
-                    })
+                    }
                 } else {
                     console.log(err);
                 }
@@ -100,7 +105,11 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
                             db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, result) => {
 
                                 if (!err) { //if not error
-                                    res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                    if (row.length != 0) {
+                                        res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                    } else {
+                                        res.render('v_p_analytics', { user: req.user, rows, result });
+                                    }
                                 } else {
                                     console.log(err);
                                 }

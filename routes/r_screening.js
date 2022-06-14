@@ -28,7 +28,11 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
                     let removedScreening = req.query.removed; //if any screening is deleted, set alert 
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_screening', { user: req.user, rows, removedScreening: removedScreening });
+                            }
                         } else {
                             console.log(error);
                         }

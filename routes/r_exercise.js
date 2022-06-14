@@ -29,7 +29,11 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_exercise', { user: req.user, rows, assignedTo: row[0].assignedTo, removedExercise: removedExercise });
+                            if (row.length != 0) {
+                                res.render('v_p_exercise', { user: req.user, rows, assignedTo: row[0].assignedTo, removedExercise: removedExercise });
+                            } else {
+                                res.render('v_p_exercise', { user: req.user, rows, removedExercise: removedExercise });
+                            }
                         } else {
                             console.log(error);
                         }

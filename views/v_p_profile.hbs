@@ -73,9 +73,9 @@
         <i class="uil uil-bars sidebar-toggle"></i>
         <h6 style="float: right;">
             {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp"/>
+                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
             {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp"/>
+                <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
             {{/if}}
             {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{#if assignedTo}}
@@ -103,7 +103,7 @@
                 </div>
             </div>
         {{/if}}
-        {{#if rows}}
+       
         <div class="overview">
           
             <div class="title">
@@ -270,7 +270,7 @@
                         
             </div>
         </div>
-        {{/if}}
+        
     </div>
 </section>
 

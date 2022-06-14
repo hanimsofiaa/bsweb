@@ -22,7 +22,7 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
     if (req.user) {
         if (req.user.role === "Patient") {
 
-            db.query('SELECT * FROM diets', (err, rows) => {
+            db.query('SELECT * FROM diets WHERE ic = ?', [req.user.ic], (err, rows) => {
                 //when done with connection
 
                 if (!err) { //if not error
@@ -31,7 +31,11 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
                     db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
                         if (!error) {
-                            res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood, assignedTo: row[0].assignedTo });
+                            if (row.length != 0) {
+                                res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood, assignedTo: row[0].assignedTo });
+                            } else {
+                                res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood });
+                            }
                         } else {
                             console.log(error);
                         }

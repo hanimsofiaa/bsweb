@@ -463,8 +463,6 @@ router.get('/doctorlist/:id', authContoller.isLoggedIn, (req, res) => {
                     console.log(rows);
                 })
 
-
-
             }
 
         } else {
