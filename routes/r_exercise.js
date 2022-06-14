@@ -19,27 +19,32 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
-                let removedExercise = req.query.removed; //if any exercise is deleted, set alert 
+                if (!err) { //if not error
+                    let removedExercise = req.query.removed; //if any exercise is deleted, set alert 
 
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_exercise', { user: req.user, rows, assignedTo: row[0].assignedTo, removedExercise: removedExercise });
-                    } else {
-                        console.log(error);
-                    }
-                })
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_exercise', { user: req.user, rows, assignedTo: row[0].assignedTo, removedExercise: removedExercise });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
-        })
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -49,27 +54,32 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_exercise_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                    } else {
-                        console.log(error);
-                    }
-                })
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_exercise_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
 
-        })
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -80,39 +90,44 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (error, rows) => {
-                    //when done with connection
+                    db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (error, rows) => {
+                        //when done with connection
 
-                    if (!error) { //if not error
+                        if (!error) { //if not error
 
-                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                            if (!error) {
-                                res.render('v_p_exercise_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                            } else {
-                                console.log(error);
-                            }
-                        })
-
-
-                    } else {
-                        console.log(error);
-                    }
-                    console.log(rows);
-                })
+                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                if (!error) {
+                                    res.render('v_p_exercise_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                } else {
+                                    console.log(error);
+                                }
+                            })
 
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
+                        } else {
+                            console.log(error);
+                        }
+                        console.log(rows);
+                    })
 
-        })
+
+                } else {
+                    console.log(err);
+                }
+                console.log(row);
+
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -122,34 +137,38 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                if (req.params.id) {
-                    db.query('DELETE FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
-                        //when done with connection
+                    if (req.params.id) {
+                        db.query('DELETE FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
+                            //when done with connection
 
-                        if (!err) { //if not error
-                            let removedExercise = encodeURIComponent('Activity Successfully Removed');
-                            res.redirect('/exercise/view?removed=' + removedExercise); //no need render just redirect to same page of current page dislaying
-                            //res.redirect('/diet/view');
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                            if (!err) { //if not error
+                                let removedExercise = encodeURIComponent('Activity Successfully Removed');
+                                res.redirect('/exercise/view?removed=' + removedExercise); //no need render just redirect to same page of current page dislaying
+                                //res.redirect('/diet/view');
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
-
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+            })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -159,41 +178,46 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
 router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
-            //when done with connection
+            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, row) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                if (req.params.id) {
-                    db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
-                        //when done with connection
+                    if (req.params.id) {
+                        db.query('SELECT * FROM exercise WHERE id = ? AND ic = ?', [req.params.id, req.user.ic], (err, rows) => {
+                            //when done with connection
 
-                        if (!err) { //if not error
+                            if (!err) { //if not error
 
-                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                                if (!error) {
-                                    res.render('v_p_exercise_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Exercise Displayed Below' });
-                                } else {
-                                    console.log(error);
-                                }
-                            })
+                                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                    if (!error) {
+                                        res.render('v_p_exercise_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Exercise Displayed Below' });
+                                    } else {
+                                        console.log(error);
+                                    }
+                                })
 
 
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');

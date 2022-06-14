@@ -19,16 +19,52 @@ const db = mysql.createConnection({
 //localhost/
 
 router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
-    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
-        if (!err) {
-
-            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [row[0].assignedTo], (err, rows) => {
+    if (req.user) {
+        if (req.user.role === "Patient") {
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, row) => {
                 if (!err) {
 
-
-                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [row[0].assignedTo], (err, result) => {
+                    db.query('SELECT * FROM doctordetails WHERE fullname = ?', [row[0].assignedTo], (err, rows) => {
                         if (!err) {
-                            res.render('v_p_dashboard', { user: req.user, assignedTo: row[0].assignedTo, rows, result });
+
+
+                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [row[0].assignedTo], (err, result) => {
+                                if (!err) {
+                                    res.render('v_p_dashboard', { user: req.user, assignedTo: row[0].assignedTo, rows, result });
+                                } else {
+                                    console.log(err);
+                                }
+                            })
+
+
+                        } else {
+                            console.log(err);
+                        }
+                    })
+                } else {
+                    console.log(err);
+                }
+            })
+        } else {
+            res.status(404).send('Not Found');
+        }
+
+    } else {
+        res.redirect('/login');
+    }
+
+});
+
+
+router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
+
+    if (req.user) {
+        if (req.user.role === "Patient") {
+            db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+                if (!err) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, result) => {
+                        if (!err) {
+                            res.render('v_p_dashboard_edit', { user: req.user, assignedTo: result[0].fullname, rows, result });
                         } else {
                             console.log(err);
                         }
@@ -40,31 +76,12 @@ router.get('/dashboard', authContoller.isLoggedIn, (req, res) => {
                 }
             })
         } else {
-            console.log(err);
+            res.status(404).send('Not Found');
         }
-    })
 
-});
-
-
-router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
-
-
-    db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
-        if (!err) {
-            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, result) => {
-                if (!err) {
-                    res.render('v_p_dashboard_edit', { user: req.user, assignedTo: result[0].fullname, rows, result });
-                } else {
-                    console.log(err);
-                }
-            })
-
-
-        } else {
-            console.log(err);
-        }
-    })
+    } else {
+        res.redirect('/login');
+    }
 
 });
 
@@ -72,33 +89,42 @@ router.get('/dashboard/:ic', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
-    db.query('SELECT * FROM diets WHERE ic = ?', [req.user.ic], (err, rows) => {
+    if (req.user) {
+        if (req.user.role === "Patient") {
+            db.query('SELECT * FROM diets WHERE ic = ?', [req.user.ic], (err, rows) => {
 
-        if (!err) { //if not error
+                if (!err) { //if not error
 
-            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                if (!error) {
-                    db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, result) => {
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            db.query('SELECT * FROM exercise WHERE ic = ?', [req.user.ic], (err, result) => {
 
-                        if (!err) { //if not error
-                            res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                if (!err) { //if not error
+                                    res.render('v_p_analytics', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                } else {
+                                    console.log(err);
+                                }
+
+                            })
+
                         } else {
-                            console.log(err);
+                            console.log(error);
                         }
-
                     })
 
                 } else {
-                    console.log(error);
+                    console.log(err);
                 }
-            })
 
+                console.log('the data from user table', rows);
+            })
         } else {
-            console.log(err);
+            res.status(404).send('Not Found');
         }
 
-        console.log('the data from user table', rows);
-    })
+    } else {
+        res.redirect('/login');
+    }
 
 
 });
@@ -139,23 +165,26 @@ router.get('/', (req, res) => {
 router.get('/profile', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
 
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+                if (!err) { //if not error
+                    res.render('v_p_profile', { rows, user: req.user });
+                } else {
+                    console.log(err);
+                }
 
-            if (!err) { //if not error
-                res.render('v_p_profile', { rows, user: req.user });
-            } else {
-                console.log(err);
-            }
+                console.log('the data from user table', rows);
+            })
 
-            console.log('the data from user table', rows);
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
-    } else { //if there is no jwt token
-        res.redirect('/login'); //localhost/login
+    } else {
+        res.redirect('/login');
     }
-
 
 
 });
@@ -163,30 +192,28 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
 router.get('/profilepatient', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
 
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (err, rows) => {
+                if (!err) { //if not error
+                    res.render('v_p_profile_edit', { rows, user: req.user });
+                } else {
+                    console.log(err);
+                }
 
-            if (!err) { //if not error
-                res.render('v_p_profile_edit', { rows, user: req.user });
-            } else {
-                console.log(err);
-            }
+                console.log('the data from user table', rows);
+            })
 
-            console.log('the data from user table', rows);
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
-    } else { //if there is no jwt token
-        res.redirect('/login'); //localhost/login
+    } else {
+        res.redirect('/login');
     }
 
 
-
 });
-
-
-
-
-
 
 module.exports = router;

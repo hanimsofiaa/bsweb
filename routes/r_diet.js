@@ -20,29 +20,34 @@ const db = mysql.createConnection({
 router.get('/view', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, rows) => {
-            //when done with connection
+            db.query('SELECT * FROM diets', (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                let removedFood = req.query.removed; //if any food is deleted, set alert 
+                    let removedFood = req.query.removed; //if any food is deleted, set alert 
 
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood, assignedTo: row[0].assignedTo });
-                    } else {
-                        console.log(error);
-                    }
-                })
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_diet', { user: req.user, rows, removedFood: removedFood, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
 
-        })
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -52,26 +57,31 @@ router.get('/view', authContoller.isLoggedIn, (req, res) => {
 router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, rows) => {
-            //when done with connection
+            db.query('SELECT * FROM diets', (err, rows) => {
+                //when done with connection
 
-            if (!err) { //if not error
+                if (!err) { //if not error
 
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                    } else {
-                        console.log(error);
-                    }
-                })
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
 
-        })
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -81,25 +91,31 @@ router.get('/foodlist', authContoller.isLoggedIn, (req, res) => {
 router.get('/add', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, rows) => {
-            //when done with connection
 
-            if (!err) { //if not error
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_diet_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                    } else {
-                        console.log(error);
-                    }
-                })
+            db.query('SELECT * FROM diets', (err, rows) => {
+                //when done with connection
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                if (!err) { //if not error
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_diet_add', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
-        })
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -109,39 +125,45 @@ router.get('/add', authContoller.isLoggedIn, (req, res) => {
 router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
-
-        db.query('SELECT * FROM diets', (err, row) => {
-            //when done with connection
-
-            if (!err) { //if not error
-
-                db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (error, rows) => {
-                    if (!error) { //if not error
-
-                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                            if (!error) {
-                                res.render('v_p_diet_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                            } else {
-                                console.log(error);
-                            }
-                        })
-
-                    } else {
-                        console.log(error);
-                    }
-                    console.log(rows);
-
-                })
+        if (req.user.role === "Patient") {
 
 
+            db.query('SELECT * FROM diets', (err, row) => {
+                //when done with connection
+
+                if (!err) { //if not error
+
+                    db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (error, rows) => {
+                        if (!error) { //if not error
+
+                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                if (!error) {
+                                    res.render('v_p_diet_edit', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                                } else {
+                                    console.log(error);
+                                }
+                            })
+
+                        } else {
+                            console.log(error);
+                        }
+                        console.log(rows);
+
+                    })
 
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
 
-        })
+
+                } else {
+                    console.log(err);
+                }
+                console.log(row);
+
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -151,34 +173,40 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
 router.get('/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, row) => {
-            //when done with connection
 
-            if (!err) { //if not error
+            db.query('SELECT * FROM diets', (err, row) => {
+                //when done with connection
 
-                if (req.params.id) {
-                    db.query('DELETE FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+                if (!err) { //if not error
 
-                        if (!err) { //if not error
-                            let removedFood = encodeURIComponent('Food Successfully Removed');
-                            res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
-                            // res.redirect('/diet/view');
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                    if (req.params.id) {
+                        db.query('DELETE FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
+                            //when done with connection
+
+                            if (!err) { //if not error
+                                let removedFood = encodeURIComponent('Food Successfully Removed');
+                                res.redirect('/diet/view?removed=' + removedFood); //no need render just redirect to same page of current page dislaying
+                                // res.redirect('/diet/view');
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -188,40 +216,46 @@ router.get('/:id', authContoller.isLoggedIn, (req, res) => {
 router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, row) => {
-            //when done with connection
 
-            if (!err) { //if not error
+            db.query('SELECT * FROM diets', (err, row) => {
+                //when done with connection
 
-                if (req.params.id) {
-                    db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-                        //when done with connection
+                if (!err) { //if not error
 
-                        if (!err) { //if not error
+                    if (req.params.id) {
+                        db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
+                            //when done with connection
 
-                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                                if (!error) {
-                                    res.render('v_p_diet_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Food Displayed Below' });
-                                } else {
-                                    console.log(error);
-                                }
-                            })
+                            if (!err) { //if not error
 
-                        } else {
-                            console.log(err);
-                        }
-                        console.log(rows);
-                    })
+                                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                                    if (!error) {
+                                        res.render('v_p_diet_display', { user: req.user, rows, assignedTo: row[0].assignedTo, alert: 'Your Selected Food Displayed Below' });
+                                    } else {
+                                        console.log(error);
+                                    }
+                                })
+
+                            } else {
+                                console.log(err);
+                            }
+                            console.log(rows);
+                        })
+                    }
+
+
+                } else {
+                    console.log(err);
                 }
+                console.log(row);
 
+            })
 
-            } else {
-                console.log(err);
-            }
-            console.log(row);
-
-        })
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
@@ -231,25 +265,31 @@ router.get('/display/:id', authContoller.isLoggedIn, (req, res) => {
 router.get('/add_foodlist', authContoller.isLoggedIn, (req, res) => {
     //if there is request from user with jwt token
     if (req.user) {
+        if (req.user.role === "Patient") {
 
-        db.query('SELECT * FROM diets', (err, rows) => {
-            //when done with connection
 
-            if (!err) { //if not error
-                db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
-                    if (!error) {
-                        res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
-                    } else {
-                        console.log(error);
-                    }
-                })
+            db.query('SELECT * FROM diets', (err, rows) => {
+                //when done with connection
 
-            } else {
-                console.log(err);
-            }
-            console.log(rows);
+                if (!err) { //if not error
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.user.ic], (error, row) => {
+                        if (!error) {
+                            res.render('v_p_diet_search', { user: req.user, rows, assignedTo: row[0].assignedTo });
+                        } else {
+                            console.log(error);
+                        }
+                    })
 
-        })
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+
+            })
+
+        } else {
+            res.status(404).send('Not Found');
+        }
 
     } else {
         res.redirect('/login');
