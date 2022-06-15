@@ -29,7 +29,7 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
 
                         if (row.length === 0) {
                             db.query('SELECT * FROM userdetails', (error, result) => {
-                                res.render('v_d_profile', { rows, user: req.user, result, newuser: 'user' });
+                                res.render('v_d_profile', { rows, user: req.user, result, display: 'display' });
                             })
                         } else {
 
@@ -40,7 +40,7 @@ router.get('/profile', authContoller.isLoggedIn, (req, res) => {
                                 /*db.query('SELECT * FROM userdetails WHERE ic = ?', [row.ic], (error, patientdetails) => {
                                     res.render('v_d_profile', { rows, user: req.user, patientdetails, row });
                                 })*/
-                                res.render('v_d_profile', { rows, user: req.user, row, existinguser: 'user' });
+                                res.render('v_d_profile', { rows, user: req.user, row, display: 'display' });
 
 
 

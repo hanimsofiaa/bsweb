@@ -127,6 +127,14 @@
             <br>
             <div class="activity">
                 <form class="row g-3 needs-validation" method="POST" action="/profile/add" novalidate>
+                    <div class="form-group" style="padding: 5px; width:fit-content;">
+                        <label for="assignedTo">Select Doctor</label>
+                        <select class="form-select"  id="assignedTo" name="assignedTo" aria-label="assignedTo">
+                            {{#each result}}
+                                <option value="{{this.fullname}}">{{this.fullname}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
                     {{> v_p_profile_form}}
                 </form>
             </div>	

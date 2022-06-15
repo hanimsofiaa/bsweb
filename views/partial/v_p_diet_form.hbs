@@ -149,8 +149,11 @@
 
 <div class="col-6">
 	<div class="form-floating mb-3">
-		<input type="number" class="form-control" id="serving_size" placeholder="Serving Size" name="serving_size" id="serving_size" value="{{this.serving_size}}">
+		<input type="number" class="form-control" id="serving_size" placeholder="Serving Size" name="serving_size" id="serving_size" value="{{this.serving_size}}" min="1" onkeyup="validateSS();" required>
 		<label for="serving_size">Serving Size</label>
+		<small style="float: left;">Minimum Value: 1</small><br>
+		<small  id="P_incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain minimum value of 1</small>
+		<small  id="P_correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
 	</div>
 </div>
 
@@ -200,6 +203,32 @@
 	}
 	
 	document.getElementById("time").value = datep.getFullYear() + "-" + monthp + "-" + dayp + "T" + hourp + ":" + minp + ":" + secp ;
+	
+
+
+function validateSS(){
+
+    var myP = document.getElementById("serving_size");
+    var P_incorrect = document.getElementById("P_incorrect");
+    var P_correct= document.getElementById("P_correct");
+
+    console.log(myP.value);
+    if(myP.value.length > 0){
+        if ((parseInt(myP.value) != null) && (parseInt(myP.value) != 0) && !(parseInt(myP.value) < 1)){
+            P_incorrect.classList.remove("invalid");
+            P_incorrect.classList.add("valid");
+            P_incorrect.style.display = "none";
+            P_correct.style.display = "block";  //display correct
+        }else{
+            P_incorrect.classList.remove("valid");
+            P_incorrect.classList.add("invalid");
+            P_incorrect.style.display="block";
+            P_correct.style.display = "none";
+        }
+    }
+    
+}
+
 	
 </script>	
 			

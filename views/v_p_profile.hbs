@@ -103,7 +103,7 @@
                 </div>
             </div>
         {{/if}}
-       
+        {{#if display}}
         <div class="overview">
           
             <div class="title">
@@ -112,7 +112,7 @@
             </div>
           
             <div class="activity">
-                
+                    
                     <div class="col d-flex justify-content-center">
                         <div class="card">
                             <div class="avatar-ctn">
@@ -141,7 +141,7 @@
                             </div>
                         </div> 
                     </div>
-                   
+                     
                         <br>
                        
                         <div class="card text-center">
@@ -166,6 +166,13 @@
                                             <tr>
                                                 <th scope="col" class="text-left">Assigned Doctor :</th>                                               
                                                 <th scope="col" class="text-left">{{this.assignedTo}}</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                         <thead>
+                                            <tr>
+                                                <th scope="col" class="text-left">Recommended Daily Calories Intake(kcal) :</th>                                               
+                                                <th scope="col" class="text-left">{{this.daily_intake}}</th>
                                             </tr>
                                         </thead>
                                         
@@ -270,6 +277,7 @@
                         
             </div>
         </div>
+        {{/if}}
         
     </div>
 </section>

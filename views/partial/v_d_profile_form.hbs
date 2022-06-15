@@ -42,7 +42,9 @@
 <!--Phone Number Input Field--> 
 <div class="form-group" style="padding: 5px;">
 	<label for="phone_number">Phone Number</label>
-	<input type="tel" class="form-control" id="phone_number" name="phone_number" placeholder="Eg: 0123456789" value="{{this.phone_number}}">
+	<input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="Eg: 0123456789" value="{{this.phone_number}}" pattern="(?=.*[0-9])" title="Must contain 10 or 11 digit numbers only"  onkeyup="validatePN();" required>
+	<small id="incorrect" class="invalid" style="display: none; color:red float: left;"><i class="bi bi-exclamation-circle-fill"></i> Please enter a valid phone number format(Eg: 0123456789)</small>
+    <small id="correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
 </div>
 
 
@@ -51,3 +53,30 @@
 		<button type="submit" class="btn btn-primary" style="padding: 5px;">Update Profile</button>
 	</div>
 </div>
+
+
+<script>
+	function validatePN(){
+
+    var myP = document.getElementById("phone_number");
+    var P_incorrect = document.getElementById("incorrect");
+    var P_correct= document.getElementById("correct");
+	var pattern = /(?=.*[0-9])/g;
+
+    console.log(myP.value);
+    if(myP.value.length > 0){
+        if ((parseInt(myP.value) != null) && (myP.value.match(pattern)) && (myP.value.length == 10 || myP.value.length == 11)){
+            P_incorrect.classList.remove("invalid");
+            P_incorrect.classList.add("valid");
+            P_incorrect.style.display = "none";
+            P_correct.style.display = "block";  //display correct
+        }else{
+            P_incorrect.classList.remove("valid");
+            P_incorrect.classList.add("invalid");
+            P_incorrect.style.display="block";
+            P_correct.style.display = "none";
+        }
+    }
+    
+}
+</script>

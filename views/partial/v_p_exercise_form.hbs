@@ -76,15 +76,20 @@
 
 <div class="col-6">
 	<div class="form-floating mb-3">
-		<input type="text" class="form-control" id="duration" placeholder="00:00:00" name="duration" id="duration" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"value="{{this.duration}}">
-		<label for="duration">Duration (hh:mm:ss)</label>
+		<input type="text" class="form-control" id="duration" placeholder="00:00:00" name="duration" id="duration" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"value="{{this.duration}}" onkeyup="validateD();" required>
+		<label for="duration">Duration (hh:mm:ss)</label><br>
+		<small  id="incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain format 00:00:00</small>
+		<small  id="correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
 	</div>
 </div>
 
 <div class="col-5">
 	<div class="form-floating mb-3">
-		<input type="number" class="form-control" id="step_count" placeholder="Step Count" name="step_count" id="step_count" value="{{this.step_count}}">
+		<input type="number" class="form-control" id="step_count" placeholder="Step Count" name="step_count" id="step_count" value="{{this.step_count}}" min="1" onkeyup="validateSC();" required>
 		<label for="step_count">Step Count</label>
+		<small style="float: left;">Minimum Value: 1</small><br>
+		<small  id="P_incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain minimum value of 1</small>
+		<small  id="P_correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
 	</div>
 </div>
 
@@ -138,5 +143,55 @@
 	
 	document.getElementById("time").value = datep.getFullYear() + "-" + monthp + "-" + dayp + "T" + hourp + ":" + minp + ":" + secp ;
 	
+	
+function validateSC(){
+
+    var myP = document.getElementById("step_count");
+    var P_incorrect = document.getElementById("P_incorrect");
+    var P_correct= document.getElementById("P_correct");
+	
+
+    console.log(myP.value);
+    if(myP.value.length > 0){
+        if ((parseInt(myP.value) != null) && (parseInt(myP.value) != 0) && !(parseInt(myP.value) < 1)){
+            P_incorrect.classList.remove("invalid");
+            P_incorrect.classList.add("valid");
+            P_incorrect.style.display = "none";
+            P_correct.style.display = "block";  //display correct
+        }else{
+            P_incorrect.classList.remove("valid");
+            P_incorrect.classList.add("invalid");
+            P_incorrect.style.display="block";
+            P_correct.style.display = "none";
+        }
+    }
+    
+}
+	
+	
+	
+function validateD(){
+
+    var myP = document.getElementById("duration");
+    var P_incorrect = document.getElementById("incorrect");
+    var P_correct= document.getElementById("correct");
+	var pattern = /[0-9]{2}:[0-9]{2}:[0-9]{2}/g;
+
+    console.log(myP.value);
+    if(myP.value.length > 0){
+        if ((parseInt(myP.value) != null) && (myP.value.match(pattern))){
+            P_incorrect.classList.remove("invalid");
+            P_incorrect.classList.add("valid");
+            P_incorrect.style.display = "none";
+            P_correct.style.display = "block";  //display correct
+        }else{
+            P_incorrect.classList.remove("valid");
+            P_incorrect.classList.add("invalid");
+            P_incorrect.style.display="block";
+            P_correct.style.display = "none";
+        }
+    }
+    
+}
 </script>	
 			
