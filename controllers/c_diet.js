@@ -66,6 +66,14 @@ exports.add_diet = (req, res) => {
 
     const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, time } = req.body;
 
+    const ss = parseInt(serving_size);
+    const cc = parseInt(calories);
+    if (!serving_size || ss < 1 || cc < 1 || !cc || !name || !type) {
+        return res.status(400).render('v_p_diet_add', {
+            message: 'Incorrect Input Field'
+        })
+    }
+
     var c = [],
         labels = [];
     var datep = new Date(time);
@@ -183,6 +191,14 @@ exports.update_diet_id = (req, res) => {
     console.log("Year: " + createdAt.getFullYear());
 
     const { ic, fullname, assignedTo, name, calories, type, serving_size, serving_type, time } = req.body;
+
+    const ss = parseInt(serving_size);
+    const cal = parseInt(calories);
+    if (!serving_size || ss < 1 || cal < 1 || !cal || !name || !type) {
+        return res.status(400).render('v_p_diet_edit', {
+            message: 'Incorrect Input Field'
+        })
+    }
 
     var c = [],
         labels = [];
@@ -331,10 +347,23 @@ exports.search_foodlist_db = (req, res) => {
     const ic = req.body.ic;
     console.log("my ic for search diet" + ic);
 
-    db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM food_list WHERE name LIKE ? LIMIT 10', ['%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet_search', { ic: req.body.ic, rows, alert: 'Display Searched Food', searchword: searchTerm });
+            //res.render('v_p_diet_search', { ic: req.body.ic, rows, alert: 'Display Searched Food', searchword: searchTerm });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    if (row.length != 0) {
+                        res.render('v_p_diet_search', { user: req.user, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
+                    } else {
+                        res.render('v_p_diet_search', { user: req.user, rows });
+                    }
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -364,6 +393,14 @@ exports.add_search_diet = (req, res) => {
 
     const { ic, fullname, assignedTo, name, type, serving_type, time } = req.body;
 
+
+    const ss = parseInt(serving_size);
+    const cc = parseInt(calories);
+    if (!serving_size || ss < 1 || cc < 1 || !cc || !name || !type) {
+        return res.status(400).render('v_p_diet_search', {
+            message: 'Incorrect Input Field'
+        })
+    }
 
     var c = [],
         labels = [];

@@ -75,7 +75,7 @@
             {{else}}
                 <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
+            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
             {{#if assignedTo}}
                 Assigned to {{assignedTo}}
             {{/if}}</h6>
@@ -116,7 +116,12 @@
 					<div class="input-group-append">
 						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
 					</div>
-				
+					
+					{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
+            {{#if assignedTo}}
+                Assigned to {{assignedTo}}
+            {{/if}}</h6>
+			
 					{{#if user.ic}}
 					<!--IC Input Field--> 
 					<div class="form-group" id="ic" name= "ic">
@@ -153,33 +158,53 @@
 					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{ic}}">
 					</div>
 			{{/if}}
+			
+			{{#each row}}
+			{{this.fullname}}, ahhahaha{{this.ic}}
+			{{/each}}
+			
+			
+        </div>
+			
 			{{#each rows}}
 			<hr>
 			<div class="activity" style="justify-content: center;">
 				<form class="row g-3 needs-validation" method="POST" action="/diet/add_foodlist" novalidate>
 					
-					{{#if user.ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
-					</div>
-					{{/if}}
-
-					{{#if this.ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
-					</div>
-					{{/if}}
 					
+					<!--IC Input Field--> 
+					<div class="form-group" id="ic" name= "ic">
+					<input type="text" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
+					</div>
+					<!--Name Input Field--> 
+					<div class="form-group" id="fullname" name= "fullname">
+					<input type="text" class="form-control" id="fullname" name= "fullname" value="{{user.fullname}}">
+					</div>
+					<!--Name Input Field--> 
+					<div class="form-group" id="assignedTo" name= "assignedTo">
+					<input type="text" class="form-control" id="assignedTo" name= "assignedTo" value="{{user.assignedTo}}">
+					</div>
+					{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
+					{{#if assignedTo}}
+						Assigned to {{assignedTo}}
+					{{/if}}</h6>
+
 					{{#if ic}}
 					<!--IC Input Field--> 
 					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{ic}}">
+					<input type="text" class="form-control" id="ic" name= "ic" value="{{ic}}">
+					</div>
+					{{/if}}
+
+					{{#if assignedTo}}     
+					<div class="form-group" id="assignedTo" name= "assignedTo">
+						<input type="text" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
 					</div>
 					{{/if}}
 					
 				 {{> v_p_diet_form_search}}	
+				 
+				 
 				</form>
 			</div>
 			<br>

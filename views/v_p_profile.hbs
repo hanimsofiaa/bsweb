@@ -134,7 +134,7 @@
                     
                             </div>
                             <hr>
-                            <button onclick="displayPic()">clickme</button>
+                           
                             <div class="card-body">
                                 <h5 class="card-title">{{user.ic}}</h5>
                                 <p class="card-text"><b>{{user.fullname}}({{user.role}})</b></p>  
@@ -279,17 +279,6 @@
             </div>
         </div>
         {{/if}}
-         <div id="add_to_me">
-            <h1>GeeksforGeeks</h1>
-            <p>This is the text which has already been typed into the div</p>
-        </div>
-        
-        <input type="file"
-       onchange="imagePreview(this.Image)"
-       name="avata" 
-       accept="image/png, image/jpeg" />
-
-        <img id="avata" src="" alt="avata" />
 
     </div>
 </section>
@@ -298,17 +287,5 @@
     function displayBtn(){
         document.getElementById("btnUpload").style.display = "block";
     }
-    function displayPic(){
-        var base = Buffer.from({{user.picture}}).toString('base64');
-        document.getElementById("add_to_me").innerHTML += 
-        '<img src="data:image/png;base64,'+base+'" alt="something familiar"/>';
-    }
-    
-    function imagePreview(e) {
-        const avatar = document.getElementById("avata");
-        const blob = new Blob([e.files[0]], { type: "image/jpeg" })
-        const blobURL = URL.createObjectURL(blob)
-        avatar.style.display = "block"
-        avatar.src = blobURL
-    }
+
 </script>

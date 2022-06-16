@@ -1,37 +1,4 @@
-{{#if user.ic}}
-<!--IC Input Field--> 
-<div class="form-group" id="ic" name= "ic">
-<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
-</div>
-<!--Name Input Field--> 
-<div class="form-group" id="fullname" name= "fullname">
-<input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{user.fullname}}">
-</div>
-{{/if}}
 
-{{#if this.ic}}
-<!--IC Input Field--> 
-<div class="form-group" id="ic" name= "ic">
-<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
-</div>
-<!--Name Input Field--> 
-<div class="form-group" id="fullname" name= "fullname">
-<input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{this.fullname}}">
-</div>
-{{/if}}
-
-{{#if ic}}
-<!--IC Input Field--> 
-<div class="form-group" id="ic" name= "ic">
-<input type="hidden" class="form-control" id="ic" name= "ic" value="{{ic}}">
-</div>
-{{/if}}
-
-{{#if assignedTo}}     
-<div class="form-group" id="assignedTo" name= "assignedTo">
-	<input type="hidden" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
-</div>
-{{/if}}
 
 <center><h6>{{{this.name}}} ({{{this.serving_size}}} {{{this.serving_type}}})</h6></center>
 <center><h6>{{{this.serving_size}}} serving size: {{{this.calories}}} kcal </h6></center>

@@ -66,6 +66,13 @@ exports.add_exercise = (req, res) => {
 
     const { ic, fullname, assignedTo, activity, duration, step_count, distance, time } = req.body;
 
+    const ss = parseInt(step_count);
+    if (!activity || ss < 1 || !duration || !ss || !time) {
+        return res.status(400).render('v_p_exercise_add', {
+            message: 'Incorrect Input Field'
+        })
+    }
+
     db.query('INSERT INTO exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
@@ -105,6 +112,14 @@ exports.update_exercise_id = (req, res) => {
     const calories_burn = numstep * 0.04;
 
     const { ic, fullname, assignedTo, activity, duration, step_count, distance, time } = req.body;
+
+    const ss = parseInt(step_count);
+    if (!activity || ss < 1 || !duration || !ss || !time) {
+        return res.status(400).render('v_p_exercise_edit', {
+            message: 'Incorrect Input Field'
+        })
+    }
+
 
     db.query('UPDATE exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
         //when done with connection

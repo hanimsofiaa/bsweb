@@ -59,9 +59,7 @@ exports.add_profile = (req, res) => {
 
         if (!home_address || !phone_number || !marital_status || !activity_level || !surgery_status || !curr_weight || !surgery_date || !height) {
             //render back to edit and pass the data back
-            return res.render('v_p_profile_add', {
-                message: 'Field Cannot Be Empty'
-            })
+            return res.status(400).render('v_p_profile_add', { rows, message: 'Field Cannot Be Empty' });
         }
 
 
@@ -141,6 +139,7 @@ exports.add_profile = (req, res) => {
 
                         return res.status(200).render('v_p_profile_add', { success: 'Successfully Update Patient Profile' });
 
+
                     }
                 })
 
@@ -188,7 +187,8 @@ exports.update_profile_id = (req, res) => {
 
                 //when done with connection
                 if (!err) { //if not error
-                    res.render('v_p_profile_edit', { rows, message: 'Field Cannot Be Empty' });
+                    return res.status(400).render('v_p_profile_edit', { rows, message: 'Field Cannot Be Empty' });
+
                 } else {
                     console.log(err);
                 }

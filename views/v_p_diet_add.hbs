@@ -107,6 +107,15 @@
                 </div>
             </div>
             {{/if}}
+            
+            {{#if message}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong></strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{/if}}
 
             <br>
             <div class="activity">
