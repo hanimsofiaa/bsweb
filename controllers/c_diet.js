@@ -130,8 +130,8 @@ exports.add_diet = (req, res) => {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
-                        const sid = 'ACa496989cd3eace6d07dec534767f230d';
-                        const auth_token = '4788e1a667104142cdd146cf15b209dd';
+                        const sid = process.env.SID;
+                        const auth_token = process.env.AUTH_TOKEN;
 
                         var twilio = require('twilio')(sid, auth_token);
                         twilio.messages.create({
@@ -256,8 +256,8 @@ exports.update_diet_id = (req, res) => {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
-                        const sid = 'ACa496989cd3eace6d07dec534767f230d';
-                        const auth_token = '4788e1a667104142cdd146cf15b209dd';
+                        const sid = process.env.SID;
+                        const auth_token = process.env.AUTH_TOKEN;
 
                         var twilio = require('twilio')(sid, auth_token);
                         twilio.messages.create({
@@ -458,8 +458,8 @@ exports.add_search_diet = (req, res) => {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
-                        const sid = 'ACa496989cd3eace6d07dec534767f230d';
-                        const auth_token = '4788e1a667104142cdd146cf15b209dd';
+                        const sid = process.env.SID;
+                        const auth_token = process.env.AUTH_TOKEN;
 
                         var twilio = require('twilio')(sid, auth_token);
                         twilio.messages.create({
