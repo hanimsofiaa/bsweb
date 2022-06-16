@@ -456,6 +456,9 @@ nav.close~.dashboard .top {
     .activity .activity-data {
         overflow-X: scroll;
     }
+    .activity {
+        overflow-X: scroll;
+    }
 }
 
 @media (max-width: 780px) {
@@ -463,17 +466,26 @@ nav.close~.dashboard .top {
         width: calc(100% / 2 - 15px);
         margin-top: 15px;
     }
+    .activity {
+        overflow-X: scroll;
+    }
 }
 
 @media (max-width: 560px) {
     .dash-content .boxes .box {
         width: 100%;
     }
+    .activity {
+        overflow-X: scroll;
+    }
 }
 
 @media (max-width: 500px) {
     .dashboard .top .sidebar-toggle {
         display: none;
+    }
+    .activity {
+        overflow-X: scroll;
     }
 }
 

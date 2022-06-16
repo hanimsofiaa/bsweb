@@ -324,7 +324,10 @@ exports.add_upload_ic = (req, res) => {
 
     // name of the input is name="image"
     sampleFile = req.files.image;
-    uploadPath = __dirname + '../../public/images/' + req.params.ic;
+    const path = require("path");
+    const p = path.join(__dirname, "../public/images/");
+
+    uploadPath = p + req.params.ic;
 
     console.log(sampleFile);
 
