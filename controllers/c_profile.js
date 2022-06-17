@@ -319,7 +319,10 @@ exports.add_upload_ic = (req, res) => {
     let uploadPath;
 
     if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No files were uploaded.');
+
+        return res.status(400).render('v_p_profile', {
+            message: 'No files were uploaded.'
+        })
     }
 
     // name of the input is name="image"
@@ -345,7 +348,20 @@ exports.add_upload_ic = (req, res) => {
                     //when done with connection
                     if (!err) { //if not error
                         // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                        return res.render('v_p_profile', { success: 'Profile Photo Updated' });
+
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, getuser) => {
+
+
+                            //when done with connection 
+                            if (!err) { //if not error
+                                res.render('v_p_profile', { getuser, assignedTo: rows[0].assignedTo, success: 'Profile Photo Updated' });
+                            } else {
+                                console.log(err);
+                            }
+
+                        })
+
+
                     } else {
                         console.log(err);
                     }

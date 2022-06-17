@@ -347,18 +347,19 @@ exports.search_foodlist_db = (req, res) => {
     const ic = req.body.ic;
     console.log("my ic for search diet" + ic);
 
-    db.query('SELECT * FROM food_list WHERE name LIKE ? LIMIT 10', ['%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             //res.render('v_p_diet_search', { ic: req.body.ic, rows, alert: 'Display Searched Food', searchword: searchTerm });
 
             db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
                 if (!error) {
-                    if (row.length != 0) {
-                        res.render('v_p_diet_search', { user: req.user, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
-                    } else {
-                        res.render('v_p_diet_search', { user: req.user, rows });
-                    }
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_diet_search', { getuser, rows, row, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
+                    })
+
+
                 } else {
                     console.log(error);
                 }
@@ -367,8 +368,6 @@ exports.search_foodlist_db = (req, res) => {
         } else {
             console.log(err);
         }
-        console.log(rows);
-
     })
 }
 
@@ -391,8 +390,8 @@ exports.add_search_diet = (req, res) => {
 
     //console.log(newCal);
 
-    const { ic, fullname, assignedTo, name, type, serving_type, time } = req.body;
-
+    const { ic, fullname, name, type, serving_type, time } = req.body;
+    console.log("add_search_diet", ic, fullname);
 
     const ss = parseInt(serving_size);
     const cc = parseInt(calories);
@@ -471,6 +470,8 @@ exports.add_search_diet = (req, res) => {
                     }
                 }
 
+            } else {
+                console.log("row 0")
             }
         })
 
@@ -479,18 +480,21 @@ exports.add_search_diet = (req, res) => {
 
     //console.log("pass my ic" + req.body.ic);
 
-    db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
-        //when done with connection
-        if (!err) { //if not error
-            res.render('v_p_diet_search', {
-                alert: 'New Food Has Been Added'
-            });
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
+    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
+        const at = row[0].assignedTo;
+        db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, at, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+                res.render('v_p_diet_search', {
+                    alert: 'New Food Has Been Added'
+                });
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
 
-    })
+        })
+    });
 
 
 }

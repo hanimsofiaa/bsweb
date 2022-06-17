@@ -3,11 +3,9 @@
 <center><h6>{{{this.name}}} ({{{this.serving_size}}} {{{this.serving_type}}})</h6></center>
 <center><h6>{{{this.serving_size}}} serving size: {{{this.calories}}} kcal </h6></center>
 
-<input type="text" class="form-control" id="name" placeholder="Food Name" name="name" id="name" value="{{this.name}}" hidden>
+<input type="hidden" class="form-control" id="name" placeholder="Food Name" name="name" id="name" value="{{this.name}}">
 
-<input type="text" class="form-control" id="ic" placeholder="IC" name="ic" id="ic" value="{{ic}}" hidden>
-
-<input type="text" class="form-control" id="serving_type" placeholder="Serving type" name="serving_type" id="serving_type" value="{{this.serving_type}}" hidden>
+<input type="hidden" class="form-control" id="serving_type" placeholder="Serving type" name="serving_type" id="serving_type" value="{{this.serving_type}}">
 	
 <center><div class="col-6">
 	<div class="form-floating mb-3">

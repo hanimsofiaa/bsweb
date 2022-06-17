@@ -72,15 +72,28 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         <h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+            {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
-            {{#if assignedTo}}
-                Assigned to {{assignedTo}}
-            {{/if}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+             {{#if assignedTo}}
+                Assigned to {{assignedTo}}</h6>
+            {{/if}}
         
         <!--<input type="file" id="image" name="image" accept="image/png, image/jpg">
         <div id="display_image"></div>-->
@@ -103,6 +116,16 @@
                 </div>
             </div>
         {{/if}}
+        
+        {{#if message}}         
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong></strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {{/if}}
+        
         {{#if display}}
         <div class="overview">
           

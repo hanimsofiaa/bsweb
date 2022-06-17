@@ -70,15 +70,29 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
 		<h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+            {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
-            {{#if assignedTo}}
-                Assigned to {{assignedTo}}
-            {{/if}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+             {{#if assignedTo}}
+                Assigned to {{assignedTo}}</h6>
+            {{/if}}
+        
     </div>
     <div class="dash-content">
 		
@@ -112,37 +126,11 @@
 				<!--button for SEARCH -->
 				<div class="input-group mb-3">
 				<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
-					<input type="search" autocomplete="on" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">
+					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{#if user.ic}}{{user.ic}}{{/if}}">
+					<input type="search" autocomplete="off" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">	
 					<div class="input-group-append">
 						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
 					</div>
-					
-					{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
-            {{#if assignedTo}}
-                Assigned to {{assignedTo}}
-            {{/if}}</h6>
-			
-					{{#if user.ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
-					</div>
-					{{/if}}
-
-					{{#if this.ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
-					</div>
-					{{/if}}
-					{{#if ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{ic}}">
-					</div>
-					{{/if}}
-					
-					
 				</form>
 				</div>
 			</div>	
@@ -151,19 +139,7 @@
 			{{#if searchword}}
 			<div class="container mt-4" style="background-color: #ffffff;"><h5>Searched Results for <b>"{{searchword}}"</b></h5></div>
 			{{/if}}
-	
-			{{#if ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{ic}}">
-					</div>
-			{{/if}}
-			
-			{{#each row}}
-			{{this.fullname}}, ahhahaha{{this.ic}}
-			{{/each}}
-			
-			
+
         </div>
 			
 			{{#each rows}}
@@ -172,38 +148,12 @@
 				<form class="row g-3 needs-validation" method="POST" action="/diet/add_foodlist" novalidate>
 					
 					
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="text" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
-					</div>
-					<!--Name Input Field--> 
-					<div class="form-group" id="fullname" name= "fullname">
-					<input type="text" class="form-control" id="fullname" name= "fullname" value="{{user.fullname}}">
-					</div>
-					<!--Name Input Field--> 
-					<div class="form-group" id="assignedTo" name= "assignedTo">
-					<input type="text" class="form-control" id="assignedTo" name= "assignedTo" value="{{user.assignedTo}}">
-					</div>
-					{{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}, {{#if this.ic}}{{/if}}
-					{{#if assignedTo}}
-						Assigned to {{assignedTo}}
-					{{/if}}</h6>
-
-					{{#if ic}}
-					<!--IC Input Field--> 
-					<div class="form-group" id="ic" name= "ic">
-					<input type="text" class="form-control" id="ic" name= "ic" value="{{ic}}">
-					</div>
-					{{/if}}
-
-					{{#if assignedTo}}     
-					<div class="form-group" id="assignedTo" name= "assignedTo">
-						<input type="text" class="form-control" id="assignedTo" name= "assignedTo" value="{{assignedTo}}">
-					</div>
-					{{/if}}
+					{{#each ../getuser}}
+						<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
+						<input type="hidden" class="form-control" id="fullname" name= "fullname" value="{{this.fullname}}">
+					{{/each}}
 					
 				 {{> v_p_diet_form_search}}	
-				 
 				 
 				</form>
 			</div>
