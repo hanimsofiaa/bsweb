@@ -137,14 +137,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-            {{/if}}
+            {{else}}
 
             <br>
             <div class="activity">
                 <form class="row g-3 needs-validation" method="POST" action="/doctor/profile/add" novalidate>
                     {{> v_d_profile_form}}
                 </form>
-            </div>	
+            </div>
+            {{/if}}	
         </div>
     </div>
 </section>

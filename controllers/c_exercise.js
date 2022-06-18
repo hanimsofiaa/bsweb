@@ -80,33 +80,45 @@ exports.add_exercise = (req, res) => {
 
     const ss = parseInt(step_count);
     if (!activity || ss < 1 || !duration || !ss || !time) {
-        return res.status(400).render('v_p_exercise_add', {
-            message: 'Incorrect Input Field'
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+            if (!error) {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                    res.status(400).render('v_p_exercise_add', { getuser, row, assignedTo: row[0].assignedTo, message: 'Incorrect Input Field' });
+
+
+                })
+            } else {
+                console.log(error);
+            }
+        })
+
+    } else {
+
+        db.query('INSERT INTO exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                    if (!error) {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                            res.render('v_p_exercise_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Exercise Has Been Added' });
+                        })
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
         })
     }
-
-    db.query('INSERT INTO exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
-        //when done with connection
-        if (!err) { //if not error
-
-            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
-                if (!error) {
-                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
-
-                        res.render('v_p_exercise_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Exercise Has Been Added' });
-                    })
-                } else {
-                    console.log(error);
-                }
-            })
-
-
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
-
-    })
 
 }
 
@@ -137,47 +149,58 @@ exports.update_exercise_id = (req, res) => {
 
     const ss = parseInt(step_count);
     if (!activity || ss < 1 || !duration || !ss || !time) {
-        return res.status(400).render('v_p_exercise_edit', {
-            message: 'Incorrect Input Field'
+
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+            if (!error) {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                    res.status(400).render('v_p_exercise_edit', { getuser, row, assignedTo: row[0].assignedTo, message: 'Incorrect Input Field' });
+                })
+            } else {
+                console.log(error);
+            }
+
+
+        })
+    } else {
+
+        db.query('UPDATE exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+
+                //display back updated version
+                db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
+                    //when done with connection
+
+                    if (!err) { //if not error
+
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                            if (!error) {
+                                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                    res.render('v_p_exercise_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${activity} Has Been Updated` });
+                                })
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
+
+                    } else {
+                        console.log(err);
+                    }
+                    console.log(rows);
+                })
+
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
         })
     }
-
-
-    db.query('UPDATE exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, updatedAt, req.params.id], (err, rows) => {
-        //when done with connection
-        if (!err) { //if not error
-
-            //display back updated version
-            db.query('SELECT * FROM exercise WHERE id = ?', [req.params.id], (err, rows) => {
-                //when done with connection
-
-                if (!err) { //if not error
-
-
-                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
-                        if (!error) {
-                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
-
-                                res.render('v_p_exercise_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${activity} Has Been Updated` });
-                            })
-                        } else {
-                            console.log(error);
-                        }
-                    })
-
-
-                } else {
-                    console.log(err);
-                }
-                console.log(rows);
-            })
-
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
-
-    })
 }
 
 //function 7 - delete existing data using its id(pass id)

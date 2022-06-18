@@ -215,42 +215,51 @@ exports.add_profile = (req, res) => {
 
         if (!home_address || !phone_number) {
             //render back to edit and pass the data back
-            return res.render('v_d_profile_add', {
-                message: 'Field Cannot Be Empty'
+
+            db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_d_profile_add', { getuser, row, message: 'Incorrect Input Field' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+        } else {
+
+            console.log(req.body);
+            db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
+                if (error) {
+                    console.log(error + "ic retrieve");
+                } else {
+                    //if there is no data for patient in patientdetails table, create new one
+                    db.query('INSERT INTO doctordetails SET ?', { ic: ic, fullname: fullname, home_address: home_address, phone_number: phone_number, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log(results);
+
+
+                            db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                                if (!error) {
+                                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                        res.render('v_d_profile_add', { getuser, row, success: 'Successfully Update Doctor Profile' });
+                                    })
+                                } else {
+                                    console.log(error);
+                                }
+                            })
+
+
+                        }
+                    })
+
+                }
+
             })
         }
-
-        console.log(req.body);
-        db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
-            if (error) {
-                console.log(error + "ic retrieve");
-            } else {
-                //if there is no data for patient in patientdetails table, create new one
-                db.query('INSERT INTO doctordetails SET ?', { ic: ic, fullname: fullname, home_address: home_address, phone_number: phone_number, createdAt: createdAt, updatedAt: updatedAt }, (error, results) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(results);
-
-
-                        db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
-                            if (!error) {
-                                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
-
-                                    res.render('v_d_profile_add', { getuser, row, success: 'Successfully Update Doctor Profile' });
-                                })
-                            } else {
-                                console.log(error);
-                            }
-                        })
-
-
-                    }
-                })
-
-            }
-
-        })
     } catch (error) {
 
     }
@@ -269,63 +278,61 @@ exports.update_profile_id = (req, res) => {
         if (!home_address || !phone_number) {
             //render back to edit and pass the data back
 
-            db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (err, rows) => {
+            db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-                //when done with connection
-                if (!err) { //if not error
-                    res.render('v_d_profile_edit', { user: req.user, rows, message: 'Field Cannot Be Empty' });
+                        res.render('v_d_profile_edit', { getuser, row, message: 'Incorrect Input Field' });
+                    })
                 } else {
-                    console.log(err);
+                    console.log(error);
                 }
-                console.log(rows);
+            })
+        } else {
+
+            //if there is data for patient in patientdetails table, update existing data
+            db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
+                if (error) {
+                    console.log(error + "ic retrieve");
+                } else {
+
+                    db.query('UPDATE doctordetails SET ic = ?, fullname = ?, home_address = ?, phone_number = ?, updatedAt = ? WHERE id = ?', [ic, fullname, home_address, phone_number, updatedAt, req.params.id], (error, results) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log(results);
+                            //display back updated version
+                            db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (err, rows) => {
+
+                                //when done with connection
+                                if (!err) { //if not error
+                                    // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
+
+                                    db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                                        if (!error) {
+                                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                                res.render('v_d_profile_edit', { getuser, rows, row, success: 'Successfully Update Doctor Profile' });
+                                            })
+                                        } else {
+                                            console.log(error);
+                                        }
+                                    })
+                                } else {
+                                    console.log(err);
+                                }
+                                console.log(rows);
+                            })
+                        }
+                    })
+                }
             })
         }
-
-
-        console.log(req.body);
-        //if there is data for patient in patientdetails table, update existing data
-
-
-        db.query('SELECT ic FROM userdetails WHERE ic = ?', [ic], async(error, results) => {
-            if (error) {
-                console.log(error + "ic retrieve");
-            } else {
-
-                db.query('UPDATE doctordetails SET ic = ?, fullname = ?, home_address = ?, phone_number = ?, updatedAt = ? WHERE id = ?', [ic, fullname, home_address, phone_number, updatedAt, req.params.id], (error, results) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(results);
-                        //display back updated version
-                        db.query('SELECT * FROM doctordetails WHERE id = ?', [req.params.id], (err, rows) => {
-
-                            //when done with connection
-                            if (!err) { //if not error
-                                // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-
-                                db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
-                                    if (!error) {
-                                        db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
-
-                                            res.render('v_d_profile_edit', { getuser, rows, row, success: 'Successfully Update Doctor Profile' });
-                                        })
-                                    } else {
-                                        console.log(error);
-                                    }
-                                })
-                            } else {
-                                console.log(err);
-                            }
-                            console.log(rows);
-                        })
-                    }
-                })
-            }
-        })
 
     } catch (error) {
 
     }
+
 
 }
 
@@ -335,17 +342,35 @@ exports.update_dashboard_ic = (req, res) => {
     const { user_ic, daily_intake } = req.body;
     console.log("updatedashboardic", user_ic);
 
-    db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ?', [daily_intake, req.params.ic], (err, row) => {
-        //when done with connection
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
-            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+
+    if (!daily_intake || daily_intake < 100 || daily_intake > 100000) {
+
+        db.query('SELECT * FROM doctordetails WHERE ic = ?', [user_ic], (error, row) => {
+            if (!error) {
                 db.query('SELECT * FROM userdetails WHERE ic = ?', [user_ic], (err, getuser) => {
-                    res.render('v_d_dashboard_edit', { getuser, row, result, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+
+                    res.render('v_d_dashboard_edit', { getuser, row, message: 'Incorrect Input Field' });
                 })
-            })
+            } else {
+                console.log(error);
+            }
         })
 
-    })
+
+    } else {
+
+        db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ?', [daily_intake, req.params.ic], (err, row) => {
+            //when done with connection
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [user_ic], (err, getuser) => {
+                        res.render('v_d_dashboard_edit', { getuser, row, result, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+                    })
+                })
+            })
+
+        })
+    }
 
 
 }
@@ -357,55 +382,80 @@ exports.add_upload_ic = (req, res) => {
     let uploadPath;
 
     if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No files were uploaded.');
-    }
 
-    // name of the input is name="image"
-    sampleFile = req.files.image;
-    const path = require("path");
-    const p = path.join(__dirname, "../public/images/");
+        db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+                // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
 
-    uploadPath = p + req.params.ic;
-
-    console.log(sampleFile);
-
-    // Use mv() to place file on the server 
-    sampleFile.mv(uploadPath, function(err) {
-        if (err) {
-            return res.status(500).send(err);
-        } else {
-
-            db.query('UPDATE userdetails SET image = ? WHERE ic = ?', [req.params.ic, req.params.ic], (error, results) => {
-
-                db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, getuser) => {
 
 
-                    //when done with connection
+                    //when done with connection 
                     if (!err) { //if not error
-                        // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-
-                        db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, getuser) => {
-
-
-                            //when done with connection 
-                            if (!err) { //if not error
-                                res.render('v_d_profile', { getuser, success: 'Profile Photo Updated' });
-                            } else {
-                                console.log(err);
-                            }
-
-                        })
-
+                        res.render('v_d_profile', { getuser, assignedTo: rows[0].assignedTo, message: 'No files were uploaded.' });
                     } else {
                         console.log(err);
                     }
-                    console.log(rows);
 
                 })
 
-            });
 
-        }
-    });
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
+        })
+    } else {
+
+        // name of the input is name="image"
+        sampleFile = req.files.image;
+        const path = require("path");
+        const p = path.join(__dirname, "../public/images/");
+
+        uploadPath = p + req.params.ic;
+
+        console.log(sampleFile);
+
+        // Use mv() to place file on the server 
+        sampleFile.mv(uploadPath, function(err) {
+            if (err) {
+                return res.status(500).send(err);
+            } else {
+
+                db.query('UPDATE userdetails SET image = ? WHERE ic = ?', [req.params.ic, req.params.ic], (error, results) => {
+
+                    db.query('SELECT * FROM doctordetails WHERE ic = ?', [req.params.ic], (err, rows) => {
+
+
+                        //when done with connection
+                        if (!err) { //if not error
+                            // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
+
+                            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, getuser) => {
+
+
+                                //when done with connection 
+                                if (!err) { //if not error
+                                    res.render('v_d_profile', { getuser, success: 'Profile Photo Updated' });
+                                } else {
+                                    console.log(err);
+                                }
+
+                            })
+
+                        } else {
+                            console.log(err);
+                        }
+                        console.log(rows);
+
+                    })
+
+                });
+
+            }
+        });
+    }
 
 }

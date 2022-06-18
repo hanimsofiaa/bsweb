@@ -119,32 +119,47 @@
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 			</div>
-			{{/if}}
-
-			<br>
-			<div class="container">
-				<!--button for SEARCH -->
-				<div class="input-group mb-3">
-				<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
-                    {{#if user.ic}}
-						<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
-                    {{/if}}
-                    
-                    {{#if getuser}}
-                    <input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
-                    {{/if}}
+			{{else}}
+            
+                {{#if message}}
+                <div class="container" style="background-color: #ffffff;" on>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error! </strong>{{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {{else}}
+                
+                <br>
+                <div class="container">
+                    <!--button for SEARCH -->
+                    <div class="input-group mb-3">
+                    <form autocomplete="on" class="input-group mb-3" id="searchfoodlist" method="POST" action="/diet/foodlist">
+                        {{#if user.ic}}
+                            <input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
+                        {{/if}}
                         
-					<input type="search" autocomplete="off" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">	
-					<div class="input-group-append">
-						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
-					</div>
-				</form>
-				</div>
-			</div>	
-			<br>
+                        {{#if getuser}}
+                        <input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
+                        {{/if}}
+                            
+                        <input type="search" autocomplete="off" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">
+                        
+                        <div class="input-group-append">
+                            <span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
+                        </div>
+                        
+                    </form>
+                    <p><span class="small">Tips: Search Precise Name of Food(eg: Nasi Goreng Ayam Cendawan)</span></p>
+                    </div>
+                </div>	
+                <br>
+                {{/if}}
+                
+            {{/if}}
 			
 			{{#if searchword}}
-			<div class="container mt-4" style="background-color: #ffffff;"><h5>Searched Results for <b>"{{searchword}}"</b></h5></div>
+			<div class="container mt-4" style="background-color: #ffffff;"><h5>Top 10 Searched Results for <b>"{{searchword}}"</b></h5></div>
 			{{/if}}
 
         </div>

@@ -111,16 +111,7 @@
             </ol>
             <br>
             
-            {{#if message}}
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Fail! </strong>{{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {{/if}}
-            
-            {{#if success}}
+             {{#if success}}
             <div class="container" style="background-color: #ffffff;">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>Success! </strong>{{success}}
@@ -128,7 +119,15 @@
                 </div>
             </div>
             {{/if}}
-
+            
+            {{#if message}}
+            <div class="container" style="background-color: #ffffff;">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Fail! </strong>{{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {{else}}
             <div class="activity">
                 
                 <div class="card">
@@ -145,6 +144,7 @@
                 </div>
                 
 			</div>
+            {{/if}}
         </div>
     </div>
 </section>

@@ -80,112 +80,120 @@ exports.add_diet = (req, res) => {
     const ss = parseInt(serving_size);
     const cc = parseInt(calories);
     if (!serving_size || ss < 1 || cc < 1 || !cc || !name || !type) {
-        return res.status(400).render('v_p_diet_add', {
-            message: 'Incorrect Input Field'
-        })
-    }
 
-    var c = [],
-        labels = [];
-    var datep = new Date(time);
-    var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
-    console.log(getsdate);
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+            if (!error) {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-    db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
+                    res.status(400).render('v_p_diet_add', { getuser, row, assignedTo: row[0].assignedTo, message: 'Incorrect Input Field' });
 
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
-
-            c.push(calories);
-            labels.push(getsdate);
-
-            if (rows.length != 0) {
-
-                console.log("rowlength", rows.length);
-                for (let n = 0; n < rows.length; n++) {
-
-                    console.log(rows[n].time);
-                    console.log(rows[n].calories);
-
-                    var getDate = new Date(rows[n].time);
-                    console.log("getdate", getDate);
-                    var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
-
-
-                    var calofmeal = rows[n].calories;
-                    calofmeal = parseInt(calofmeal);
-                    console.log(typeof calofmeal + "calofmeal" + calofmeal);
-
-                    if (labels.includes(newDate)) {
-                        for (let i = 0; i < labels.length; i++) {
-
-                            c[i] = parseInt(c[i]);
-
-                            if (labels[i] == newDate) {
-
-                                c[i] = c[i] + calofmeal;
-                                console.log("ci before break", c[i], typeof c[i]);
-                                break;
-                            }
-                        }
-
-                    } else {
-                        c.push(calofmeal);
-                        labels.push(newDate);
-                    }
-
-                }
-
-
-                console.log("c", c);
-                console.log("labels", labels);
-
-                for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
-                        console.log("ci", c[m]);
-                        console.log("DI", row[0].daily_intake);
-
-                        const sid = process.env.SID;
-                        const auth_token = process.env.AUTH_TOKEN;
-
-                        var twilio = require('twilio')(sid, auth_token);
-                        twilio.messages.create({
-                            from: "+15074788007",
-                            to: "+60134355859",
-                            body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
-
-                        }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
-                    }
-                }
-
+                })
+            } else {
+                console.log(error);
             }
         })
+    } else {
+        //if no error in input field
+        var c = [],
+            labels = [];
+        var datep = new Date(time);
+        var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
+        console.log(getsdate);
 
-    })
+        db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
+
+                c.push(calories);
+                labels.push(getsdate);
+
+                if (rows.length != 0) {
+
+                    console.log("rowlength", rows.length);
+                    for (let n = 0; n < rows.length; n++) {
+
+                        console.log(rows[n].time);
+                        console.log(rows[n].calories);
+
+                        var getDate = new Date(rows[n].time);
+                        console.log("getdate", getDate);
+                        var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
 
 
+                        var calofmeal = rows[n].calories;
+                        calofmeal = parseInt(calofmeal);
+                        console.log(typeof calofmeal + "calofmeal" + calofmeal);
+
+                        if (labels.includes(newDate)) {
+                            for (let i = 0; i < labels.length; i++) {
+
+                                c[i] = parseInt(c[i]);
+
+                                if (labels[i] == newDate) {
+
+                                    c[i] = c[i] + calofmeal;
+                                    console.log("ci before break", c[i], typeof c[i]);
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            c.push(calofmeal);
+                            labels.push(newDate);
+                        }
+
+                    }
 
 
-    db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
-        //when done with connection
-        if (!err) { //if not error
+                    console.log("c", c);
+                    console.log("labels", labels);
 
-            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
-                if (!error) {
-                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+                    for (let m = 0; m < c.length; m++) {
+                        if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
+                            console.log("ci", c[m]);
+                            console.log("DI", row[0].daily_intake);
 
-                        res.render('v_p_diet_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
-                    })
-                } else {
-                    console.log(error);
+                            const sid = process.env.SID;
+                            const auth_token = process.env.AUTH_TOKEN;
+
+                            var twilio = require('twilio')(sid, auth_token);
+                            twilio.messages.create({
+                                from: "+15074788007",
+                                to: "+60134355859",
+                                body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
+
+                            }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
+                        }
+                    }
+
                 }
             })
 
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
+        })
 
-    })
+
+        db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+
+                db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                    if (!error) {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                            res.render('v_p_diet_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
+                        })
+                    } else {
+                        console.log(error);
+                    }
+                })
+
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
+        })
+    }
 
 }
 
@@ -218,120 +226,131 @@ exports.update_diet_id = (req, res) => {
     const ss = parseInt(serving_size);
     const cal = parseInt(calories);
     if (!serving_size || ss < 1 || cal < 1 || !cal || !name || !type) {
-        return res.status(400).render('v_p_diet_edit', {
-            message: 'Incorrect Input Field'
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+            if (!error) {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                    res.status(400).render('v_p_diet_edit', { getuser, row, assignedTo: row[0].assignedTo, message: 'Incorrect Input Field' });
+                })
+            } else {
+                console.log(error);
+            }
+
+
+        })
+    } else {
+
+        //if no error in input field
+        var c = [],
+            labels = [];
+        var datep = new Date(time);
+        var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
+        console.log(getsdate);
+        c.push(cal);
+        labels.push(getsdate);
+
+        db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
+
+                if (rows.length != 0) {
+
+                    console.log("rowlength", rows.length);
+                    for (let n = 0; n < rows.length; n++) {
+
+                        var getDate = new Date(rows[n].time);
+                        console.log("getdate", getDate);
+                        var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
+
+
+                        var calofmeal = rows[n].calories;
+                        calofmeal = parseInt(calofmeal);
+                        console.log(typeof calofmeal + "calofmeal" + calofmeal);
+
+                        if (rows[n].id != req.params.id) {
+                            if (labels.includes(newDate)) {
+                                for (let i = 0; i < labels.length; i++) {
+
+                                    c[i] = parseInt(c[i]);
+                                    if (labels[i] == newDate) {
+                                        c[i] = c[i] + calofmeal;
+                                        console.log("ci before break", c[i], typeof c[i]);
+                                        break;
+                                    }
+                                }
+
+                            } else {
+                                c.push(calofmeal);
+                                labels.push(newDate);
+                            }
+                        }
+
+                    }
+
+
+                    console.log("c", c);
+                    console.log("labels", labels);
+
+                    for (let m = 0; m < c.length; m++) {
+                        if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
+                            console.log("ci", c[m]);
+                            console.log("DI", row[0].daily_intake);
+
+                            const sid = process.env.SID;
+                            const auth_token = process.env.AUTH_TOKEN;
+
+                            var twilio = require('twilio')(sid, auth_token);
+                            twilio.messages.create({
+                                from: "+15074788007",
+                                to: "+60134355859",
+                                body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
+
+                            }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
+                        }
+                    }
+
+                }
+            })
+
+        })
+
+        db.query('UPDATE diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
+            //when done with connection
+            if (!err) { //if not error
+
+                //display back updated version
+                db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
+                    //when done with connection
+
+                    if (!err) { //if not error
+
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                            if (!error) {
+                                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                    res.render('v_p_diet_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${name} Has Been Updated` });
+                                })
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
+                    } else {
+                        console.log(err);
+                    }
+                    console.log(rows);
+                })
+
+            } else {
+                console.log(err);
+            }
+            console.log(rows);
+
         })
     }
 
-    var c = [],
-        labels = [];
-    var datep = new Date(time);
-    var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
-    console.log(getsdate);
-    c.push(cal);
-    labels.push(getsdate);
 
-    db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
-
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
-
-            if (rows.length != 0) {
-
-                console.log("rowlength", rows.length);
-                for (let n = 0; n < rows.length; n++) {
-
-                    var getDate = new Date(rows[n].time);
-                    console.log("getdate", getDate);
-                    var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
-
-
-                    var calofmeal = rows[n].calories;
-                    calofmeal = parseInt(calofmeal);
-                    console.log(typeof calofmeal + "calofmeal" + calofmeal);
-
-                    if (rows[n].id != req.params.id) {
-                        if (labels.includes(newDate)) {
-                            for (let i = 0; i < labels.length; i++) {
-
-                                c[i] = parseInt(c[i]);
-                                if (labels[i] == newDate) {
-                                    c[i] = c[i] + calofmeal;
-                                    console.log("ci before break", c[i], typeof c[i]);
-                                    break;
-                                }
-                            }
-
-                        } else {
-                            c.push(calofmeal);
-                            labels.push(newDate);
-                        }
-                    }
-
-                }
-
-
-                console.log("c", c);
-                console.log("labels", labels);
-
-                for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
-                        console.log("ci", c[m]);
-                        console.log("DI", row[0].daily_intake);
-
-                        const sid = process.env.SID;
-                        const auth_token = process.env.AUTH_TOKEN;
-
-                        var twilio = require('twilio')(sid, auth_token);
-                        twilio.messages.create({
-                            from: "+15074788007",
-                            to: "+60134355859",
-                            body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
-
-                        }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
-                    }
-                }
-
-            }
-        })
-
-    })
-
-
-
-
-    db.query('UPDATE diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?,updatedAt = ? WHERE id = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, updatedAt, req.params.id], (err, rows) => {
-        //when done with connection
-        if (!err) { //if not error
-
-            //display back updated version
-            db.query('SELECT * FROM diets WHERE id = ?', [req.params.id], (err, rows) => {
-                //when done with connection
-
-                if (!err) { //if not error
-
-                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
-                        if (!error) {
-                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
-
-                                res.render('v_p_diet_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${name} Has Been Updated` });
-                            })
-                        } else {
-                            console.log(error);
-                        }
-                    })
-
-                } else {
-                    console.log(err);
-                }
-                console.log(rows);
-            })
-
-        } else {
-            console.log(err);
-        }
-        console.log(rows);
-
-    })
 }
 
 //function 7 - delete existing data using its id(pass id)
@@ -429,109 +448,116 @@ exports.add_search_diet = (req, res) => {
     const ss = parseInt(serving_size);
     const cc = parseInt(calories);
     if (!serving_size || ss < 1 || cc < 1 || !cc || !name || !type) {
-        return res.status(400).render('v_p_diet_search', {
-            message: 'Incorrect Input Field'
-        })
-    }
 
-    var c = [],
-        labels = [];
-    var datep = new Date(time);
-    var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
-    console.log(getsdate);
-
-    db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
-
-        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
-
-            c.push(newCal);
-            labels.push(getsdate);
-
-            if (rows.length != 0) {
-
-                console.log("rowlength", rows.length);
-                for (let n = 0; n < rows.length; n++) {
-
-
-                    var getDate = new Date(rows[n].time);
-                    console.log("getdate", getDate);
-                    var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
-
-
-                    var calofmeal = rows[n].calories;
-                    calofmeal = parseInt(calofmeal);
-                    console.log(typeof calofmeal + "calofmeal" + calofmeal);
-
-                    if (labels.includes(newDate)) {
-                        for (let i = 0; i < labels.length; i++) {
-
-                            c[i] = parseInt(c[i]);
-
-                            if (labels[i] == newDate) {
-
-                                c[i] = c[i] + calofmeal;
-                                console.log("ci before break", c[i], typeof c[i]);
-                                break;
-                            }
-                        }
-
-                    } else {
-                        c.push(calofmeal);
-                        labels.push(newDate);
-                    }
-
-                }
-
-
-                console.log("c", c);
-                console.log("labels", labels);
-
-                for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
-                        console.log("ci", c[m]);
-                        console.log("DI", row[0].daily_intake);
-
-                        const sid = process.env.SID;
-                        const auth_token = process.env.AUTH_TOKEN;
-
-                        var twilio = require('twilio')(sid, auth_token);
-                        twilio.messages.create({
-                            from: "+15074788007",
-                            to: "+60134355859",
-                            body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
-
-                        }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
-                    }
-                }
-
-            } else {
-                console.log("row 0")
-            }
-        })
-
-    })
-
-
-    //console.log("pass my ic" + req.body.ic);
-
-    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
-        const at = row[0].assignedTo;
-        db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, at, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
-            //when done with connection
-            if (!err) { //if not error
-
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+            if (!error) {
                 db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-                    res.render('v_p_diet_search', { getuser, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
+                    res.render('v_p_diet_search', { getuser, row, assignedTo: row[0].assignedTo, message: 'Incorrect Input Field' });
                 })
-
             } else {
-                console.log(err);
+                console.log(error);
             }
-            console.log(rows);
+        })
+    } else {
+        var c = [],
+            labels = [];
+        var datep = new Date(time);
+        var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
+        console.log(getsdate);
+
+        db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
+
+                c.push(newCal);
+                labels.push(getsdate);
+
+                if (rows.length != 0) {
+
+                    console.log("rowlength", rows.length);
+                    for (let n = 0; n < rows.length; n++) {
+
+
+                        var getDate = new Date(rows[n].time);
+                        console.log("getdate", getDate);
+                        var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
+
+
+                        var calofmeal = rows[n].calories;
+                        calofmeal = parseInt(calofmeal);
+                        console.log(typeof calofmeal + "calofmeal" + calofmeal);
+
+                        if (labels.includes(newDate)) {
+                            for (let i = 0; i < labels.length; i++) {
+
+                                c[i] = parseInt(c[i]);
+
+                                if (labels[i] == newDate) {
+
+                                    c[i] = c[i] + calofmeal;
+                                    console.log("ci before break", c[i], typeof c[i]);
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            c.push(calofmeal);
+                            labels.push(newDate);
+                        }
+
+                    }
+
+
+                    console.log("c", c);
+                    console.log("labels", labels);
+
+                    for (let m = 0; m < c.length; m++) {
+                        if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
+                            console.log("ci", c[m]);
+                            console.log("DI", row[0].daily_intake);
+
+                            const sid = process.env.SID;
+                            const auth_token = process.env.AUTH_TOKEN;
+
+                            var twilio = require('twilio')(sid, auth_token);
+                            twilio.messages.create({
+                                from: "+15074788007",
+                                to: "+60134355859",
+                                body: `BARIACT. Patient ${fullname} (${ic}) has exceeded the recommended calories intake of ${row[0].daily_intake} on ${labels[m]}.  ${fullname}'s total calories intake on ${labels[m]} is ${c[m]}.`
+
+                            }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
+                        }
+                    }
+
+                } else {
+                    console.log("row 0")
+                }
+            })
 
         })
-    });
 
+
+        //console.log("pass my ic" + req.body.ic);
+
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
+            const at = row[0].assignedTo;
+            db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, at, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
+                //when done with connection
+                if (!err) { //if not error
+
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_diet_search', { getuser, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
+                    })
+
+                } else {
+                    console.log(err);
+                }
+                console.log(rows);
+
+            })
+        });
+    }
 
 }

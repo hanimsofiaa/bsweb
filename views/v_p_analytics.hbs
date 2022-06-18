@@ -141,7 +141,7 @@
                     </tbody>
                 </table>
                 
-                <canvas id="myChart" style="display: none;"></canvas>
+                <canvas id="myChart"></canvas>
             </div>
 		</div>
         
@@ -187,7 +187,7 @@
                     </tbody>
                 </table>
                 
-                <canvas id="mySecChart" style="display: none;"></canvas>
+                <canvas id="mySecChart"></canvas>
                 
             </div>
 		</div>
@@ -196,199 +196,388 @@
 </section>
 
 <script>
-function displayCalories(){
-    document.getElementById('myChart').style.display = "block";
     
-    var datepick = document.getElementById('datepicker').value;
-    var datep = new Date(datepick);
-    //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
-             
-    var labels = [], c = [];
-    var typeofmeal, calofmeal;
-    var sdate, getsdate;
-    {{#each rows}}
     
-        typeofmeal = "{{{this.time}}}"; //get all createdAt 
-        sdate = new Date(typeofmeal); //assign ad Date format
+    $(document).ready(function() {
         
-        if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
-            
-            getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
-            //document.write("getsdate: "+getsdate);
-            
-            //labels.push(getsdate);
-            //c.push(calofmeal);
-            
-            calofmeal = "{{{this.calories}}}";
-            calofmeal = parseInt(calofmeal);
-            
-            document.getElementById("alert1").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
         
-            //document.write(labels.length+ "<br>");
-            //document.write(c.length+ "<br>");
-            //document.write("Calories 1" + {{{this.calories}}}+ "<br>");
-            //document.write("Calories 2" + calofmeal+ "<br>");
-            // document.write("Year : " + sdate.getFullYear() + "<br>");
-            //document.write("Month : " + (sdate.getMonth()+1) + "<br>");
-            //document.write("Day : " + sdate.getDate() + "<br>");
-            //document.write("Time : " + sdate.getHours() + "<br>");
-            //document.write("Minute : " + sdate.getMinutes() + "<br>");
+        var datep = new Date(Date.now());
+        //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
+        
+        //diet
+        var labels = [], c = [];
+        var typeofmeal, calofmeal;
+        var sdate, getsdate;
+        {{#each rows}}
+        
+            typeofmeal = "{{{this.time}}}"; //get all createdAt 
+            sdate = new Date(typeofmeal); //assign ad Date format
             
-            if(labels.includes(getsdate)){
+            if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
                 
-                for (let i = 0; i < labels.length; i++) {
-                    if (labels[i] == getsdate) {
-                        c[i] = c[i] + calofmeal;
-                        console.log(c[i]);
-                        break;
-                    }
-                }
+                getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
+                //document.write("getsdate: "+getsdate);
                 
-            }else{
-                c.push(calofmeal);
-                labels.push(getsdate);
-            }
+                //labels.push(getsdate);
+                //c.push(calofmeal);
+                
+                calofmeal = "{{{this.calories}}}";
+                calofmeal = parseInt(calofmeal);
+                
+                document.getElementById("alert1").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
             
-            document.getElementById('myChart').style.display = "block";
-        }
-        else{
-            document.getElementById('myChart').style.display = "block";
-            document.getElementById("alert1").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
-        }
-            
-    {{/each}}
-    
-    //document.write("Type of meal : ["+ labels + "]<br>");
-    //document.write("Cal of meal : ["+ c + "]<br>");
-   
-    var displaydate1 = "", displaycalories1 = "";
-    
-    for(var i = 0 ; i < (labels.length); i++ ){
-        displaydate1 = displaydate1  + labels[i] + "<br>";
-        displaycalories1 = displaycalories1 + c[i] + "<br>";
-    }
-    
-    document.getElementById("date1").innerHTML = displaydate1;
-    document.getElementById("calories1").innerHTML = displaycalories1;
-    
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Total Food Calories Intake',
-                data: c,
-                borderWidth: 1,
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
+                //document.write(labels.length+ "<br>");
+                //document.write(c.length+ "<br>");
+                //document.write("Calories 1" + {{{this.calories}}}+ "<br>");
+                //document.write("Calories 2" + calofmeal+ "<br>");
+                // document.write("Year : " + sdate.getFullYear() + "<br>");
+                //document.write("Month : " + (sdate.getMonth()+1) + "<br>");
+                //document.write("Day : " + sdate.getDate() + "<br>");
+                //document.write("Time : " + sdate.getHours() + "<br>");
+                //document.write("Minute : " + sdate.getMinutes() + "<br>");
+                
+                if(labels.includes(getsdate)){
                     
-                ]
-            }]
-        },options: {
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        display: false //this will remove only the label
+                    for (let i = 0; i < labels.length; i++) {
+                        if (labels[i] == getsdate) {
+                            c[i] = c[i] + calofmeal;
+                            console.log(c[i]);
+                            break;
+                        }
                     }
-                }]
-            }
-        }
-        
-        
-    });
-}
-
-
-function displayExercise(){
-    
-    document.getElementById('mySecChart').style.display = "block";
-    
-    var datepick = document.getElementById('datepicker2').value;
-    var datep = new Date(datepick);
-    //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
-    
-            
-    var labels = [], c = [];
-    var typeofmeal, calofmeal;
-    var sdate, getsdate;
-    {{#each result}}
-    
-        typeofmeal = "{{{this.time}}}"; //get all createdAt 
-        sdate = new Date(typeofmeal); //assign ad Date format
-        
-        if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
-            
-            getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
-            //document.write("getsdate: "+getsdate);
-            
-            //labels.push(getsdate);
-            //c.push(calofmeal);
-            
-            calofmeal = "{{{this.calories_burn}}}";
-            calofmeal = parseInt(calofmeal);
-            
-            document.getElementById("alert2").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
-         
-            if(labels.includes(getsdate)){
-                
-                for (let i = 0; i < labels.length; i++) {
-                    if (labels[i] == getsdate) {
-                        c[i] = c[i] + calofmeal;
-                        console.log(c[i]);
-                        break;
-                    }
+                    
+                }else{
+                    c.push(calofmeal);
+                    labels.push(getsdate);
                 }
                 
-            }else{
-                c.push(calofmeal);
-                labels.push(getsdate);
+                //document.getElementById('myChart').style.display = "block";
             }
-            
-            document.getElementById('myChart').style.display = "block";
+            else{
+                //document.getElementById('myChart').style.display = "block";
+                document.getElementById("alert1").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            }
+                
+        {{/each}}
+        
+        //document.write("Type of meal : ["+ labels + "]<br>");
+        //document.write("Cal of meal : ["+ c + "]<br>");
+    
+        var displaydate1 = "", displaycalories1 = "";
+        
+        for(var i = 0 ; i < (labels.length); i++ ){
+            displaydate1 = displaydate1  + labels[i] + "<br>";
+            displaycalories1 = displaycalories1 + c[i] + "<br>";
         }
-        else{
-            document.getElementById('mySecChart').style.display = "none";
-            document.getElementById("alert2").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
-        }
-            
-    {{/each}}
-    
-    //document.write("Type of meal : ["+ labels + "]<br>");
-    //document.write("Cal of meal : ["+ c + "]<br>");
-   
-    var displaydate2 = "", displaycalories2 = "";
-    
-    for(var i = 0 ; i < (labels.length); i++ ){
-        displaydate2 = displaydate2  + labels[i] + "<br>";
-        displaycalories2 = displaycalories2 + c[i] + "<br>";
-    }
-    
-    document.getElementById("date2").innerHTML = displaydate2;
-    document.getElementById("calories2").innerHTML = displaycalories2;
-    
-    const secctx = document.getElementById('mySecChart').getContext('2d');
-    const mySecChart = new Chart(secctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            //labels: labels,
-            datasets: [{
-                label: 'Total Calories Burned',
-                data: c,
-                borderWidth: 1
-            }]
-            
-        },options: {
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        display: false //this will remove only the label
-                    }
+        
+        document.getElementById("date1").innerHTML = displaydate1;
+        document.getElementById("calories1").innerHTML = displaycalories1;
+        
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Food Calories Intake',
+                    data: c,
+                    borderWidth: 1,
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                        
+                    ]
                 }]
+            },options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        }
+                    }]
+                }
             }
-        }
-    });
+            
+            
+        });
+        
+        //exercise
+        
+         var labels = [], c = [];
+        var typeofmeal, calofmeal;
+        var sdate, getsdate;
+        {{#each result}}
+        
+            typeofmeal = "{{{this.time}}}"; //get all createdAt 
+            sdate = new Date(typeofmeal); //assign ad Date format
+            
+            if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
+                
+                getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
+                //document.write("getsdate: "+getsdate);
+                
+                //labels.push(getsdate);
+                //c.push(calofmeal);
+                
+                calofmeal = "{{{this.calories_burn}}}";
+                calofmeal = parseInt(calofmeal);
+                
+                document.getElementById("alert2").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            
+                if(labels.includes(getsdate)){
+                    
+                    for (let i = 0; i < labels.length; i++) {
+                        if (labels[i] == getsdate) {
+                            c[i] = c[i] + calofmeal;
+                            console.log(c[i]);
+                            break;
+                        }
+                    }
+                    
+                }else{
+                    c.push(calofmeal);
+                    labels.push(getsdate);
+                }
+                
+                //document.getElementById('mySecChart').style.display = "block";
+            }
+            else{
+                //document.getElementById('mySecChart').style.display = "none";
+                document.getElementById("alert2").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            }
+                
+        {{/each}}
+        
+        //document.write("Type of meal : ["+ labels + "]<br>");
+        //document.write("Cal of meal : ["+ c + "]<br>");
     
-}
+        var displaydate2 = "", displaycalories2 = "";
+        
+        for(var i = 0 ; i < (labels.length); i++ ){
+            displaydate2 = displaydate2  + labels[i] + "<br>";
+            displaycalories2 = displaycalories2 + c[i] + "<br>";
+        }
+        
+        document.getElementById("date2").innerHTML = displaydate2;
+        document.getElementById("calories2").innerHTML = displaycalories2;
+        
+        const secctx = document.getElementById('mySecChart').getContext('2d');
+        const mySecChart = new Chart(secctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                //labels: labels,
+                datasets: [{
+                    label: 'Total Calories Burned',
+                    data: c,
+                    borderWidth: 1
+                }]
+                
+            },options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        }
+                    }]
+                }
+            }
+        });
+        
+    
+    });
+    function displayCalories(){
+        //document.getElementById('myChart').style.display = "block";
+        
+        var datepick = document.getElementById('datepicker').value;
+        var datep = new Date(datepick);
+        //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
+                
+        var labels = [], c = [];
+        var typeofmeal, calofmeal;
+        var sdate, getsdate;
+        {{#each rows}}
+        
+            typeofmeal = "{{{this.time}}}"; //get all createdAt 
+            sdate = new Date(typeofmeal); //assign ad Date format
+            
+            if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
+                
+                getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
+                //document.write("getsdate: "+getsdate);
+                
+                //labels.push(getsdate);
+                //c.push(calofmeal);
+                
+                calofmeal = "{{{this.calories}}}";
+                calofmeal = parseInt(calofmeal);
+                
+                document.getElementById("alert1").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            
+                //document.write(labels.length+ "<br>");
+                //document.write(c.length+ "<br>");
+                //document.write("Calories 1" + {{{this.calories}}}+ "<br>");
+                //document.write("Calories 2" + calofmeal+ "<br>");
+                // document.write("Year : " + sdate.getFullYear() + "<br>");
+                //document.write("Month : " + (sdate.getMonth()+1) + "<br>");
+                //document.write("Day : " + sdate.getDate() + "<br>");
+                //document.write("Time : " + sdate.getHours() + "<br>");
+                //document.write("Minute : " + sdate.getMinutes() + "<br>");
+                
+                if(labels.includes(getsdate)){
+                    
+                    for (let i = 0; i < labels.length; i++) {
+                        if (labels[i] == getsdate) {
+                            c[i] = c[i] + calofmeal;
+                            console.log(c[i]);
+                            break;
+                        }
+                    }
+                    
+                }else{
+                    c.push(calofmeal);
+                    labels.push(getsdate);
+                }
+                
+                //document.getElementById('myChart').style.display = "block";
+            }
+            else{
+                //document.getElementById('myChart').style.display = "block";
+                document.getElementById("alert1").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            }
+                
+        {{/each}}
+        
+        //document.write("Type of meal : ["+ labels + "]<br>");
+        //document.write("Cal of meal : ["+ c + "]<br>");
+    
+        var displaydate1 = "", displaycalories1 = "";
+        
+        for(var i = 0 ; i < (labels.length); i++ ){
+            displaydate1 = displaydate1  + labels[i] + "<br>";
+            displaycalories1 = displaycalories1 + c[i] + "<br>";
+        }
+        
+        document.getElementById("date1").innerHTML = displaydate1;
+        document.getElementById("calories1").innerHTML = displaycalories1;
+        
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Food Calories Intake',
+                    data: c,
+                    borderWidth: 1,
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                        
+                    ]
+                }]
+            },options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        }
+                    }]
+                }
+            }
+            
+            
+        });
+    }
+
+
+    function displayExercise(){
+        
+    // document.getElementById('mySecChart').style.display = "block";
+        
+        var datepick = document.getElementById('datepicker2').value;
+        var datep = new Date(datepick);
+        //document.getElementById("alert1").innerHTML = (datep.getMonth() + 1) + "/" + datep.getFullYear();
+        
+                
+        var labels = [], c = [];
+        var typeofmeal, calofmeal;
+        var sdate, getsdate;
+        {{#each result}}
+        
+            typeofmeal = "{{{this.time}}}"; //get all createdAt 
+            sdate = new Date(typeofmeal); //assign ad Date format
+            
+            if((datep.getMonth() === sdate.getMonth()) && (datep.getFullYear() === sdate.getFullYear())){ //check whether month&year from user input match with data from database
+                
+                getsdate = sdate.getDate() + "/" + (sdate.getMonth()+1) + "/" + sdate.getFullYear(); 
+                //document.write("getsdate: "+getsdate);
+                
+                //labels.push(getsdate);
+                //c.push(calofmeal);
+                
+                calofmeal = "{{{this.calories_burn}}}";
+                calofmeal = parseInt(calofmeal);
+                
+                document.getElementById("alert2").innerHTML = "<strong>Display Analytics on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            
+                if(labels.includes(getsdate)){
+                    
+                    for (let i = 0; i < labels.length; i++) {
+                        if (labels[i] == getsdate) {
+                            c[i] = c[i] + calofmeal;
+                            console.log(c[i]);
+                            break;
+                        }
+                    }
+                    
+                }else{
+                    c.push(calofmeal);
+                    labels.push(getsdate);
+                }
+                
+                //document.getElementById('mySecChart').style.display = "block";
+            }
+            else{
+                //document.getElementById('mySecChart').style.display = "none";
+                document.getElementById("alert2").innerHTML = "<strong>No Data Recorded on " + datep.toLocaleString('default', { month: 'long' }) + " " + datep.getFullYear() + "</strong>";
+            }
+                
+        {{/each}}
+        
+        //document.write("Type of meal : ["+ labels + "]<br>");
+        //document.write("Cal of meal : ["+ c + "]<br>");
+    
+        var displaydate2 = "", displaycalories2 = "";
+        
+        for(var i = 0 ; i < (labels.length); i++ ){
+            displaydate2 = displaydate2  + labels[i] + "<br>";
+            displaycalories2 = displaycalories2 + c[i] + "<br>";
+        }
+        
+        document.getElementById("date2").innerHTML = displaydate2;
+        document.getElementById("calories2").innerHTML = displaycalories2;
+        
+        const secctx = document.getElementById('mySecChart').getContext('2d');
+        const mySecChart = new Chart(secctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                //labels: labels,
+                datasets: [{
+                    label: 'Total Calories Burned',
+                    data: c,
+                    borderWidth: 1
+                }]
+                
+            },options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false //this will remove only the label
+                        }
+                    }]
+                }
+            }
+        });
+        
+    }
 </script>

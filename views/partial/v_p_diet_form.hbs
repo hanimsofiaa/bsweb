@@ -163,8 +163,11 @@
 		
 <div class="col-6">
 	<div class="form-floating mb-3">
-		<input type="number" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}">
+		<input type="number" class="form-control" id="calories" placeholder="Calories" name="calories" id="calories" value="{{this.calories}}"  min="1" onkeyup="validateC();" required>
 		<label for="calories">Calories</label>
+		<small style="float: left;">Minimum Value: 1</small><br>
+		<small  id="C_incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain minimum value of 1</small>
+		<small  id="C_correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
 	</div>
 </div>
 
@@ -236,6 +239,28 @@ function validateSS(){
     
 }
 
+function validateC(){
+
+    var myP = document.getElementById("calories");
+    var P_incorrect = document.getElementById("C_incorrect");
+    var P_correct= document.getElementById("C_correct");
+
+    console.log(myP.value);
+    if(myP.value.length > 0){
+        if ((parseInt(myP.value) != null) && (parseInt(myP.value) != 0) && !(parseInt(myP.value) < 1)){
+            P_incorrect.classList.remove("invalid");
+            P_incorrect.classList.add("valid");
+            P_incorrect.style.display = "none";
+            P_correct.style.display = "block";  //display correct
+        }else{
+            P_incorrect.classList.remove("valid");
+            P_incorrect.classList.add("invalid");
+            P_incorrect.style.display="block";
+            P_correct.style.display = "none";
+        }
+    }
+    
+}
 	
 </script>	
 			

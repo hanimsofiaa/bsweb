@@ -120,16 +120,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-            {{/if}}
+            {{else}}
+            
+               {{#if message}}
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error! </strong>{{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {{else}}
 
-            <br>
-            <div class="activity">
-                {{#each rows}}
-                <form class="row g-3 needs-validation" method="POST" action="/exercise/update/{{this.id}}" novalidate>
-                    {{> v_p_exercise_form}}
-                </form>
-                {{/each}}
-            </div>	
+                <br>
+                <div class="activity">
+                    {{#each rows}}
+                    <form class="row g-3 needs-validation" method="POST" action="/exercise/update/{{this.id}}" novalidate>
+                        {{> v_p_exercise_form}}
+                    </form>
+                    {{/each}}
+                </div>	
+                {{/if}}
+            {{/if}}
         </div>
     </div>
 </section>
