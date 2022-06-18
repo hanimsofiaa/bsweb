@@ -107,7 +107,6 @@ router.get('/update/:id', authContoller.isLoggedIn, (req, res) => {
         if (req.user.role === "Patient") {
 
             const role = "Doctor";
-            const healthcare = 1;
 
             //take the list of doctor working at same healthcare as the user
             db.query('SELECT * FROM userdetails WHERE healthcare = ? AND role = ?', [req.user.healthcare, role], (error, result) => {
