@@ -71,15 +71,28 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         <h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+          {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
-            {{#if assignedTo}}
-                Assigned to {{assignedTo}}
-            {{/if}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+             {{#if assignedTo}}
+                Assigned to {{assignedTo}}</h6>
+            {{/if}}
     </div>
     
     <div class="dash-content">

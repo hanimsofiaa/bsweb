@@ -71,15 +71,28 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
 		<h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+             {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
-            {{#if assignedTo}}
-                Assigned to {{assignedTo}}
-            {{/if}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+             {{#if assignedTo}}
+                Assigned to {{assignedTo}}</h6>
+            {{/if}}
     </div>
     <div class="dash-content">
 		<div class="overview">
@@ -108,12 +121,6 @@
 
 			{{#if alert}}
 
-			<br><br>
-			<ol class="breadcrumb" style="background-color: #ffffff;">
-				<li class="breadcrumb-item"><a href="/screening/view">Back to Screening</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Search Your Screening</li>
-			</ol>
-			<br>
 
 			<div class="container" style="background-color: #ffffff;">
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -139,14 +146,24 @@
 				<!--button for SEARCH -->
 				<div class="input-group mb-3">
 				<form class="input-group mb-3" method="POST" action="/screening/search">
-					<input type="search" class="form-control" name="search" placeholder="Search Your Score or Date" aria-label="Search">
+					<input type="search" class="form-control" name="search" placeholder="Search Your Screening Date" aria-label="Search">
+					
+					{{#if user.ic}}
+					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
+					{{/if}}
+					
+					{{#if getuser}}
+					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
+					{{/if}}
+						
+						
 					<div class="input-group-append">
 						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
 					</div>
 				</form>
 				</div>
 				
-				<table class="table table-bordered">
+				<table id="example" style="width:100%;text-align: center"  class="table table-bordered">
 					<thead>
 						<tr>
 							<!--<th scope="col">#</th>-->

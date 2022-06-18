@@ -33,11 +33,23 @@ exports.view_exercise = (req, res) => {
 exports.find_exercise = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_exercise(name="search")
+    const ic = req.body.ic;
 
-    db.query('SELECT * FROM exercise WHERE activity LIKE ? OR duration LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM exercise WHERE activity LIKE ? AND ic = ?', ['%' + searchTerm + '%', ic], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_exercise', { rows, alert: 'Display Searched Exercise' });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_exercise', { getuser, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Exercise' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -76,9 +88,19 @@ exports.add_exercise = (req, res) => {
     db.query('INSERT INTO exercise SET ic = ?, fullname = ?, assignedTo = ?, time = ?, activity = ?, calories_burn = ?, step_count = ?, duration = ?, distance = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, activity, calories_burn, step_count, duration, distance, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_exercise_add', {
-                alert: 'New Exercise Has Been Added'
-            });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_exercise_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Exercise Has Been Added' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
+
         } else {
             console.log(err);
         }
@@ -130,7 +152,20 @@ exports.update_exercise_id = (req, res) => {
                 //when done with connection
 
                 if (!err) { //if not error
-                    res.render('v_p_exercise_edit', { rows, alert: `${activity} Has Been Updated` });
+
+
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                        if (!error) {
+                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                res.render('v_p_exercise_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${activity} Has Been Updated` });
+                            })
+                        } else {
+                            console.log(error);
+                        }
+                    })
+
+
                 } else {
                     console.log(err);
                 }

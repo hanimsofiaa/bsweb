@@ -126,7 +126,14 @@
 				<!--button for SEARCH -->
 				<div class="input-group mb-3">
 				<form autocomplete="on" class="input-group mb-3" method="POST" action="/diet/foodlist">
-					<input type="hidden" class="form-control" id="ic" name= "ic" value="{{#if user.ic}}{{user.ic}}{{/if}}">
+                    {{#if user.ic}}
+						<input type="hidden" class="form-control" id="ic" name= "ic" value="{{user.ic}}">
+                    {{/if}}
+                    
+                    {{#if getuser}}
+                    <input type="hidden" class="form-control" id="ic" name= "ic" value="{{this.ic}}">
+                    {{/if}}
+                        
 					<input type="search" autocomplete="off" class="form-control" name="search" placeholder="Search Name of Food from Database" aria-label="Search">	
 					<div class="input-group-append">
 						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>

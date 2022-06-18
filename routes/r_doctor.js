@@ -392,7 +392,7 @@ router.get('/diet', authContoller.isLoggedIn, (req, res) => {
 
                         db.query('SELECT * FROM diets', (error, result) => {
                             db.query('SELECT * FROM userdetails', (error, rows) => {
-                                res.render('v_d_diet', { user: req.user, rows, result });
+                                res.render('v_d_diet', { user: req.user, result });
                             })
                         })
 
@@ -504,7 +504,7 @@ router.get('/exercise', authContoller.isLoggedIn, (req, res) => {
 
                         db.query('SELECT * FROM exercise', (error, result) => {
                             db.query('SELECT * FROM userdetails', (error, rows) => {
-                                res.render('v_d_exercise', { user: req.user, result, rows });
+                                res.render('v_d_exercise', { user: req.user, result });
                             })
                         })
 
@@ -613,7 +613,7 @@ router.get('/screening', authContoller.isLoggedIn, (req, res) => {
 
                         db.query('SELECT * FROM screening', (error, result) => {
                             db.query('SELECT * FROM userdetails', (error, rows) => {
-                                res.render('v_d_screening', { user: req.user, result, rows });
+                                res.render('v_d_screening', { user: req.user, result });
                             })
                         })
 

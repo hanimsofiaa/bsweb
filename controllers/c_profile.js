@@ -135,10 +135,17 @@ exports.add_profile = (req, res) => {
                         console.log(error);
                     } else {
                         console.log(results);
-                        //kena tukar v_login
 
-                        return res.status(200).render('v_p_profile_add', { success: 'Successfully Update Patient Profile' });
+                        db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                            if (!error) {
+                                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
+                                    res.render('v_p_profile_add', { getuser, row, assignedTo: row[0].assignedTo, success: 'Successfully Update Patient Profile' });
+                                })
+                            } else {
+                                console.log(error);
+                            }
+                        })
 
                     }
                 })
@@ -188,7 +195,6 @@ exports.update_profile_id = (req, res) => {
                 //when done with connection
                 if (!err) { //if not error
                     return res.status(400).render('v_p_profile_edit', { rows, message: 'Field Cannot Be Empty' });
-
                 } else {
                     console.log(err);
                 }
@@ -294,7 +300,17 @@ exports.update_profile_id = (req, res) => {
                                         //when done with connection
                                         if (!err) { //if not error
                                             // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                                            return res.status(200).render('v_p_profile_edit', { rows, success: 'Successfully Update Patient Profile' });
+                                            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                                                if (!error) {
+                                                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                                        res.render('v_p_profile_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, success: 'Successfully Update Patient Profile' });
+                                                    })
+                                                } else {
+                                                    console.log(error);
+                                                }
+                                            })
+
                                         } else {
                                             console.log(err);
                                         }

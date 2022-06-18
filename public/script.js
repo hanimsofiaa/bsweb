@@ -36,5 +36,21 @@ $(document).ready(function() {
         });
     }
 
+    $('#example').DataTable({
+        responsive: true,
+        searching: false,
+        info: true,
+        paging: true,
+        language: {
+            'paginate': {
+                'previous': '<span class="prev-icon" style="padding:5px">Previous 	|</span>',
+                'next': '<span class="next-icon" style="padding:5px">| 	Next</span>'
+            }
+        },
+        dom: '<"bottom"flp>rt<"bottom"i><"clear">',
+
+
+        "pageLength": 5
+    });
 
 });

@@ -73,12 +73,26 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
 		  <h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+            {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+            </h6>
     </div>
     <div class="dash-content">
 		
@@ -133,14 +147,21 @@
 				<!--button for SEARCH -->
 				<div class="input-group mb-3">
 				<form class="input-group mb-3" method="POST" action="/doctor/exercise/search">
-					<input type="search" class="form-control" name="search" placeholder="Search Patients' Activity or Duration" aria-label="Search">
+					<input type="search" class="form-control" name="search" placeholder="Search Patients' Name" aria-label="Search">
+					{{#if user.fullname}}
+						<input type="hidden" class="form-control" id="user_fullname" name= "user_fullname" value="{{user.fullname}}">
+					{{/if}}
+					
+					{{#if getuser}}
+					<input type="hidden" class="form-control" id="user_fullname" name= "user_fullname" value="{{this.fullname}}">
+					{{/if}}
 					<div class="input-group-append">
 						<span type="submit" class="input-group-text"><i class="bi bi-search"></i></span>
 					</div>
 				</form>
 				</div>
 				
-				<table class="table table-bordered">
+				<table id="example" style="width:100%;text-align: center" class="table table-bordered">
 					<thead>
 						<tr>
 							<!--<th scope="col">#</th>-->
@@ -158,6 +179,21 @@
 					<tbody>
 						
 						{{#each patientexercise}}
+						<tr>
+							<!--<th scope="row">{{{this.id}}}</th>-->
+							<td>{{{this.fullname}}}</td>
+							<td>{{{this.activity}}}</td>
+							<td>{{{this.duration}}}</td>
+							<td>{{{this.step_count}}}</td>
+							<td>{{{this.calories_burn}}}</td>
+							<td>{{{this.time}}}</td>
+							<td  class="text-center">
+								<a href="/doctor/exercise/{{this.id}}" type="button" class="btn btn-light btn-small"><i class="bi bi-eye-fill"></i></a>
+							</td>
+						</tr>
+						{{/each}}
+						
+						{{#each rows}}
 						<tr>
 							<!--<th scope="row">{{{this.id}}}</th>-->
 							<td>{{{this.fullname}}}</td>

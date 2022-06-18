@@ -81,12 +81,26 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
          <h6 style="float: right;">
-            {{#if user.image}}
-                <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
-            {{else}}
-                <img src="/images/profileimage.png" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+            {{#if user}}
+                {{#if user.image}}
+                    <img src="/images/{{user.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}
             {{/if}}
-            {{user.role}}, {{user.fullname}}, {{user.email}}, {{user.ic}}</h6>
+            
+            
+            {{#each getuser}}
+                 {{#if this.image}}
+                    <img src="/images/{{this.image}}" class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{else}}
+                    <img src="/images/profileimage.png"  class="pp" id="pp" style="height: 30px; width:30px; object-fit: cover; overflow:hidden"/>
+                {{/if}}
+                {{this.role}}, {{this.fullname}}, {{this.email}}, {{this.ic}}
+            {{/each}}
+            
+            </h6>
     </div>
     <div class="dash-content">
              
@@ -142,6 +156,15 @@
                         
                         <div class="col-12">
                             <div class="form-floating mb-3">
+                                {{#if ../user.ic}}
+                                    <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../user.ic}}">
+                                {{/if}}
+                               
+                    
+                                {{#if ../getuser}}
+                                <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../this.ic}}">
+                                {{/if}}
+                               
                                 <input type="number" class="form-control" id="daily_intake" name= "daily_intake" value="{{this.daily_intake}}" min="100" max="100000" title="Acceptable Range: 100-100000"  onkeyup="validateDI();" required>
                                 <label class="form-label" id="daily_intake" name= "daily_intake">{{this.fullname}}'s Recommended Daily Calories Intake(kcal):</label>
                                 <small style="float: left;">(Acceptable Range: 100-100,000)</small><br>

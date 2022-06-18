@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
 const async = require("hbs/lib/async");
 const authContoller = require('./c_auth');
+const { use } = require("browser-sync");
 
 //add db connection
 const db = mysql.createConnection({
@@ -50,11 +51,25 @@ exports.display_diet_id = (req, res) => {
 exports.find_diet = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    console.log("searchterm", searchTerm);
+    let fullname = req.body.user_fullname;
+    console.log("fullname", fullname);
 
-    db.query('SELECT * FROM diets WHERE name LIKE ? OR type LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM diets WHERE fullname LIKE ? AND assignedTo = ?', ['%' + searchTerm + '%', fullname], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_diet', { user: req.user, rows, alert: 'Display Searched Food' });
+
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [fullname], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [fullname], (err, getuser) => {
+
+                        res.render('v_d_diet', { getuser, rows, row, alert: 'Display Searched Name' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -83,11 +98,23 @@ exports.view_exercise = (req, res) => {
 exports.find_exercise = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    let fullname = req.body.user_fullname;
 
-    db.query('SELECT * FROM exercise WHERE activity LIKE ? OR duration LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM exercise WHERE fullname LIKE ? AND assignedTo = ?', ['%' + searchTerm + '%', fullname], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_exercise', { user: req.user, rows, alert: 'Display Searched Exercise' });
+
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [fullname], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [fullname], (err, getuser) => {
+
+                        res.render('v_d_exercise', { getuser, rows, row, alert: 'Display Searched Name' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -131,11 +158,24 @@ exports.view_screening = (req, res) => {
 exports.find_screening = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    let fullname = req.body.user_fullname;
 
-    db.query('SELECT * FROM screening WHERE score LIKE ? OR createdAt LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM screening WHERE fullname LIKE ? AND assignedTo = ?', ['%' + searchTerm + '%', fullname], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_d_screening', { user: req.user, rows, alert: 'Display Searched Screening' });
+
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [fullname], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [fullname], (err, getuser) => {
+
+                        res.render('v_d_screening', { getuser, rows, row, alert: 'Display Searched Name' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
+
         } else {
             console.log(err);
         }
@@ -191,9 +231,19 @@ exports.add_profile = (req, res) => {
                         console.log(error);
                     } else {
                         console.log(results);
-                        //kena tukar v_login
 
-                        return res.status(200).render('v_d_profile_add', { user: req.user, success: 'Successfully Update Doctor Profile' });
+
+                        db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                            if (!error) {
+                                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                    res.render('v_d_profile_add', { getuser, row, success: 'Successfully Update Doctor Profile' });
+                                })
+                            } else {
+                                console.log(error);
+                            }
+                        })
+
 
                     }
                 })
@@ -252,7 +302,17 @@ exports.update_profile_id = (req, res) => {
                             //when done with connection
                             if (!err) { //if not error
                                 // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                                return res.status(200).render('v_d_profile_edit', { user: req.user, rows, success: 'Successfully Update Doctor Profile' });
+
+                                db.query('SELECT * FROM doctordetails WHERE ic = ?', [ic], (error, row) => {
+                                    if (!error) {
+                                        db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                            res.render('v_d_profile_edit', { getuser, rows, row, success: 'Successfully Update Doctor Profile' });
+                                        })
+                                    } else {
+                                        console.log(error);
+                                    }
+                                })
                             } else {
                                 console.log(err);
                             }
@@ -272,13 +332,17 @@ exports.update_profile_id = (req, res) => {
 //function 12 - edit patient profile
 exports.update_dashboard_ic = (req, res) => {
 
-
-    const { daily_intake } = req.body;
+    const { user_ic, daily_intake } = req.body;
+    console.log("updatedashboardic", user_ic);
 
     db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ?', [daily_intake, req.params.ic], (err, row) => {
         //when done with connection
         db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
-            res.render('v_d_dashboard_edit', { user: req.user, row, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+            db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [user_ic], (err, getuser) => {
+                    res.render('v_d_dashboard_edit', { getuser, row, result, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+                })
+            })
         })
 
     })
@@ -319,7 +383,19 @@ exports.add_upload_ic = (req, res) => {
                     //when done with connection
                     if (!err) { //if not error
                         // res.render('v_p_profile_edit', { rows, success: `${fullname}'s Profile Has Been Updated` });
-                        return res.render('v_d_profile', { success: 'Profile Photo Updated' });
+
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (err, getuser) => {
+
+
+                            //when done with connection 
+                            if (!err) { //if not error
+                                res.render('v_d_profile', { getuser, success: 'Profile Photo Updated' });
+                            } else {
+                                console.log(err);
+                            }
+
+                        })
+
                     } else {
                         console.log(err);
                     }
@@ -328,6 +404,7 @@ exports.add_upload_ic = (req, res) => {
                 })
 
             });
+
         }
     });
 

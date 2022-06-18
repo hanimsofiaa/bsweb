@@ -33,11 +33,24 @@ exports.view_screening = (req, res) => {
 exports.find_screening = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_screening(name="search")
+    const ic = req.body.ic;
 
-    db.query('SELECT * FROM screening WHERE score LIKE ? OR createdAt LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM screening WHERE updatedAt LIKE ? AND ic = ?', ['%' + searchTerm + '%', ic], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_screening', { rows, alert: 'Display Searched Screening' });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_screening', { getuser, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Screening' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
+
         } else {
             console.log(err);
         }
@@ -104,9 +117,20 @@ exports.add_screening = (req, res) => {
     db.query('INSERT INTO screening SET ic = ?, fullname = ?, assignedTo = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_screening_add', {
-                alert: 'New Screening Has Been Added'
-            });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_screening_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Screening Has Been Added' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
+
+
         } else {
             console.log(err);
         }
@@ -187,7 +211,19 @@ exports.update_screening_id = (req, res) => {
                 //when done with connection
 
                 if (!err) { //if not error
-                    res.render('v_p_screening_edit', { rows, alert: `${score} Has Been Updated` });
+
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                        if (!error) {
+                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                res.render('v_p_screening_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${updatedAt} Has Been Updated` });
+                            })
+                        } else {
+                            console.log(error);
+                        }
+                    })
+
+
                 } else {
                     console.log(err);
                 }

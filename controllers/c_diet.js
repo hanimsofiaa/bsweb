@@ -35,11 +35,22 @@ exports.view_diet = (req, res) => {
 exports.find_diet = (req, res) => {
 
     let searchTerm = req.body.search; //get req.body.search from v_p_diet(name="search")
+    const ic = req.body.ic;
 
-    db.query('SELECT * FROM diets WHERE name LIKE ? OR type LIKE ?', ['%' + searchTerm + '%', '%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM diets WHERE name LIKE ? AND ic = ?', ['%' + searchTerm + '%', ic], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet', { rows, alert: 'Display Searched Food' });
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_diet', { getuser, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -92,6 +103,9 @@ exports.add_diet = (req, res) => {
                 console.log("rowlength", rows.length);
                 for (let n = 0; n < rows.length; n++) {
 
+                    console.log(rows[n].time);
+                    console.log(rows[n].calories);
+
                     var getDate = new Date(rows[n].time);
                     console.log("getdate", getDate);
                     var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
@@ -126,7 +140,7 @@ exports.add_diet = (req, res) => {
                 console.log("labels", labels);
 
                 for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake) {
+                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
@@ -154,9 +168,18 @@ exports.add_diet = (req, res) => {
     db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, time, name, calories, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
-            res.render('v_p_diet_add', {
-                alert: 'New Food Has Been Added'
-            });
+
+            db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                        res.render('v_p_diet_add', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+
         } else {
             console.log(err);
         }
@@ -205,13 +228,12 @@ exports.update_diet_id = (req, res) => {
     var datep = new Date(time);
     var getsdate = datep.getDate() + "/" + (datep.getMonth() + 1) + "/" + datep.getFullYear();
     console.log(getsdate);
+    c.push(cal);
+    labels.push(getsdate);
 
     db.query('SELECT * FROM diets WHERE ic = ?', [ic], (err, rows) => {
 
         db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (err, row) => {
-
-            c.push(calories);
-            labels.push(getsdate);
 
             if (rows.length != 0) {
 
@@ -227,22 +249,22 @@ exports.update_diet_id = (req, res) => {
                     calofmeal = parseInt(calofmeal);
                     console.log(typeof calofmeal + "calofmeal" + calofmeal);
 
-                    if (labels.includes(newDate)) {
-                        for (let i = 0; i < labels.length; i++) {
+                    if (rows[n].id != req.params.id) {
+                        if (labels.includes(newDate)) {
+                            for (let i = 0; i < labels.length; i++) {
 
-                            c[i] = parseInt(c[i]);
-
-                            if (labels[i] == newDate) {
-
-                                c[i] = c[i] + calofmeal;
-                                console.log("ci before break", c[i], typeof c[i]);
-                                break;
+                                c[i] = parseInt(c[i]);
+                                if (labels[i] == newDate) {
+                                    c[i] = c[i] + calofmeal;
+                                    console.log("ci before break", c[i], typeof c[i]);
+                                    break;
+                                }
                             }
-                        }
 
-                    } else {
-                        c.push(calofmeal);
-                        labels.push(newDate);
+                        } else {
+                            c.push(calofmeal);
+                            labels.push(newDate);
+                        }
                     }
 
                 }
@@ -252,7 +274,7 @@ exports.update_diet_id = (req, res) => {
                 console.log("labels", labels);
 
                 for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake) {
+                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
@@ -286,7 +308,18 @@ exports.update_diet_id = (req, res) => {
                 //when done with connection
 
                 if (!err) { //if not error
-                    res.render('v_p_diet_edit', { rows, alert: `${name} Has Been Updated` });
+
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [ic], (error, row) => {
+                        if (!error) {
+                            db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                                res.render('v_p_diet_edit', { getuser, rows, row, assignedTo: row[0].assignedTo, alert: `${name} Has Been Updated` });
+                            })
+                        } else {
+                            console.log(error);
+                        }
+                    })
+
                 } else {
                     console.log(err);
                 }
@@ -347,7 +380,7 @@ exports.search_foodlist_db = (req, res) => {
     const ic = req.body.ic;
     console.log("my ic for search diet" + ic);
 
-    db.query('SELECT * FROM food_list WHERE name LIKE ?', ['%' + searchTerm + '%'], (err, rows) => {
+    db.query('SELECT * FROM food_list WHERE name LIKE ? LIMIT 10', ['%' + searchTerm + '%'], (err, rows) => {
         //when done with connection
         if (!err) { //if not error
             //res.render('v_p_diet_search', { ic: req.body.ic, rows, alert: 'Display Searched Food', searchword: searchTerm });
@@ -356,7 +389,7 @@ exports.search_foodlist_db = (req, res) => {
                 if (!error) {
                     db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-                        res.render('v_p_diet_search', { getuser, rows, row, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
+                        res.render('v_p_diet_search', { getuser, rows, row, assignedTo: row[0].assignedTo, ic: req.body.ic, alert: 'Display Searched Food', searchword: searchTerm });
                     })
 
 
@@ -419,6 +452,7 @@ exports.add_search_diet = (req, res) => {
                 console.log("rowlength", rows.length);
                 for (let n = 0; n < rows.length; n++) {
 
+
                     var getDate = new Date(rows[n].time);
                     console.log("getdate", getDate);
                     var newDate = getDate.getDate() + "/" + (getDate.getMonth() + 1) + "/" + getDate.getFullYear();
@@ -453,7 +487,7 @@ exports.add_search_diet = (req, res) => {
                 console.log("labels", labels);
 
                 for (let m = 0; m < c.length; m++) {
-                    if (c[m] > row[0].daily_intake) {
+                    if (c[m] > row[0].daily_intake && (labels[m] === getsdate)) {
                         console.log("ci", c[m]);
                         console.log("DI", row[0].daily_intake);
 
@@ -485,9 +519,12 @@ exports.add_search_diet = (req, res) => {
         db.query('INSERT INTO diets SET ic = ?, fullname = ?, assignedTo = ?, time = ?, name = ?, calories = ?, type = ?, serving_size = ?, serving_type = ?, createdAt = ?, updatedAt = ?', [ic, fullname, at, time, name, newCal, type, serving_size, serving_type, createdAt, updatedAt], (err, rows) => {
             //when done with connection
             if (!err) { //if not error
-                res.render('v_p_diet_search', {
-                    alert: 'New Food Has Been Added'
-                });
+
+                db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
+
+                    res.render('v_p_diet_search', { getuser, assignedTo: row[0].assignedTo, alert: 'New Food Has Been Added' });
+                })
+
             } else {
                 console.log(err);
             }
