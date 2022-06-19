@@ -125,8 +125,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
-                {{/if}}
-
+                {{else}}
                 <br>
                 <div class="activity">
                     <form class="row g-3 needs-validation" method="POST" action="/profile/add" novalidate>
@@ -141,6 +140,7 @@
                         {{> v_p_profile_form}}
                     </form>
                 </div>	
+                {{/if}}
             {{/if}}
         </div>
     </div>

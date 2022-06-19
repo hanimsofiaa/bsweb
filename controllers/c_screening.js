@@ -76,6 +76,8 @@ exports.add_screening = (req, res) => {
 
     const { ic, fullname, assignedTo, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5 } = req.body;
 
+    const datep = createdAt.getDate() + "/" + (createdAt.getMonth() + 1) + "/" + createdAt.getFullYear();
+
     //calculate score
     var nonum = 0;
 
@@ -113,6 +115,33 @@ exports.add_screening = (req, res) => {
     const finalscore = (nonum / 10) * 100;
     console.log(finalscore);
     const score = finalscore;
+
+    if (depress1 === "yes" && depress2 === "yes" && depress3 === "yes" && depress4 === "yes" && depress5 === "yes") {
+        const sid = process.env.SID;
+        const auth_token = process.env.AUTH_TOKEN;
+
+        var twilio = require('twilio')(sid, auth_token);
+        twilio.messages.create({
+            from: "+15074788007",
+            to: "+60134355859",
+            body: `BARIACT. Patient ${fullname} (${ic}) has recorded he/she Depression Screening Form. The form was submitted on ${datep} and the result are all 'yes'.`
+
+        }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
+    }
+
+
+    if (eat1 === "yes" && eat2 === "yes" && eat3 === "yes" && eat4 === "yes" && eat5 === "yes") {
+        const sid = process.env.SID;
+        const auth_token = process.env.AUTH_TOKEN;
+
+        var twilio = require('twilio')(sid, auth_token);
+        twilio.messages.create({
+            from: "+15074788007",
+            to: "+60134355859",
+            body: `BARIACT. Patient ${fullname} (${ic}) has recorded he/she Eating Habits Screening Form. The form was submitted on ${datep} and the result are all 'yes'.`
+
+        }).then((res) => console.log('message sent')).catch((err) => { console.log(err) })
+    }
 
     db.query('INSERT INTO screening SET ic = ?, fullname = ?, assignedTo = ?, score = ?,  depress1 = ?,  depress2 = ?,  depress3 = ?,  depress4 = ?,  depress5 = ?, eat1 = ?, eat2 = ?, eat3 = ?, eat4 = ?, eat5 = ?, createdAt = ?, updatedAt = ?', [ic, fullname, assignedTo, score, depress1, depress2, depress3, depress4, depress5, eat1, eat2, eat3, eat4, eat5, createdAt, updatedAt], (err, rows) => {
         //when done with connection
