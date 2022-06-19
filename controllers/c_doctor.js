@@ -245,7 +245,7 @@ exports.add_profile = (req, res) => {
                                 if (!error) {
                                     db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-                                        res.render('v_d_profile_add', { getuser, row, success: 'Successfully Update Doctor Profile' });
+                                        res.render('v_d_profile_add', { getuser, row, alert: 'Successfully Update Doctor Profile' });
                                     })
                                 } else {
                                     console.log(error);
@@ -312,7 +312,7 @@ exports.update_profile_id = (req, res) => {
                                         if (!error) {
                                             db.query('SELECT * FROM userdetails WHERE ic = ?', [ic], (err, getuser) => {
 
-                                                res.render('v_d_profile_edit', { getuser, rows, row, success: 'Successfully Update Doctor Profile' });
+                                                res.render('v_d_profile_edit', { getuser, rows, row, alert: 'Successfully Update Doctor Profile' });
                                             })
                                         } else {
                                             console.log(error);
@@ -364,7 +364,7 @@ exports.update_dashboard_ic = (req, res) => {
             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
                 db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
                     db.query('SELECT * FROM userdetails WHERE ic = ?', [user_ic], (err, getuser) => {
-                        res.render('v_d_dashboard_edit', { getuser, row, result, patientnum: row.length, success: 'Patients Details Have Been Updated' });
+                        res.render('v_d_dashboard_edit', { getuser, row, result, patientnum: row.length, alert: 'Patients Details Have Been Updated' });
                     })
                 })
             })
@@ -393,7 +393,7 @@ exports.add_upload_ic = (req, res) => {
 
                     //when done with connection 
                     if (!err) { //if not error
-                        res.render('v_d_profile', { getuser, assignedTo: rows[0].assignedTo, message: 'No files were uploaded.' });
+                        res.render('v_d_profile', { getuser, message: 'No files were uploaded.' });
                     } else {
                         console.log(err);
                     }

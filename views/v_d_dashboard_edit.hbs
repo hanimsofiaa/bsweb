@@ -110,92 +110,96 @@
                 <span class="text">Patients' Details</span>
             </div>
             
-            
-            {{#if message}}
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Fail! </strong>{{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {{/if}}
-            
-            {{#if success}}
+            {{#if alert}}
                  
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong>{{success}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success! </strong>{{alert}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
-            </div>
-            {{/if}}
-			
-			<div class="activity">
                 
-				{{#each row}}
-				<br>
-				<ol class="breadcrumb" style="background-color: #ffffff;">
-					<li class="breadcrumb-item"><a href="/doctor/dashboard">Back to All Patients' Details</a></li>
-					<li class="breadcrumb-item active" aria-current="page">View {{this.fullname}}'s Details</li>
-				</ol>
-				<br>
-				
-				<div class="card" style="width: 80%;margin: 0 auto;text-align:center">
-            		<div class="card-header text-white bg-primary"><h5 class="card-title"><label class="form-label">{{this.fullname}}'s Details</label></h5></div>
-					<div class="card-body">
-						<form style="width: 100%;margin: 0 auto;" class="row g-3 needs-validation" method="POST" action="/doctor/dashboard/{{this.ic}}">
+            {{else}}
+            
+                {{#if message}}
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Fail! </strong>{{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {{else}}
+                
+            
+                    <div class="activity">
                         
-                        <div class="col-12">
-                            <div class="form-floating mb-3">
-                                       
-                                {{#each ../result}}
-                                    <img src="/images/{{this.image}}" class="avatar" id="avatar" alt="User Profile Picture"/>
-                                {{/each}}
-                            </div>
-                        </div>
+                        {{#each row}}
+                        <br>
+                        <ol class="breadcrumb" style="background-color: #ffffff;">
+                            <li class="breadcrumb-item"><a href="/doctor/dashboard">Back to All Patients' Details</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">View {{this.fullname}}'s Details</li>
+                        </ol>
+                        <br>
                         
-                        <div class="col-12">
-                            <div class="form-floating mb-3">
-                                {{#if ../user.ic}}
-                                    <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../user.ic}}">
-                                {{/if}}
-                               
-                    
-                                {{#if ../getuser}}
-                                <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../this.ic}}">
-                                {{/if}}
-                               
-                                <input type="number" class="form-control" id="daily_intake" name= "daily_intake" value="{{this.daily_intake}}" min="100" max="100000" title="Acceptable Range: 100-100000"  onkeyup="validateDI();" required>
-                                <label class="form-label" id="daily_intake" name= "daily_intake">{{this.fullname}}'s Recommended Daily Calories Intake(kcal):</label>
-                                <small style="float: left;">(Acceptable Range: 100-100,000)</small><br>
+                        <div class="card" style="width: 80%;margin: 0 auto;text-align:center">
+                            <div class="card-header text-white bg-primary"><h5 class="card-title"><label class="form-label">{{this.fullname}}'s Details</label></h5></div>
+                            <div class="card-body">
+                                <form style="width: 100%;margin: 0 auto;" class="row g-3 needs-validation" method="POST" action="/doctor/dashboard/{{this.ic}}">
                                 
-                                <small  id="P_incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain numbers in range: 100-100,000</small>
-                                <small  id="P_correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                            
+                                        {{#each ../result}}
+                                            <img src="/images/{{this.image}}" class="avatar" id="avatar" alt="User Profile Picture"/>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        {{#if ../user.ic}}
+                                            <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../user.ic}}">
+                                        {{/if}}
+                                    
+                            
+                                        {{#if ../getuser}}
+                                        <input type="hidden" class="form-control" id="user_ic" name= "user_ic" value="{{../this.ic}}">
+                                        {{/if}}
+                                    
+                                        <input type="number" class="form-control" id="daily_intake" name= "daily_intake" value="{{this.daily_intake}}" min="100" max="100000" title="Acceptable Range: 100-100000"  onkeyup="validateDI();" required>
+                                        <label class="form-label" id="daily_intake" name= "daily_intake">{{this.fullname}}'s Recommended Daily Calories Intake(kcal):</label>
+                                        <small style="float: left;">(Acceptable Range: 100-100,000)</small><br>
+                                        
+                                        <small  id="P_incorrect" class="invalid" style="display: none; color:red; float: left;"><i class="bi bi-exclamation-circle-fill"></i> Must contain numbers in range: 100-100,000</small>
+                                        <small  id="P_correct" class="valid" style="display: none; color:rgb(146, 231, 17); float: left;"><i class="bi bi-check-circle-fill"></i> Correct</small>
+                                    </div>
+                                </div>
+                                
+                                {{#each ../result}}
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="ic" name= "ic" value="{{this.ic}}" disabled>
+                                        <label class="form-label" id="ic" name= "ic">Patient's IC:</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="email" name= "email" value="{{this.email}}" disabled>
+                                        <label class="form-label" id="email" name= "email">Patient's Email:</label>
+                                    </div>
+                                </div>
+                                {{/each}}
+
+                                {{> v_d_dashboard_form}}
+                                </form>
                             </div>
                         </div>
                         
-                        {{#each ../result}}
-                         <div class="col-12">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="ic" name= "ic" value="{{this.ic}}" disabled>
-                                <label class="form-label" id="ic" name= "ic">Patient's IC:</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="email" name= "email" value="{{this.email}}" disabled>
-                                <label class="form-label" id="email" name= "email">Patient's Email:</label>
-                            </div>
-                        </div>
                         {{/each}}
-
-						{{> v_d_dashboard_form}}
-						</form>
-					</div>
-        		</div>
-				
-				{{/each}}
-			</div>	
+                    </div>	
+                {{/if}}
+                
+            {{/if}}
         </div>
     </div>
 </section>

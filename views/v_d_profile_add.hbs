@@ -118,34 +118,26 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
-            {{/if}}
-			
-			 
-            {{#if success}}
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success! </strong>{{success}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {{/if}}
-            
-            {{#if message}}
-            <div class="container" style="background-color: #ffffff;">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Fail! </strong>{{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
             {{else}}
+		
+                {{#if message}}
+                <div class="container" style="background-color: #ffffff;">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Fail! </strong>{{message}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                {{else}}
 
-            <br>
-            <div class="activity">
-                <form class="row g-3 needs-validation" method="POST" action="/doctor/profile/add" novalidate>
-                    {{> v_d_profile_form}}
-                </form>
-            </div>
-            {{/if}}	
+                <br>
+                <div class="activity">
+                    <form class="row g-3 needs-validation" method="POST" action="/doctor/profile/add" novalidate>
+                        {{> v_d_profile_form}}
+                    </form>
+                </div>
+                {{/if}}	
+                
+            {{/if}}
         </div>
     </div>
 </section>
