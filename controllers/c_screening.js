@@ -158,8 +158,6 @@ exports.add_screening = (req, res) => {
                 }
             })
 
-
-
         } else {
             console.log(err);
         }

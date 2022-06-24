@@ -143,11 +143,36 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 });
 
 router.get('/calendar', (req, res) => {
-    res.render('v_p_calendar');
+
+    db.query('SELECT * FROM train_food', (err, rows) => {
+
+        if (!err) { //if not error
+
+            var send = "";
+
+            if (rows.length > 0) {
+                for (let i = 0; i < rows.length; i++) {
+                    var base = Buffer.from(rows[i].data);
+                    var conversion = base.toString('base64');
+                    send = send + '<div class="imgContainer"><img class="flexibleImg" src="data:' + rows[i].mime + ';base64,' + conversion + '" width="400" height="400"/></div>';
+                }
+            }
+
+            res.render('v_p_calendar', { send });
+        } else {
+            console.log(err);
+        }
+
+        console.log('the data from user table', rows);
+    })
+
+
 });
 
 router.get('/registerpatient', (req, res) => {
     res.render('v_p_register');
+
+
 });
 
 router.get('/register', (req, res) => {

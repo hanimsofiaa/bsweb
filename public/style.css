@@ -788,3 +788,38 @@ hbContainer {
 .cursor-pointer {
     cursor: pointer;
 }
+
+video {
+    clear: both;
+    display: block;
+    margin: 10px;
+    background: #000000;
+    width: 640px;
+    height: 480px;
+}
+
+.removed {
+    display: none;
+}
+
+#status {
+    font-size: 150%;
+}
+
+img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.imgContainer {
+    width: auto;
+}
+
+.flexibleImg {
+    width: auto;
+    height: 200px;
+    /* Apply your height */
+}

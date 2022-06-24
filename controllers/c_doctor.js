@@ -418,6 +418,7 @@ exports.add_upload_ic = (req, res) => {
 
         console.log(sampleFile);
 
+
         // Use mv() to place file on the server 
         sampleFile.mv(uploadPath, function(err) {
             if (err) {

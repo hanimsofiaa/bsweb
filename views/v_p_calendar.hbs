@@ -100,12 +100,29 @@
     <div class="dash-content">
 		<div class="overview">
 			
+            {{#each rows}}
+        
+            <!--<li><a target='_blank'>{{this.name}}</a><br/> <div class='imgContainer'><img  class='flexibleImg' ng-src='data:{{this.mime}};base64,base64_encode({{this.data}})' width='400' height='400'/></div></li>-->
+            <button onclick="displayImage({{this.mime}},{{this.data}})">Try it</button>
+             
+            <img id='myImg' width='100' height='100' />
+            
+            {{/each}}
+            
+            
+            {{#if send}}
+                <br><br><br>
+                {{{send}}}
+            
+            {{/if}}
+            <!--
+    
 			<div class="title">
                 <i class="uil uil-utensils"></i>
                 <span class="text">Your Food List</span>
             </div>
 
-			<!-- Diet Main View-->
+			<!-- Diet Main View
 			{{#if removedFood}}
 			<div class="container" style="background-color: #ffffff;">
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -167,14 +184,30 @@
                 }
                 
                 
-            </script>
+            </script>-->
     
 		</div>
 	</div>
 
 </section>
+<script>
+    
+    
+    function passdata(data){
+        var base = Buffer.from(data);
+        var conversion = base.toString('base64');
+        console.log(conversion);
+        
+        var image = document.querySelector('img#myImg');
+        image.src="data:image/gif;base64,R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
+    }
+    
+    function myFunction(mime, data) {
+        
+        var base = Buffer.from(data);
+        var conversion = base.toString('base64');
+            
+        document.getElementById("myImg").src = "data:"+mime+";base64,"+conversion+"";
+    }
 
-
-
-
-
+</script>
