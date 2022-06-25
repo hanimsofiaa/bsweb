@@ -7,6 +7,7 @@
 		<li><a href="/auth/logout">Log Out</a></li>
 	</ul>
 </nav>-->
+<link rel="stylesheet" href="css/style.css">
 
 <nav>
     <div class="logo-name">
@@ -99,115 +100,327 @@
 	
     <div class="dash-content">
 		<div class="overview">
-			
-            {{#each rows}}
-        
-            <!--<li><a target='_blank'>{{this.name}}</a><br/> <div class='imgContainer'><img  class='flexibleImg' ng-src='data:{{this.mime}};base64,base64_encode({{this.data}})' width='400' height='400'/></div></li>-->
-            <button onclick="displayImage({{this.mime}},{{this.data}})">Try it</button>
-             
-            <img id='myImg' width='100' height='100' />
+            <div class="title">
+                <i class="uil uil-calendar-alt"></i>
+                <span class="text">Calendar</span>
+            </div>
             
-            {{/each}}
-            
+                <div class="activity">
+                     <div class="boxes" style="padding-top: 5px;">
+                    <div class="box box1">
+                        <i class="uil uil-utensils"></i>
+                        <span class="text">Food</span>
+                        <span class="number">2000</span>
+                    </div>
+                    <div class="box box2">
+                        <i class="uil uil-user-circle"></i>
+                        <span class="text">Total Patients</span>
+                        <span class="number">likee</span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-share"></i>
+                        <span class="text">Testing</span>
+                        <span class="number">10,120</span>
+                    </div>
+                </div>
+                
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 text-center mb-5">   
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="width: 100%;">
+                            <div class="elegant-calencar d-md-flex">
+                                <div class="wrap-header d-flex align-items-center img" style="background-image: url(images/sleeve-animation.gif); background-size:410px">
+                                    <p id="reset">Today</p>
+                                    <div id="header" class="p-0">
+                                        <!--<div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div> -->
+                                        <div class="head-info">
+                                            <div class="head-month"></div>
+                                            <div class="head-day"></div>
+                                        </div>
+                                        <!--<div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div> -->
+                                    </div>
+                                </div>
+                                <div class="calendar-wrap">
+                                    <div class="w-100 button-wrap">
+                                        <div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
+                                        <div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
+                                    </div><br><br>
+                                    <table  style="width:100%;text-align: center"  class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Sun</th>
+                                                <th>Mon</th>
+                                                <th>Tue</th>
+                                                <th>Wed</th>
+                                                <th>Thu</th>
+                                                <th>Fri</th>
+                                                <th>Sat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+          
             
             {{#if send}}
                 <br><br><br>
                 {{{send}}}
             
             {{/if}}
-            <!--
-    
-			<div class="title">
-                <i class="uil uil-utensils"></i>
-                <span class="text">Your Food List</span>
-            </div>
-
-			<!-- Diet Main View
-			{{#if removedFood}}
-			<div class="container" style="background-color: #ffffff;">
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>Success! </strong>{{removedFood}}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
-			</div>
-			{{/if}}
-
-			{{#if alert}}
-
-			<br><br>
-			<ol class="breadcrumb" style="background-color: #ffffff;">
-				<li class="breadcrumb-item"><a href="/diet/view">Back to Diet</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Search Your Food</li>
-			</ol>
-			<br>
-
-			<div class="container" style="background-color: #ffffff;">
-				<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<strong>Success! </strong>{{alert}}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div>
-			</div>
-			{{/if}}
-            <section class="sectioncalendar">
-                <div class="boxcalendar">
-                    <div class="containercalendar">
-                        <div id="dycalendar" onclick="getDate()"></div>
-                        
-                    </div>
-                    <div id="output"></div>
-                </div>
-            </section>
-            <script src="/dycalendar.js"></script>
-            <script>
-                dycalendar.draw({
-                    target: '#dycalendar',
-                    type: 'month',
-                    dayformat: 'full',
-                    monthformat: 'full',
-                    highlighttargetdate: true,
-                    prevnextbutton: 'show',
-                    sele
-                    
-                })
-                
-                let mystr = JSON.stringify(draw);
-                document.getElementById("output").innerHTML=mystr;
-                
-                function getDate(){
-                    let txt = "";
-                    for (let x in dycalendar) {
-                     txt += dycalendar[x] + " ";
-                    };
-                    
-                    
-                    document.getElementById("output").innerHTML=mystr;
-                }
-                
-                
-            </script>-->
-    
 		</div>
 	</div>
 
 </section>
-<script>
-    
-    
-    function passdata(data){
-        var base = Buffer.from(data);
-        var conversion = base.toString('base64');
-        console.log(conversion);
-        
-        var image = document.querySelector('img#myImg');
-        image.src="data:image/gif;base64,R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
-    }
-    
-    function myFunction(mime, data) {
-        
-        var base = Buffer.from(data);
-        var conversion = base.toString('base64');
-            
-        document.getElementById("myImg").src = "data:"+mime+";base64,"+conversion+"";
-    }
 
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    (function($) {
+
+        "use strict";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date(),
+                year = today.getFullYear(),
+                month = today.getMonth(),
+                monthTag = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                day = today.getDate(),
+                days = document.getElementsByTagName('td'),
+                selectedDay,
+                setDate,
+                daysLen = days.length;
+            // options should like '2014-01-01'
+            function Calendar(selector, options) {
+                this.options = options;
+                this.draw();
+            }
+
+            Calendar.prototype.draw = function() {
+                this.getCookie('selected_day');
+                this.getOptions();
+                this.drawDays();
+                var that = this,
+                    reset = document.getElementById('reset'),
+                    pre = document.getElementsByClassName('pre-button'),
+                    next = document.getElementsByClassName('next-button');
+
+                pre[0].addEventListener('click', function() {
+                    that.preMonth();
+                });
+                next[0].addEventListener('click', function() {
+                    that.nextMonth();
+                });
+                reset.addEventListener('click', function() {
+                    that.reset();
+                });
+                while (daysLen--) {
+                    days[daysLen].addEventListener('click', function() {
+                        that.clickDay(this);
+                    });
+                }
+            };
+
+            Calendar.prototype.drawHeader = function(e) {
+                var headDay = document.getElementsByClassName('head-day'),
+                    headMonth = document.getElementsByClassName('head-month');
+
+                e ? headDay[0].innerHTML = e : headDay[0].innerHTML = day;
+                headMonth[0].innerHTML = monthTag[month] + " - " + year;
+            };
+
+            Calendar.prototype.drawDays = function() {
+                var startDay = new Date(year, month, 1).getDay(),
+                    nDays = new Date(year, month + 1, 0).getDate(),
+
+                    n = startDay;
+                for (var k = 0; k < 42; k++) {
+                    days[k].innerHTML = '';
+                    days[k].id = '';
+                    days[k].className = '';
+                }
+
+                for (var i = 1; i <= nDays; i++) {
+                    days[n].innerHTML = i;
+                    n++;
+                }
+
+                for (var j = 0; j < 42; j++) {
+                    if (days[j].innerHTML === "") {
+
+                        days[j].id = "disabled";
+
+                    } else if (j === day + startDay - 1) {
+                        if ((this.options && (month === setDate.getMonth()) && (year === setDate.getFullYear())) || (!this.options && (month === today.getMonth()) && (year === today.getFullYear()))) {
+                            this.drawHeader(day);
+                            days[j].id = "today";
+                        }
+                    }
+                    if (selectedDay) {
+                        if ((j === selectedDay.getDate() + startDay - 1) && (month === selectedDay.getMonth()) && (year === selectedDay.getFullYear())) {
+                            days[j].className = "selected";
+                            this.drawHeader(selectedDay.getDate());
+                        }
+                    }
+                }
+            };
+
+            Calendar.prototype.clickDay = function(o) {
+                var selected = document.getElementsByClassName("selected"),
+                    len = selected.length;
+                if (len !== 0) {
+                    selected[0].className = "";
+                }
+                o.className = "selected";
+                selectedDay = new Date(year, month, o.innerHTML);
+                this.drawHeader(o.innerHTML);
+                this.setCookie('selected_day', 1);
+                console.log('You select year', year);
+                console.log('You select month', month);
+                console.log('You select date', o.innerHTML);
+
+            };
+
+            Calendar.prototype.preMonth = function() {
+                if (month < 1) {
+                    month = 11;
+                    year = year - 1;
+                } else {
+                    month = month - 1;
+                }
+                this.drawHeader(1);
+                this.drawDays();
+            };
+
+            Calendar.prototype.nextMonth = function() {
+                if (month >= 11) {
+                    month = 0;
+                    year = year + 1;
+                } else {
+                    month = month + 1;
+                }
+                this.drawHeader(1);
+                this.drawDays();
+            };
+
+            Calendar.prototype.getOptions = function() {
+                if (this.options) {
+                    var sets = this.options.split('-');
+                    setDate = new Date(sets[0], sets[1] - 1, sets[2]);
+                    day = setDate.getDate();
+                    year = setDate.getFullYear();
+                    month = setDate.getMonth();
+                }
+            };
+
+            Calendar.prototype.reset = function() {
+                month = today.getMonth();
+                year = today.getFullYear();
+                day = today.getDate();
+                this.options = undefined;
+                this.drawDays();
+            };
+
+            Calendar.prototype.setCookie = function(name, expiredays) {
+                if (expiredays) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (expiredays * 24 * 60 * 60 * 1000));
+                    var expires = "; expires=" + date.toGMTString();
+                } else {
+                    var expires = "";
+                }
+                document.cookie = name + "=" + selectedDay + expires + "; path=/";
+            };
+
+            Calendar.prototype.getCookie = function(name) {
+                if (document.cookie.length) {
+                    var arrCookie = document.cookie.split(';'),
+                        nameEQ = name + "=";
+                    for (var i = 0, cLen = arrCookie.length; i < cLen; i++) {
+                        var c = arrCookie[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1, c.length);
+
+                        }
+                        if (c.indexOf(nameEQ) === 0) {
+                            selectedDay = new Date(c.substring(nameEQ.length, c.length));
+                        }
+                    }
+                }
+            };
+            var calendar = new Calendar();
+
+        }, false);
+
+    })(jQuery);
 </script>
+
+
+
+
+
+
+

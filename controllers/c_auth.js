@@ -161,9 +161,12 @@ exports.register_user = (req, res) => {
 }
 
 exports.isLoggedIn = async(req, res, next) => {
+
+
     //console.log(req.cookies);
     if (req.cookies.jwt) {
         try {
+
             // 1. Verify token of the user
             //get ID from jwt token parameter - jwt token & password
             const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);

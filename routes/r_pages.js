@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require("mysql");
 const router = express.Router();
 const authContoller = require('../controllers/c_auth');
+const schedule = require('node-schedule');
+const { some } = require("lodash");
 
 //add db connection
 const db = mysql.createConnection({
@@ -144,7 +146,14 @@ router.get('/analytics', authContoller.isLoggedIn, (req, res) => {
 
 router.get('/calendar', (req, res) => {
 
+    //run every 2 seconds
+    const mJob = schedule.scheduleJob('*/2 * * * * *', () => {
+        console.log('job ran @', new Date().toString());
+        mJob.cancel();
+    })
+
     db.query('SELECT * FROM train_food', (err, rows) => {
+
 
         if (!err) { //if not error
 
@@ -196,6 +205,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+
     res.render('v_p_dashboard');
 });
 

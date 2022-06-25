@@ -37,6 +37,7 @@
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "mysql": "^2.18.1",
+        "node-schedule": "^2.1.0",
         "nodemon": "^2.0.15",
         "sass": "^1.14.2",
         "twilio": "^3.77.2"
