@@ -36,6 +36,7 @@ router.get('/register', (req, res) => {
 
 
 //POST
+router.post('/train', authContoller.train); //function 2 - search food by name of meal(pass req.body for searchterm)
 router.post('/register', authContoller.register_user); //function to c_auth
 router.post('/login', authContoller.login_user); //function to c_auth
 

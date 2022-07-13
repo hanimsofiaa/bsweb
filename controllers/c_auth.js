@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
 const async = require("hbs/lib/async");
 const { home } = require("nodemon/lib/utils");
-
+const schedule = require('node-schedule');
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -60,6 +60,13 @@ exports.login_user = async(req, res) => {
 
 exports.form_register_patient = (req, res) => {
     res.render('v_p_profile_add');
+}
+
+
+exports.train = (req, res) => {
+
+
+
 }
 
 exports.register_user = (req, res) => {
@@ -163,6 +170,27 @@ exports.register_user = (req, res) => {
 exports.isLoggedIn = async(req, res, next) => {
 
 
+    //run every 2 seconds
+    const mJob = schedule.scheduleJob('*/2 * * * * *', () => {
+
+        db.query('SELECT * FROM train_food', (err, rows) => {
+            if (!err) {
+                if (rows.length > 0) {
+                    for (let i = 0; i < rows.length; i++) {
+                        if (rows[i].new === 1) {
+                            console.log('Row ID' + rows[i].id + " is a new row");
+                        }
+                    }
+                }
+            }
+        })
+
+
+        // mJob.cancel();
+        //console.log('job ran @', new Date().toString());
+        //mJob.cancel();
+    })
+
     //console.log(req.cookies);
     if (req.cookies.jwt) {
         try {
@@ -197,6 +225,26 @@ exports.isLoggedIn = async(req, res, next) => {
 
 exports.logout_user = async(req, res) => {
 
+
+    //run every 2 seconds
+    const mJob = schedule.scheduleJob('*/2 * * * * *', () => {
+
+        db.query('SELECT * FROM train_food', (err, rows) => {
+            if (!err) {
+                if (rows.length > 0) {
+                    for (let i = 0; i < rows.length; i++) {
+                        if (rows[i].new === 1) {
+
+                        }
+                    }
+                }
+            }
+        })
+
+        //console.log('job ran @', new Date().toString());
+        //mJob.cancel();
+    })
+
     //if user has cookie, overwrite by jwt
     res.cookie('jwt', 'logout', {
         //cookie expires in 2 sec once click logout
@@ -206,5 +254,6 @@ exports.logout_user = async(req, res) => {
 
     //redirect to homepage
     res.status(200).redirect('/');
+
 
 }

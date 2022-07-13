@@ -350,7 +350,30 @@ router.get('/analytics/:ic', authContoller.isLoggedIn, (req, res) => {
                             db.query('SELECT * FROM exercise WHERE ic = ? AND assignedTo = ?', [req.params.ic, req.user.fullname], (err, result) => {
 
                                 if (!err) { //if not error
-                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+
+                                    db.query('SELECT * FROM recommendation WHERE patientIC = ? AND title = ?', [req.params.ic, "diet"], (err, recom) => {
+                                        if (recom.length === 0) {
+                                            db.query('SELECT * FROM recommendation WHERE patientIC = ? AND title = ?', [req.params.ic, "exercise"], (err, recomex) => {
+                                                if (recomex.length === 0) {
+                                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo });
+                                                } else if (recomex.length > 0) {
+                                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo, recomex });
+                                                } else {
+
+                                                }
+                                            })
+                                        } else {
+                                            db.query('SELECT * FROM recommendation WHERE patientIC = ? AND title = ?', [req.params.ic, "exercise"], (err, recomex) => {
+                                                if (recomex.length === 0) {
+                                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo, recom });
+                                                } else if (recomex.length > 0) {
+                                                    res.render('v_d_analytics_display', { user: req.user, rows, row, result, assignedTo: row[0].assignedTo, recom, recomex });
+                                                } else {
+
+                                                }
+                                            })
+                                        }
+                                    })
                                 } else {
                                     console.log(err);
                                 }
@@ -694,6 +717,9 @@ router.get('/screening/:id', authContoller.isLoggedIn, (req, res) => {
 
 
 //POST
+router.post('/analytics/diet/:ic', doctorContoller.add_analytics_diet_ic);
+router.post('/analytics/exercise/:ic', doctorContoller.add_analytics_exercise_ic);
+
 router.post('/upload/:ic', doctorContoller.add_upload_ic);
 router.post('/diet/search', doctorContoller.find_diet); //function 3 - search database food(req.body passed)
 router.post('/exercise/search', doctorContoller.find_exercise); //function 5 - search database exercise(req.body passed)

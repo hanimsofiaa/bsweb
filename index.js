@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const expresshbs = require('express-handlebars');
 const fileUpload = require('express-fileupload');
 
+
 dotenv.config({ path: "./.env" });
 
 const app = express();
@@ -52,6 +53,7 @@ db.connect((err) => {
 
 //define routes (r_pages and r_routes)
 app.use('/', require('./routes/r_pages'));
+app.use('/analytics', require('./routes/r_analytics'));
 app.use('/profile', require('./routes/r_profile'));
 
 app.use('/screening', require('./routes/r_screening'));

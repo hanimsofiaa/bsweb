@@ -24,6 +24,10 @@
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dashboard</span>
             </a></li>
+            <li><a href="/calendar">
+                <i class="uil uil-calendar-alt"></i>
+                <span class="link-name">Calendar</span>
+            </a></li>
             <li><a href="/diet/view">
                 <i class="uil uil-utensils"></i>
                 <span class="link-name">Diet</span>
@@ -106,8 +110,19 @@
                 <span class="text">Your Calories Analytics</span>
             </div>
 			<div class="boxes">
-    
-                <div class="row g-3 align-items-center">
+                
+                {{#if recom}} 
+                <div class="activity" style="width: 100%;">
+                    <div class="card">
+                        <div class="card-body">         
+                            <label for="description">Diet Recommendation Set by {{#if assignedTo}}{{assignedTo}}{{/if}} <i class="uil uil-utensils"></i></label>
+                            <h5><p><b>{{#each recom}}{{this.description}}{{/each}}</b></p></h5>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+                
+                <div class="row g-3 align-items-center" style="margin-top: 5px;">
                     <div class="col-auto">
                          <label for="datepicker">Select Month and Year:</label>
                     </div>
@@ -125,6 +140,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
+                
         
                 <table class="table table-bordered">
                     <thead>
@@ -146,6 +162,7 @@
 		</div>
         
         
+        
         <div class="overview">
 			<div class="title">
                 <i class="uil uil-chart"></i>
@@ -153,7 +170,18 @@
             </div>
 			<div class="boxes">
                 
-                 <div class="row g-3 align-items-center">
+                {{#if recomex}} 
+                <div class="activity" style="width: 100%;">
+                    <div class="card">
+                        <div class="card-body">         
+                            <label for="description">Exercise Recommendation Set by {{#if assignedTo}}{{assignedTo}}{{/if}} <i class="uil uil-basketball"></i></label>
+                            <h5><p><b>{{#each recomex}}{{this.description}}{{/each}}</b></p></h5>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+                
+                 <div class="row g-3 align-items-center" style="margin-top: 5px;">
                     <div class="col-auto">
                          <label for="datepicker2">Select Month and Year:</label>
                     </div>
@@ -385,6 +413,7 @@
         
     
     });
+    
     function displayCalories(){
         //document.getElementById('myChart').style.display = "block";
         

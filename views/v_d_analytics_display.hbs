@@ -121,10 +121,57 @@
                 <div class="dash-content">
 					<div class="overview">
 						<div class="title">
+							<i class="uil uil-utensils"></i>
+							<span class="text">{{#each row}}{{this.fullname}}{{/each}}'s Diet Recommendation</span>
+						</div>
+						<div class="boxes">
+                            
+                            {{#if recom}}
+                    
+                            <div class="activity" style="width:100%;margin-bottom:10px">
+                                <br><br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="row g-3 needs-validation" method="POST" action="/doctor/analytics/diet/{{#each row}}{{this.ic}}{{/each}}" novalidate>
+                                            
+                                            <div class="form-group">
+                                                <label for="description">Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Diet <i class="uil uil-utensils"></i></label>
+                                                <input type="text" class="form-control" id="description" name="description" value = "{{#each recom}}{{this.description}}{{/each}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="createdBy" name="createdBy" placeholder="{{#if user}}{{user.fullname}}{{/if}}" value="{{#if user}}{{user.fullname}}{{/if}}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            {{else}}
+                            <div class="activity" style="width:100%;margin-bottom:10px">
+                                <br><br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="row g-3 needs-validation" method="POST" action="/doctor/analytics/diet/{{#each row}}{{this.ic}}{{/each}}" novalidate>
+                                            
+                                            <div class="form-group">
+                                                <label for="description">Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Diet <i class="uil uil-utensils"></i></label>
+                                                <input type="text" class="form-control" id="description" name="description" placeholder="Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Diet">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="createdBy" name="createdBy" placeholder="{{#if user}}{{user.fullname}}{{/if}}" value="{{#if user}}{{user.fullname}}{{/if}}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/if}}
+                        </div>
+                        <div class="title">
 							<i class="uil uil-chart"></i>
 							<span class="text">{{#each row}}{{this.fullname}}{{/each}}'s Calories Analytics</span>
 						</div>
-						<div class="boxes">
 				
 							<div class="row g-3 align-items-center">
 								<div class="col-auto">
@@ -162,15 +209,65 @@
        
 							<canvas id="myChart"></canvas>
 						</div>
+                     
 					</div>
-					
-					
+                   
+                
 					<div class="overview">
 						<div class="title">
-							<i class="uil uil-chart"></i>
+							<i class="uil uil-basketball"></i>
 							<span class="text">{{#each row}}{{this.fullname}}{{/each}}'s Exercise Analytics</span>
 						</div>
 						<div class="boxes">
+                            
+                            
+                            {{#if recomex}}
+                    
+                            <div class="activity" style="width:100%;margin-bottom:10px">
+                                <br><br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="row g-3 needs-validation" method="POST" action="/doctor/analytics/exercise/{{#each row}}{{this.ic}}{{/each}}" novalidate>
+                                            
+                                            <div class="form-group">
+                                                <label for="description">Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Exercise <i class="uil uil-basketball"></i></label>
+                                                <input type="text" class="form-control" id="description" name="description" value = "{{#each recomex}}{{this.description}}{{/each}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="createdBy" name="createdBy" placeholder="{{#if user}}{{user.fullname}}{{/if}}" value="{{#if user}}{{user.fullname}}{{/if}}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                            {{else}}
+                            <div class="activity" style="width:100%;margin-bottom:10px">
+                                <br><br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form class="row g-3 needs-validation" method="POST" action="/doctor/analytics/exercise/{{#each row}}{{this.ic}}{{/each}}" novalidate>
+                                            
+                                            <div class="form-group">
+                                                <label for="description">Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Exercise <i class="uil uil-basketball"></i></label>
+                                                <input type="text" class="form-control" id="description" name="description" placeholder="Recommendation for {{#each row}}{{this.fullname}}{{/each}}'s Exercise">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="createdBy" name="createdBy" placeholder="{{#if user}}{{user.fullname}}{{/if}}" value="{{#if user}}{{user.fullname}}{{/if}}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            {{/if}}
+                        </div>
+                        <div class="title">
+							<i class="uil uil-chart"></i>
+							<span class="text">{{#each row}}{{this.fullname}}{{/each}}'s Exercise Analytics</span>
+						</div>
 							
 							<div class="row g-3 align-items-center">
 								<div class="col-auto">
@@ -210,6 +307,8 @@
 							
 						</div>
 					</div>
+                    
+                  
 					
 				</div>
 				

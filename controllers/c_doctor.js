@@ -339,11 +339,11 @@ exports.update_profile_id = (req, res) => {
 //function 12 - edit patient profile
 exports.update_dashboard_ic = (req, res) => {
 
-    const { user_ic, daily_intake } = req.body;
+    const { user_ic, daily_intake, weight_goal } = req.body;
     console.log("updatedashboardic", user_ic);
 
 
-    if (!daily_intake || daily_intake < 100 || daily_intake > 100000) {
+    if (!daily_intake || daily_intake < 100 || daily_intake > 100000 || !weight_goal || weight_goal < 10 || weight_goal > 100000) {
 
         db.query('SELECT * FROM doctordetails WHERE ic = ?', [user_ic], (error, row) => {
             if (!error) {
@@ -359,7 +359,7 @@ exports.update_dashboard_ic = (req, res) => {
 
     } else {
 
-        db.query('UPDATE patientdetails SET daily_intake = ? WHERE ic = ?', [daily_intake, req.params.ic], (err, row) => {
+        db.query('UPDATE patientdetails SET daily_intake = ?, weight_goal = ? WHERE ic = ?', [daily_intake, weight_goal, req.params.ic], (err, row) => {
             //when done with connection
             db.query('SELECT * FROM patientdetails WHERE ic = ?', [req.params.ic], (err, row) => {
                 db.query('SELECT * FROM userdetails WHERE ic = ?', [req.params.ic], (error, result) => {
@@ -372,9 +372,135 @@ exports.update_dashboard_ic = (req, res) => {
         })
     }
 
+}
+
+exports.add_analytics_diet_ic = (req, res) => {
+
+    const title = "diet";
+    const patientIC = req.params.ic;
+
+    const { description, createdBy } = req.body;
+    const createdAt = new Date(Date.now());
+    console.log("updatedashboardic", req.params.ic);
+
+
+    if (!description) {
+
+        //go back to page
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (error, patient) => {
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [createdBy], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+
+                        res.render('v_d_analytics_display_info', { getuser, patient, row, message: 'Incorrect Input Field' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+        })
+
+    } else {
+        db.query('SELECT * FROM recommendation WHERE title = ? AND patientIC = ?', [title, patientIC], (err, recomexist) => {
+            if (recomexist.length === 0) {
+                db.query('INSERT INTO recommendation SET title = ?, description = ?, createdBy = ?, createdAt = ?, patientIC = ?', [title, description, createdBy, createdAt, patientIC], (err, row) => {
+                    //when done with connection
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (err, row) => {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [patientIC], (error, result) => {
+                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+                                res.render('v_d_analytics_display_info', { getuser, row, result, patientnum: row.length, alert: 'Patients Recommendation Has Been Updated' });
+                            })
+                        })
+                    })
+
+                })
+            } else {
+
+                db.query('UPDATE recommendation SET title = ?, description = ?, createdBy = ?, createdAt = ?, patientIC = ? WHERE id = ?', [title, description, createdBy, createdAt, patientIC, recomexist[0].id], (err, row) => {
+                    //when done with connection
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (err, row) => {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [patientIC], (error, result) => {
+                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+                                res.render('v_d_analytics_display_info', { getuser, row, result, patientnum: row.length, alert: 'Patients Recommendation Has Been Updated' });
+
+                            })
+                        })
+                    })
+
+                })
+
+            }
+
+        })
+
+
+    }
 
 }
 
+exports.add_analytics_exercise_ic = (req, res) => {
+
+    const title = "exercise";
+    const patientIC = req.params.ic;
+
+    const { description, createdBy } = req.body;
+    const createdAt = new Date(Date.now());
+    console.log("updatedashboardic", req.params.ic);
+
+
+    if (!description) {
+
+        //go back to page
+        db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (error, patient) => {
+            db.query('SELECT * FROM doctordetails WHERE fullname = ?', [createdBy], (error, row) => {
+                if (!error) {
+                    db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+
+                        res.render('v_d_analytics_display_info', { getuser, patient, row, message: 'Incorrect Input Field' });
+                    })
+                } else {
+                    console.log(error);
+                }
+            })
+        })
+
+    } else {
+        db.query('SELECT * FROM recommendation WHERE title = ? AND patientIC = ?', [title, patientIC], (err, recomexist) => {
+            if (recomexist.length === 0) {
+                db.query('INSERT INTO recommendation SET title = ?, description = ?, createdBy = ?, createdAt = ?, patientIC = ?', [title, description, createdBy, createdAt, patientIC], (err, row) => {
+                    //when done with connection
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (err, row) => {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [patientIC], (error, result) => {
+                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+                                res.render('v_d_analytics_display_info', { getuser, row, result, patientnum: row.length, alert: 'Patients Recommendation Has Been Updated' });
+                            })
+                        })
+                    })
+
+                })
+            } else {
+
+                db.query('UPDATE recommendation SET title = ?, description = ?, createdBy = ?, createdAt = ?, patientIC = ? WHERE id = ?', [title, description, createdBy, createdAt, patientIC, recomexist[0].id], (err, row) => {
+                    //when done with connection
+                    db.query('SELECT * FROM patientdetails WHERE ic = ?', [patientIC], (err, row) => {
+                        db.query('SELECT * FROM userdetails WHERE ic = ?', [patientIC], (error, result) => {
+                            db.query('SELECT * FROM userdetails WHERE fullname = ?', [createdBy], (err, getuser) => {
+                                res.render('v_d_analytics_display_info', { getuser, row, result, patientnum: row.length, alert: 'Patients Recommendation Has Been Updated' });
+
+                            })
+                        })
+                    })
+
+                })
+
+            }
+
+        })
+
+
+    }
+
+}
 
 exports.add_upload_ic = (req, res) => {
 

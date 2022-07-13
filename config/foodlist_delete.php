@@ -2,14 +2,14 @@
 
 require_once "conn.php";
 
-$name = $_POST['name'];
+$id = $_POST['id'];
 
-$query = "SELECT * FROM diets WHERE name = '$name'";
+$query = "SELECT * FROM diets WHERE id = '$id'";
 $check = mysqli_query($conn,$query);
 $result = array();
 
 if(mysqli_num_rows($check) == 1){																																																									
-	$sql = "DELETE FROM diets WHERE name = '$name'";
+	$sql = "DELETE FROM diets WHERE id = '$id'";
 		
 	if(mysqli_query($conn, $sql)){
 		$result['state'] = "delete";
